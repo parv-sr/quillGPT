@@ -103,20 +103,3 @@ class CausalSelfAttention(nn.Module):
 
         return output
     
-
-if __name__ == "__main__":
-    torch.manual_seed(42)
-
-    attention = CausalSelfAttention(
-        embed_dim=128,
-        num_heads=4,
-        max_context=128
-    )
-
-    x = torch.randn(2, 5, 128)
-
-    print("Input:", x.shape)
-
-    output = attention(x)
-
-    print("Output:", output.shape)

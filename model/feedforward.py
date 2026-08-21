@@ -31,7 +31,3 @@ class FeedForwardNetwork(nn.Module):
 
         return x
     
-
-x = torch.randn(2, 5, 128)
-ffn = FeedForwardNetwork(128)
-out = ffn(x)
