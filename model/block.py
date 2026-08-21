@@ -1,21 +1,74 @@
+"""
+Here I will build a transformer block, which is essentially assembling all the tiny pieces I have built so far.
+
+A transformer block takes input: input tensor of shape (B, T, C)
+and outputs a tensor of shape: (B, T, C)
+
+Inside, however, it does perform transformations
+
+Input
+  │
+  ▼
+LayerNorm
+  │
+  ▼
+Self-Attention
+  │
+  ▼
+Residual Addition
+  │
+  ▼
+LayerNorm
+  │
+  ▼
+FeedForward
+  │
+  ▼
+Residual Addition
+  │
+  ▼
+Output
+
+This is a pre-LayerNorm network
+
+x1​ = x + Attention(LayerNorm(x))
+x2 = x1 + FFN(LayerNorm(x1))
+
+
+"""
+
+
 import torch
 from torch import nn
 
-class LayerNorm(nn.Module):
-    def __init__(self, embed_dim: int) -> None:
+from attention import CausalSelfAttention
+from feedforward import FeedForwardNetwork
+
+
+class TransformerBlock(nn.Module):
+    def __init__(self, embed_dim: int, num_heads: int, max_context: int, dropout: float = 0.1) -> None:
         super().__init__()
 
-        self.layer_norm = nn.LayerNorm(embed_dim)
+        self.layer_norm1 = nn.LayerNorm(embed_dim)
+
+        self.attention = CausalSelfAttention(
+            embed_dim=embed_dim,
+            num_heads=num_heads,
+            max_context=max_context,
+            dropout=dropout
+        )
+
+        self.layer_norm2 = nn.LayerNorm(embed_dim)
+
+        self.feed_forward = FeedForwardNetwork(
+            embed_dim=embed_dim,
+            dropout=dropout
+        )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.layer_norm(x)
-    
 
-if __name__ == "__main__":
-    x = torch.tensor([1.0, 2.0, 3.0, 4.0])
-    layer_norm = LayerNorm(4)
-    output = layer_norm(x)
+        x = x + self.attention(self.layer_norm1(x))
 
-    print(f"Output: {output}\n\n")
-    print(f"Output mean: {output.mean()}\n\n")
-    print(f"Output std dev: {output.std()}\n\n")
+        x = x + self.feed_forward(self.layer_norm2(x))
+
+        return x
