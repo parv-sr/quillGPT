@@ -1,17 +1,29 @@
+### Model
+
 ✅ Embeddings
+✅ Feed Forward Network
+✅ LayerNorm
+✅ Residual Connections
+✅ Self-Attention (Q, K, V)
+✅ Transformer Block
+✅ GPT Model
 
-⬜ Feed Forward Network
+### Data pipeline
 
-⬜ LayerNorm
 
-⬜ Residual Connections
+⬜ Corpus          
+⬜ Vocabulary      
+⬜ Encoder/decoder 
+⬜ Dataset         
+⬜ Batching 
 
-⬜ Self-Attention (Q, K, V)
+### Training
 
-⬜ Multi-Head Attention
 
-⬜ Transformer Block
-
-⬜ GPT Model
+⬜ Loss            
+⬜ AdamW           
+⬜ Backprop        
+⬜ Checkpoints     
+⬜ Validation  
 
 ⬜ Training
