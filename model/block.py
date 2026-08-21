@@ -41,8 +41,8 @@ x2 = x1 + FFN(LayerNorm(x1))
 import torch
 from torch import nn
 
-from attention import CausalSelfAttention
-from feedforward import FeedForwardNetwork
+from .attention import CausalSelfAttention
+from .feedforward import FeedForwardNetwork
 
 
 class TransformerBlock(nn.Module):

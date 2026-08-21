@@ -30,7 +30,7 @@ class Trainer:
             lr=config.learning_rate
         )
 
-        self.vocab_size = config.vocab_size()
+        self.vocab_size = config.vocab_size
 
     def train_epoch(self) -> float:
         self.model.train()

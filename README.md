@@ -5,6 +5,7 @@ It is trained to generate shakespeare-like text.
 
 ### Model features:
 
+#### 826,433 Parameters
 #### 4 transformer blocks
 #### Self-attention based on "Attention is all you need" (Vaswani et al, Google 2017)
 #### GeLU Activation

@@ -6,8 +6,8 @@ This will follow a decoder only architecture
 import torch
 from torch import nn
 
-from embedding import Embedding
-from transformer import Transformer
+from .embedding import Embedding
+from .transformer import Transformer
 
 class GPT(nn.Module):
     def __init__(self, vocab_size: int, embed_dim: int, num_heads: int, num_layers: int, max_context: int, dropout: float = 0.1) -> None:

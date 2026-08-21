@@ -5,7 +5,7 @@ Dataloader produces: (B, T, C)
 """
 
 from torch.utils.data import DataLoader
-from dataset import LanguageModelDataset
+from .dataset import LanguageModelDataset
 
 class LanguageModelDataLoader:
     def __init__(self, train_dataset: LanguageModelDataset, validation_dataset: LanguageModelDataset, batch_size: int, num_workers: int = 0) -> None:

@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from block import TransformerBlock
+from .block import TransformerBlock
 
 class Transformer(nn.Module):
     def __init__(self, embed_dim: int, num_heads: int, num_layers: int, max_context: int, dropout: float = 0.1) -> None:

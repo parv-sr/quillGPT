@@ -14,20 +14,13 @@ class FeedForwardNetwork(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
-
-        print("Input:", x.shape)
-
         x = self.linear1(x)
-        print("After Linear1:", x.shape)
 
         x = self.activation(x)
-        print("After GELU:", x.shape)
 
         x = self.linear2(x)
-        print("After Linear2:", x.shape)
 
         x = self.dropout(x)
-        print("After Dropout:", x.shape)
-
+        
         return x
     
