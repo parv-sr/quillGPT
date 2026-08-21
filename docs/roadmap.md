@@ -10,15 +10,14 @@
 
 ### Data pipeline
 
-
-⬜ Corpus          
-⬜ Vocabulary      
-⬜ Encoder/decoder 
-⬜ Dataset         
-⬜ Batching 
+✅ Corpus          
+✅ Vocabulary      
+✅ Encoder/decoder 
+✅ Dataset         
+✅ Batching 
+✅ Dataloader
 
 ### Training
-
 
 ⬜ Loss            
 ⬜ AdamW           

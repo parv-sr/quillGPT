@@ -1,9 +1,17 @@
-# config.py
+class Config:
+    vocab_size = 65
 
-VOCAB_SIZE = 65          # Tiny Shakespeare character vocabulary
-EMBED_DIM = 128          # Size of each token embedding
-NUM_HEADS = 4            # Attention heads
-NUM_LAYERS = 4           # Transformer blocks
-MAX_CONTEXT = 128        # Maximum sequence length
-DROPOUT = 0.1
-FFN_MULTIPLIER = 4
+    embed_dim = 128
+    num_heads = 4
+    num_layers = 4
+    feedforward_dim = 512
+
+    max_context = 128
+
+    dropout = 0.1
+
+    batch_size = 64
+
+    learning_rate = 3e-4
+
+    epochs = 10
