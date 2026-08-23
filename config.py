@@ -14,4 +14,6 @@ class Config:
 
     learning_rate = 3e-4
 
-    epochs = 2
+    epochs = 20
+
+    version: str = "0.0.1"

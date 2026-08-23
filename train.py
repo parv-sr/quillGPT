@@ -1,6 +1,9 @@
 import torch
 from torch import nn
 
+if torch.cuda.is_available():
+    torch.set_float32_matmul_precision("high")
+
 from typing import Tuple, List
 
 from config import Config
@@ -20,14 +23,24 @@ class Trainer:
         self.validation_loader = validation_loader
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
         self.model.to(self.device)
+        
+        self.use_amp: bool = self.device.type == "cuda"
+
+        if self.use_amp:
+            self.scaler = torch.amp.GradScaler("cuda")
+        else:
+            self.scaler = None
+
+        if self.device.type == "cuda":
+            self.model = torch.compile(self.model)
 
         self.loss_function = nn.CrossEntropyLoss()
 
         self.optimizer = torch.optim.AdamW(
             self.model.parameters(),
-            lr=config.learning_rate
+            lr=config.learning_rate,
+            fused=torch.cuda.is_available()
         )
 
         self.vocab_size = config.vocab_size
@@ -38,23 +51,29 @@ class Trainer:
         total_loss: float = 0.0
 
         for x, y in self.train_loader:
-            x = x.to(self.device)
-            y = y.to(self.device)
+            if not torch.cuda.is_available():
+                x = x.to(self.device)
+                y = y.to(self.device)
 
-            self.optimizer.zero_grad()
+            self.optimizer.zero_grad(set_to_none=True)
 
-            logits = self.model(x)
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=self.use_amp):
+                logits = self.model(x)
 
-            loss = self.loss_function(
-                logits.view(-1, self.vocab_size),
-                y.view(-1)
-            )
+                loss = self.loss_function(
+                    logits.view(-1, self.vocab_size),
+                    y.view(-1)
+                )
 
-            loss.backward()
+            if self.use_amp:
+                self.scaler.scale(loss).backward()
+                self.scaler.step(self.optimizer)
+                self.scaler.update()
+            else:
+                loss.backward()
+                self.optimizer.step()
 
-            self.optimizer.step()
-
-            total_loss +- loss.item()
+            total_loss += loss.item()
 
         return total_loss / len(self.train_loader)
     
@@ -62,19 +81,20 @@ class Trainer:
     def validate(self) -> float:
         self.model.eval()
 
-        total_loss: float
+        total_loss: float = 0
 
         
         for x, y in self.validation_loader:
-            x = x.to(self.device)
-            y = y.to(self.device)
+            if not torch.cuda.is_available():
+                x = x.to(self.device)
+                y = y.to(self.device)
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=self.use_amp):
+                logits = self.model(x)
 
-            logits = self.model(x)
-
-            loss = self.loss_function(
-                logits.view(-1, self.vocab_size),
-                y.view(-1),
-            )
+                loss = self.loss_function(
+                    logits.view(-1, self.vocab_size),
+                    y.view(-1),
+                )
 
             total_loss += loss.item()
 
@@ -134,6 +154,9 @@ def main() -> None:
             f"Train Loss: {train_loss:.4f} | "
             f"Val Loss: {validation_loss:.4f}"
         )
+
+    torch.save(model.state_dict(), f"tinyGPT_v{config.version}.pth")
+    print("Model weights saved successfully to gpt_model_final.pth!")
 
 if __name__ == "__main__":
     main()

@@ -27,6 +27,7 @@ This effectively makes it a causal self-attention.
 """
 
 import torch
+import torch.nn.functional as F
 from torch import nn
 
 class CausalSelfAttention(nn.Module):
@@ -74,7 +75,7 @@ class CausalSelfAttention(nn.Module):
 
         # Shape of attention matrices after transpose become (B, H, T, D)
         # Where H -> Number of heads & D -> Dimension of head
-
+        """
         attention_scores = q @ k.transpose(-2, -1)
 
         attention_scores = attention_scores / (
@@ -96,6 +97,12 @@ class CausalSelfAttention(nn.Module):
         )
 
         output = attention_weights @ v
+        """
+        output = F.scaled_dot_product_attention(
+            q, k, v,
+            dropout_p=self.dropout.p if self.training else 0.0,
+            is_causal=True
+        )
         output = output.transpose(1, 2)
         output = output.contiguous().view(B, T, C)
 

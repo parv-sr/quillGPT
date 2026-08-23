@@ -14,9 +14,12 @@ class LanguageModelDataset(Dataset):
     def __init__(self, token_ids: List[int], context_length: int) -> None:
         super().__init__()
 
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         self.tokens = torch.tensor(
             token_ids,
-            dtype=torch.long
+            dtype=torch.long,
+            device=self.device
         )
 
         self.context_length = context_length
