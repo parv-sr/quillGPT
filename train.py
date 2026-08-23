@@ -43,6 +43,11 @@ class Trainer:
             fused=torch.cuda.is_available()
         )
 
+        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            self.optimizer,
+            T_max=config.epochs
+        )
+
         self.vocab_size = config.vocab_size
 
     def train_epoch(self) -> float:
@@ -148,6 +153,8 @@ def main() -> None:
     for epoch in range(config.epochs):
         train_loss = trainer.train_epoch()
         validation_loss = trainer.validate()
+
+        trainer.scheduler.step()
 
         print(
             f"Epoch {epoch + 1:02d} | "
