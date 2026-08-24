@@ -30,7 +30,7 @@ class ONNXInferenceEngine:
         if "CUDAExecutionProvider" in available:
             return ["CUDAExecutionProvider", "CPUExecutionProvider"]
         
-        return "CPUExecutionProvider"
+        return ["CPUExecutionProvider"]
     
     @property
     def providers(self) -> List[str]:
@@ -44,7 +44,7 @@ class ONNXInferenceEngine:
             tokens = tokens.astype(np.int64)
 
         outputs = self.session.run(
-            [self.input_name],
+            [self.output_name],
             {
                 self.input_name: tokens
             }

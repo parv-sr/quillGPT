@@ -43,13 +43,18 @@ class ONNXExporter:
             size=(1, self.config.max_context),
             dtype=torch.long
         )
+        
+        batch_dim = torch.export.Dim("batch", min=1)
+        seq_dim = torch.export.Dim("sequence", min=1, max=self.config.max_context)
+        dynamic_shapes = {"tokens" : {0: batch_dim, 1: seq_dim}}
 
         onnx = torch.onnx.export(
             model=model, 
             args=(example_tokens), 
             input_names=["tokens"],
             output_names=["logits"],
-            dynamo=True
+            dynamo=True,
+            dynamic_shapes=dynamic_shapes
         )
 
         onnx.save(
