@@ -5,10 +5,14 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.141.1",
     "matplotlib>=3.11.1",
     "numpy>=2.5.1",
     "onnx>=1.22.0",
     "onnxruntime>=1.29.0",
     "onnxscript>=0.7.1",
+    "pydantic>=2.13.4",
+    "starlette>=1.6.0",
     "torch>=2.13.0",
+    "uvicorn>=0.52.4",
 ]

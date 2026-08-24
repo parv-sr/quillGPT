@@ -12,8 +12,10 @@ class TextGenerator:
         self.max_context = max_context
 
     def _sample(self, logits: np.ndarray, temperature: float) -> int:
-        if temperature <= 0:
+        if temperature < 0:
             raise ValueError("Temperature cannot be greater than 0.")
+        elif temperature == 0:
+            return int(np.argmax(logits))
         
         logits = logits / temperature
         logits =(logits - np.max(logits))
@@ -41,4 +43,4 @@ class TextGenerator:
 
         return self.tokenizer.decode(token_ids=token_ids)
     
-    
+
