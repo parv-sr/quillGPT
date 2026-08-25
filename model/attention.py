@@ -29,6 +29,12 @@ This effectively makes it a causal self-attention.
 
 The V2 Implementation will feature Grouped Query attention (GQA) and Rotational positional embeddings (RoPE).
 
+The current Multi head attention mechanism has the same number of heads for all 3 Q, K, V matrices.
+
+GQA fundamentally changes this by keeping many query heads, but with fewer key and value heads.
+-> Multiple Query heads may share the same KV head.
+-> Will be very helpful in KV caching.
+
 
 """
 

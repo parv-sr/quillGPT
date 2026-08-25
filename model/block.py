@@ -9,16 +9,16 @@ Inside, however, it does perform transformations
 Input
   │
   ▼
-LayerNorm
+RMSNorm
   │
   ▼
-Self-Attention
-  │
-  ▼
+Self-Attention -----
+  │                │
+  ▼                RoPE 
 Residual Addition
   │
   ▼
-LayerNorm
+RMSNorm
   │
   ▼
 FeedForward
@@ -29,7 +29,7 @@ Residual Addition
   ▼
 Output
 
-This is a pre-LayerNorm network
+This is a pre-RMSNorm network
 
 x1​ = x + Attention(LayerNorm(x))
 x2 = x1 + FFN(LayerNorm(x1))
@@ -46,7 +46,7 @@ from .feedforward import FeedForwardNetwork
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, embed_dim: int, num_heads: int, max_context: int, dropout: float = 0.1) -> None:
+    def __init__(self, embed_dim: int, num_heads: int, max_context: int, feedforward_dim: int, dropout: float = 0.1) -> None:
         super().__init__()
 
         self.rms_norm1 = nn.RMSNorm(embed_dim)
@@ -62,6 +62,7 @@ class TransformerBlock(nn.Module):
 
         self.feed_forward = FeedForwardNetwork(
             embed_dim=embed_dim,
+            hidden_dim=feedforward_dim,
             dropout=dropout
         )
 
