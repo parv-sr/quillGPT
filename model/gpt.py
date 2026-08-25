@@ -43,16 +43,3 @@ class GPT(nn.Module):
 
         return logits
     
-
-if __name__ == "__main__":
-    torch.manual_seed(42)
-
-    model = GPT(
-        vocab_size=65,
-        embed_dim=128,
-        num_heads=4,
-        num_layers=4,
-        max_context=128,
-    )
-
-    print(model)

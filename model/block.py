@@ -49,7 +49,7 @@ class TransformerBlock(nn.Module):
     def __init__(self, embed_dim: int, num_heads: int, max_context: int, dropout: float = 0.1) -> None:
         super().__init__()
 
-        self.layer_norm1 = nn.LayerNorm(embed_dim)
+        self.rms_norm1 = nn.RMSNorm(embed_dim)
 
         self.attention = CausalSelfAttention(
             embed_dim=embed_dim,
@@ -58,7 +58,7 @@ class TransformerBlock(nn.Module):
             dropout=dropout
         )
 
-        self.layer_norm2 = nn.LayerNorm(embed_dim)
+        self.rms_norm2 = nn.RMSNorm(embed_dim)
 
         self.feed_forward = FeedForwardNetwork(
             embed_dim=embed_dim,
@@ -67,8 +67,8 @@ class TransformerBlock(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
 
-        x = x + self.attention(self.layer_norm1(x))
+        x = x + self.attention(self.rms_norm1(x))
 
-        x = x + self.feed_forward(self.layer_norm2(x))
+        x = x + self.feed_forward(self.rms_norm2(x))
 
         return x

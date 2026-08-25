@@ -1,6 +1,8 @@
 """
 Here I will implement the tokenizer. 
 This will be a character-level tokenizer for a small model.
+
+NOTE: DEPRECATED FOR V2
 """
 
 

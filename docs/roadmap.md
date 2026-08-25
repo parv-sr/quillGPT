@@ -19,10 +19,10 @@
 
 ### Training
 
-⬜ Loss            
-⬜ AdamW           
-⬜ Backprop        
-⬜ Checkpoints     
-⬜ Validation  
+✅Loss            
+✅ AdamW           
+✅ Backprop        
+✅ Checkpoints     
+✅ Validation  
 
-⬜ Training
+✅ Training
