@@ -15,20 +15,25 @@ where:
 Output shape:
     (B, H, T, D)
 """
-
 import torch
+
 from torch import nn
 
+
 class RotaryPositionalEmbedding(nn.Module):
-    def __init__(self, head_dim: int, max_context: int, base: float = 10000.0) -> None:
+    def __init__(
+        self,
+        head_dim: int,
+        max_context: int,
+        base: float = 10000.0
+    ) -> None:
         super().__init__()
 
         if head_dim % 2 != 0:
-            raise ValueError("Head dim must be even")
+            raise ValueError("RoPE requires an even head dimension")
 
         self.head_dim = head_dim
         self.max_context = max_context
-        self.base = base
 
         inverse_frequencies = 1.0 / (
             base ** (
@@ -38,34 +43,39 @@ class RotaryPositionalEmbedding(nn.Module):
 
         positions = torch.arange(max_context).float()
 
-        angles = torch.outer(positions, inverse_frequencies)
-
-        self.register_buffer("cos", angles.cos())
-        self.register_buffer("sin", angles.sin())
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        B, H, T, D = x.shape
-
-        if D != self.head_dim:
-            raise ValueError(f"Expected head dimension {self.head_dim}, got {D}")
-
-        if T > self.max_context:
-            raise ValueError(f"Sequence length {T} exceeds maximum context length {self.max_context}")
-
-        x_even = x[..., 0::2]
-        x_odd = x[..., 1::2]
-
-        cos = self.cos[:T].unsqueeze(0).unsqueeze(0)
-        sin = self.sin[:T].unsqueeze(0).unsqueeze(0)
-
-        rotated_even = x_even * cos - x_odd * sin
-        rotated_odd = x_even * sin + x_odd * cos
-
-        output = torch.stack(
-            (rotated_even, rotated_odd),
-            dim=-1
+        frequencies = torch.outer(
+            positions,
+            inverse_frequencies
         )
 
-        return output.flatten(-2)
+        cos = frequencies.cos()
+        sin = frequencies.sin()
 
-    
+        self.register_buffer("cos", cos)
+        self.register_buffer("sin", sin)
+
+    def forward(self, x: torch.Tensor, position_offset: int = 0) -> torch.Tensor:
+        _, _, sequence_length, _ = x.shape
+
+        end_position = position_offset + sequence_length
+
+        if end_position > self.max_context:
+            raise ValueError(
+                f"Sequence exceeds maximum context of {self.max_context}"
+            )
+
+        cos = self.cos[position_offset:end_position]
+        sin = self.sin[position_offset:end_position]
+
+        cos = cos.unsqueeze(0).unsqueeze(0)
+        sin = sin.unsqueeze(0).unsqueeze(0)
+
+        x_first, x_second = x.chunk(2, dim=-1)
+
+        rotated_first = x_first * cos - x_second * sin
+        rotated_second = x_first * sin + x_second * cos
+
+        return torch.cat(
+            [rotated_first, rotated_second],
+            dim=-1
+        )

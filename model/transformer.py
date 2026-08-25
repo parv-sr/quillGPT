@@ -1,6 +1,9 @@
 import torch
 from torch import nn
 
+from typing import Optional, Tuple, List
+
+from .attention import KeyValueCache
 from .block import TransformerBlock
 
 class Transformer(nn.Module):
@@ -20,8 +23,28 @@ class Transformer(nn.Module):
             ]
          )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        for block in self.blocks:
-            x = block(x)
+    def forward(
+        self,
+        x: torch.Tensor, 
+        past_key_values: Optional[Tuple[KeyValueCache, ...]] = None,
+        use_cache: bool = False
+    ) -> torch.Tensor | Tuple[torch.Tensor, Tuple[KeyValueCache, ...]]:
+        
+        present_key_values: List[KeyValueCache] = []
+
+        for index, block in enumerate(self.blocks):
+            past_key_value = (past_key_values[index] if past_key_values is not None else None)
+
+            if use_cache:
+                x, present_key_value = block(
+                    x, past_key_value=past_key_value, use_cache=True
+                )
+
+                present_key_values.append(present_key_value)
+            else:
+                x = block(x)
+
+        if use_cache:
+            return x, tuple(present_key_values)
 
         return x
