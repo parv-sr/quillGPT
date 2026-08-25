@@ -24,6 +24,12 @@ Then finally: attention weights * Value matrix
 For a decoder only pretrained transformer, a *Causal Mask* is required, so that it does not cheat in training by looking at the next token.
 A causal mask hides the next tokens in the sequence.
 This effectively makes it a causal self-attention.
+
+---------------------
+
+The V2 Implementation will feature Grouped Query attention (GQA) and Rotational positional embeddings (RoPE).
+
+
 """
 
 import torch
