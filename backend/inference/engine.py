@@ -3,12 +3,16 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 
-from typing import List
+from typing import List, Tuple, Dict
+
+KeyValueCache = Tuple[np.ndarray, np.ndarray]
+KeyValueCaches = Tuple[KeyValueCache, ...]
 
 
 class ONNXInferenceEngine:
-    def __init__(self, model_path: str) -> None:
+    def __init__(self, model_path: str, num_layers: int) -> None:
         self.model_path = Path(model_path)
+        self.num_layers = num_layers
 
         if not self.model_path.exists():
             raise FileNotFoundError(
