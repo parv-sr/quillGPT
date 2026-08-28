@@ -60,9 +60,8 @@ class Trainer:
         pbar: tqdm = tqdm(self.train_loader, desc=f"Training Epoch {epoch + 1}", dynamic_ncols=True, leave=True)
 
         for x, y in pbar:
-            if not torch.cuda.is_available():
-                x = x.to(self.device)
-                y = y.to(self.device)
+            x = x.to(self.device)
+            y = y.to(self.device)
 
             self.optimizer.zero_grad(set_to_none=True)
 
@@ -149,6 +148,7 @@ def main() -> None:
     val_loss: float = 0.0
 
     for epoch in range(config.epochs):
+        print("Training loop started")
         train_loss: float = trainer.train_epoch(epoch, val_loss)
         val_loss = trainer.validate()
         trainer.scheduler.step()
