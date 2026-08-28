@@ -1,9 +1,9 @@
 class Config:
-    vocab_size = 256
-    embed_dim = 384
-    num_heads = 12
-    num_layers = 8
-    feedforward_dim = 1024
+    vocab_size = 4096
+    embed_dim = 512
+    num_heads = 8
+    num_layers = 12
+    feedforward_dim = 1536
 
     max_context = 512
 
@@ -13,6 +13,6 @@ class Config:
 
     learning_rate = 3e-4
 
-    epochs = 10
+    epochs = 5
 
     version: str = "0.0.2"
