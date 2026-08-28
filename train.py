@@ -1,7 +1,7 @@
 import torch
 from pathlib import Path
 from torch import nn
-from typing import Tuple, List, Any
+from typing import List, Any
 from tqdm import tqdm
 
 if torch.cuda.is_available():
