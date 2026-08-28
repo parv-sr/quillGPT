@@ -2,7 +2,7 @@ from typing import Tuple
 
 import numpy as np
 
-from data.tokenizer import CharacterTokenizer
+from data.bpe_tokenizer import BPETokenizer
 
 from .engine import (
     KeyValueCaches,
@@ -14,7 +14,7 @@ class TextGenerator:
     def __init__(
         self,
         engine: ONNXInferenceEngine,
-        tokenizer: CharacterTokenizer,
+        tokenizer: BPETokenizer,
         max_context: int
     ) -> None:
         self.engine = engine

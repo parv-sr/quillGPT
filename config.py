@@ -1,5 +1,6 @@
 class Config:
     vocab_size = 4096
+
     embed_dim = 512
     num_heads = 8
     num_layers = 12
@@ -12,7 +13,12 @@ class Config:
     batch_size = 32
 
     learning_rate = 3e-4
+    min_learning_rate = 3e-5
 
-    epochs = 5
+    weight_decay = 0.1
 
-    version: str = "0.0.2"
+    warmup_fraction = 0.05
+
+    epochs = 10
+
+    version: str = "0.1.3"
