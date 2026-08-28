@@ -1,4 +1,5 @@
 import torch
+from pathlib import Path
 from torch import nn
 from typing import Tuple, List, Any
 from tqdm import tqdm
@@ -9,7 +10,7 @@ if torch.cuda.is_available():
 from config import Config
 from model.gpt import GPT
 from data.corpus import TextCorpus
-from data.tokenizer import CharacterTokenizer
+from data.bpe_tokenizer import BPETokenizer
 from data.dataset import LanguageModelDataset, train_validation_split
 from data.dataloader import LanguageModelDataLoader
 
@@ -40,7 +41,7 @@ class Trainer:
         self.model.train()
         total_loss: float = 0.0
         step_count: int = 0
-        pbar: tqdm = tqdm(self.train_loader, desc=f"Training Epoch {epoch + 1}")
+        pbar: tqdm = tqdm(self.train_loader, desc=f"Training Epoch {epoch + 1}", dynamic_ncols=True, leave=True)
         for x, y in pbar:
             if not torch.cuda.is_available():
                 x = x.to(self.device)
@@ -59,7 +60,7 @@ class Trainer:
             total_loss += loss.item()
             step_count += 1
             current_loss: float = total_loss / step_count
-            pbar.set_postfix_str(f"Training Loss={current_loss:.4f}, Validation={val_loss:.4f}")
+            pbar.set_postfix_str(f"Training Loss={current_loss:.4f}, Validation={val_loss:.4f}", refresh=False)
         return total_loss / len(self.train_loader)
 
     @torch.no_grad()
@@ -79,14 +80,20 @@ class Trainer:
 def main() -> None:
     config: Config = Config()
     corpus: TextCorpus = TextCorpus("data/raw")
-    tokenizer: CharacterTokenizer = CharacterTokenizer(corpus.text)
+    tokenizer: BPETokenizer = BPETokenizer(config.vocab_size)
+    tokenizer_path: str = "bpe_tokenizer.json"
+    if Path(tokenizer_path).exists():
+        tokenizer.load(tokenizer_path)
+    else:
+        tokenizer.train(corpus.text[:5000000] if len(corpus.text) > 5000000 else corpus.text)
+        tokenizer.save(tokenizer_path)
     tokens: List[int] = tokenizer.encode(corpus.text)
     train_tokens, validation_tokens = train_validation_split(tokens)
     train_dataset: LanguageModelDataset = LanguageModelDataset(train_tokens, config.max_context)
     validation_dataset: LanguageModelDataset = LanguageModelDataset(validation_tokens, config.max_context)
     data: LanguageModelDataLoader = LanguageModelDataLoader(train_dataset, validation_dataset, config.batch_size)
     model: GPT = GPT(
-        tokenizer.vocab_size,
+        config.vocab_size,
         config.embed_dim,
         config.num_heads,
         config.num_layers,
@@ -99,7 +106,7 @@ def main() -> None:
         data.train_loader,
         data.validation_loader,
         config,
-        tokenizer.vocab_size
+        config.vocab_size
     )
     val_loss: float = 0.0
     for epoch in range(config.epochs):

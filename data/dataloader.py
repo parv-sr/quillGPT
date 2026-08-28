@@ -17,12 +17,16 @@ class GPUDataLoader:
     
     def __iter__(self) -> Iterator[Tuple[torch.Tensor, torch.Tensor]]:
         indices: torch.Tensor = torch.randperm(self.num_samples, device=self.tokens.device) * self.context_length
+
         for i in range(self.num_batches):
             batch_indices: torch.Tensor = indices[i * self.batch_size : (i + 1) * self.batch_size]
+
             offsets: torch.Tensor = torch.arange(self.context_length, device=self.tokens.device)
+            
             grid_indices: torch.Tensor = batch_indices.unsqueeze(1) + offsets
             x: torch.Tensor = self.tokens[grid_indices]
             y: torch.Tensor = self.tokens[grid_indices + 1]
+
             yield x, y
 
 class LanguageModelDataLoader:
@@ -36,6 +40,7 @@ class LanguageModelDataLoader:
         ) if not torch.cuda.is_available() else GPUDataLoader(
             train_dataset, batch_size
         )
+        
         self.validation_loader = DataLoader(
             validation_dataset,
             batch_size=batch_size,
