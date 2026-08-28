@@ -1,169 +1,112 @@
 import torch
 from torch import nn
+from typing import Tuple, List, Any
+from tqdm import tqdm
 
 if torch.cuda.is_available():
     torch.set_float32_matmul_precision("high")
-
-from typing import Tuple, List
 
 from config import Config
 from model.gpt import GPT
 from data.corpus import TextCorpus
 from data.tokenizer import CharacterTokenizer
-from data.dataset import (
-    LanguageModelDataset,
-    train_validation_split,
-)
+from data.dataset import LanguageModelDataset, train_validation_split
 from data.dataloader import LanguageModelDataLoader
 
 class Trainer:
-    def __init__(self, model: nn.Module, train_loader, validation_loader, config: Config) -> None:
-        self.model = model
-        self.train_loader = train_loader
-        self.validation_loader = validation_loader
-
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    def __init__(
+        self,
+        model: nn.Module,
+        train_loader: Any,
+        validation_loader: Any,
+        config: Config,
+        vocab_size: int
+    ) -> None:
+        self.model: nn.Module = model
+        self.train_loader: Any = train_loader
+        self.validation_loader: Any = validation_loader
+        self.device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
-        
         self.use_amp: bool = self.device.type == "cuda"
-
-        if self.use_amp:
-            self.scaler = torch.amp.GradScaler("cuda")
-        else:
-            self.scaler = None
-
+        self.scaler: torch.amp.GradScaler | None = torch.amp.GradScaler("cuda") if self.use_amp else None
         if self.device.type == "cuda":
             self.model = torch.compile(self.model)
+        self.loss_function: nn.CrossEntropyLoss = nn.CrossEntropyLoss()
+        self.optimizer: torch.optim.AdamW = torch.optim.AdamW(self.model.parameters(), lr=config.learning_rate, fused=torch.cuda.is_available())
+        self.scheduler: torch.optim.lr_scheduler.CosineAnnealingLR = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max=config.epochs)
+        self.vocab_size: int = vocab_size
 
-        self.loss_function = nn.CrossEntropyLoss()
-
-        self.optimizer = torch.optim.AdamW(
-            self.model.parameters(),
-            lr=config.learning_rate,
-            fused=torch.cuda.is_available()
-        )
-
-        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-            self.optimizer,
-            T_max=config.epochs
-        )
-
-        self.vocab_size = config.vocab_size
-
-    def train_epoch(self) -> float:
+    def train_epoch(self, epoch: int, val_loss: float = 0.0) -> float:
         self.model.train()
-
         total_loss: float = 0.0
-
-        for x, y in self.train_loader:
+        step_count: int = 0
+        pbar: tqdm = tqdm(self.train_loader, desc=f"Training Epoch {epoch + 1}")
+        for x, y in pbar:
             if not torch.cuda.is_available():
                 x = x.to(self.device)
                 y = y.to(self.device)
-
             self.optimizer.zero_grad(set_to_none=True)
-
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=self.use_amp):
-                logits = self.model(x)
-
-                loss = self.loss_function(
-                    logits.view(-1, self.vocab_size),
-                    y.view(-1)
-                )
-
-            if self.use_amp:
+                logits: torch.Tensor = self.model(x)
+                loss: torch.Tensor = self.loss_function(logits.view(-1, self.vocab_size), y.view(-1))
+            if self.use_amp and self.scaler is not None:
                 self.scaler.scale(loss).backward()
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
             else:
                 loss.backward()
                 self.optimizer.step()
-
             total_loss += loss.item()
-
+            step_count += 1
+            current_loss: float = total_loss / step_count
+            pbar.set_postfix_str(f"Training Loss={current_loss:.4f}, Validation={val_loss:.4f}")
         return total_loss / len(self.train_loader)
-    
+
     @torch.no_grad()
     def validate(self) -> float:
         self.model.eval()
-
-        total_loss: float = 0
-
-        
+        total_loss: float = 0.0
         for x, y in self.validation_loader:
             if not torch.cuda.is_available():
                 x = x.to(self.device)
                 y = y.to(self.device)
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=self.use_amp):
-                logits = self.model(x)
-
-                loss = self.loss_function(
-                    logits.view(-1, self.vocab_size),
-                    y.view(-1),
-                )
-
+                logits: torch.Tensor = self.model(x)
+                loss: torch.Tensor = self.loss_function(logits.view(-1, self.vocab_size), y.view(-1))
             total_loss += loss.item()
-
         return total_loss / len(self.validation_loader)
-    
 
 def main() -> None:
-    config = Config()
-
-    corpus = TextCorpus("data/raw/input.txt")
-    tokenizer = CharacterTokenizer(corpus.text)
-    tokens = tokenizer.encode(corpus.text)
-
-    train_tokens, validation_tokens = (train_validation_split(tokens))
-
-    train_dataset = LanguageModelDataset(
-        train_tokens,
-        config.max_context
+    config: Config = Config()
+    corpus: TextCorpus = TextCorpus("data/raw")
+    tokenizer: CharacterTokenizer = CharacterTokenizer(corpus.text)
+    tokens: List[int] = tokenizer.encode(corpus.text)
+    train_tokens, validation_tokens = train_validation_split(tokens)
+    train_dataset: LanguageModelDataset = LanguageModelDataset(train_tokens, config.max_context)
+    validation_dataset: LanguageModelDataset = LanguageModelDataset(validation_tokens, config.max_context)
+    data: LanguageModelDataLoader = LanguageModelDataLoader(train_dataset, validation_dataset, config.batch_size)
+    model: GPT = GPT(
+        tokenizer.vocab_size,
+        config.embed_dim,
+        config.num_heads,
+        config.num_layers,
+        config.max_context,
+        config.feedforward_dim,
+        config.dropout
     )
-
-    validation_dataset = LanguageModelDataset(
-        validation_tokens,
-        config.max_context
+    trainer: Trainer = Trainer(
+        model,
+        data.train_loader,
+        data.validation_loader,
+        config,
+        tokenizer.vocab_size
     )
-
-    data = LanguageModelDataLoader(
-        train_dataset=train_dataset,
-        validation_dataset=validation_dataset,
-        batch_size=config.batch_size
-    )
-
-    model = GPT(
-        vocab_size=tokenizer.vocab_size,
-        embed_dim=config.embed_dim,
-        num_heads=config.num_heads,
-        num_layers=config.num_layers,
-        max_context=config.max_context,
-        dropout=config.dropout
-    )
-
-    trainer = Trainer(
-        model=model,
-        train_loader=data.train_loader,
-        validation_loader=data.validation_loader,
-        config=config
-    )
-
-    print(f"Device: {trainer.device}")
-    print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
-
+    val_loss: float = 0.0
     for epoch in range(config.epochs):
-        train_loss = trainer.train_epoch()
-        validation_loss = trainer.validate()
-
+        train_loss: float = trainer.train_epoch(epoch, val_loss)
+        val_loss = trainer.validate()
         trainer.scheduler.step()
-
-        print(
-            f"Epoch {epoch + 1:02d} | "
-            f"Train Loss: {train_loss:.4f} | "
-            f"Val Loss: {validation_loss:.4f}"
-        )
-
     torch.save(model.state_dict(), f"tinyGPT_v{config.version}.pth")
-    print("Model weights saved successfully to gpt_model_final.pth!")
 
 if __name__ == "__main__":
     main()
