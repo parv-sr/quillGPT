@@ -11,7 +11,7 @@ from backend.inference.generator import TextGenerator
 from data.tokenizer import CharacterTokenizer
 from data.corpus import TextCorpus
 
-MODEL_PATH: str = f"artifacts/models/tinyGPT_v{config.version}.onnx"
+MODEL_PATH: str = f"artifacts/models/quillGPT_v{config.version}.onnx"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="tinyGPT Inference gateway",
+    title="quillGPT Inference gateway",
     lifespan=lifespan
 )
 

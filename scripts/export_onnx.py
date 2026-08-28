@@ -1,5 +1,11 @@
+import sys
 from pathlib import Path
 from typing import Tuple
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 import torch
 from torch import nn
@@ -45,21 +51,34 @@ class ONNXExporter:
             map_location="cpu",
             weights_only=True
         )
-        vocab_size = checkpoint.get("embedding.token_embeddings.weight", checkpoint.get("output_projection.weight")).shape[0] if "embedding.token_embeddings.weight" in checkpoint or "output_projection.weight" in checkpoint else self.vocab_size
+        clean_state = {k.replace("_orig_mod.", ""): v for k, v in checkpoint.items()}
+
+        vocab_size = clean_state["embedding.token_embeddings.weight"].shape[0]
+        embed_dim = clean_state["embedding.token_embeddings.weight"].shape[1]
+        num_layers = max([int(k.split(".")[2]) for k in clean_state.keys() if "transformer.blocks." in k]) + 1
+        feedforward_dim = clean_state["transformer.blocks.0.feed_forward.gate_projection.weight"].shape[0]
+        head_dim = clean_state["transformer.blocks.0.attention.rope.cos"].shape[1] * 2
+        num_heads = embed_dim // head_dim
+        max_context = clean_state["transformer.blocks.0.attention.rope.cos"].shape[0]
 
         model = GPT(
             vocab_size=vocab_size,
-            embed_dim=self.config.embed_dim,
-            num_heads=self.config.num_heads,
-            num_layers=self.config.num_layers,
-            max_context=self.config.max_context,
-            feedforward_dim=self.config.feedforward_dim,
-            dropout=self.config.dropout,
+            embed_dim=embed_dim,
+            num_heads=num_heads,
+            num_layers=num_layers,
+            max_context=max_context,
+            feedforward_dim=feedforward_dim,
+            dropout=0.0
         )
 
-        clean_state = {k.replace("_orig_mod.", ""): v for k, v in checkpoint.items()}
         model.load_state_dict(clean_state)
         model.eval()
+
+        self.num_layers = num_layers
+        self.num_heads = num_heads
+        self.embed_dim = embed_dim
+        self.max_context = max_context
+        self.head_dim = head_dim
 
         return model
     
@@ -68,30 +87,30 @@ class ONNXExporter:
 
         wrapper = ONNXGPTWrapper(
             model=model,
-            num_layers=self.config.num_layers
+            num_layers=self.num_layers
         )
-        head_dim = self.config.embed_dim // self.config.num_heads
+        wrapper.eval()
 
         example_tokens = torch.randint(
             low=0,
             high=model.embedding.token_embeddings.num_embeddings,
-            size=(1, self.config.max_context),
+            size=(1, 4),
             dtype=torch.long
         )
         
         example_cache = []
 
-        for _ in range(self.config.num_layers):
+        for _ in range(self.num_layers):
             example_cache.extend(
                 [
-                    torch.zeros(1, self.config.num_heads, 1, head_dim), 
-                    torch.zeros(1, self.config.num_heads, 1, head_dim)
+                    torch.zeros(1, self.num_heads, 0, self.head_dim), 
+                    torch.zeros(1, self.num_heads, 0, self.head_dim)
                 ]
             )
 
         input_names = ["tokens"]
 
-        for layer in range(self.config.num_layers):
+        for layer in range(self.num_layers):
             input_names.extend([
                 f"past_key_{layer}",
                 f"past_value_{layer}"
@@ -99,34 +118,29 @@ class ONNXExporter:
         
         output_names = ["logits"]
 
-        for layer in range(self.config.num_layers):
+        for layer in range(self.num_layers):
             output_names.extend([
                 f"present_key_{layer}",
                 f"present_value_{layer}"
             ])
 
         batch_dim = torch.export.Dim("batch", min=1)
-        seq_dim = torch.export.Dim("sequence", min=1, max=self.config.max_context)
-        cache_dim = torch.export.Dim("cache", min=1, max=self.config.max_context)
+        seq_dim = torch.export.Dim("sequence", min=1, max=self.max_context)
+        cache_dim = torch.export.Dim("cache", min=0, max=self.max_context)
 
-        dynamic_shapes = {"tokens": {0: batch_dim, 1: seq_dim}}
+        tokens_dynamic = {0: batch_dim, 1: seq_dim}
+        cache_dynamic = {0: batch_dim, 2: cache_dim}
 
-        for layer in range(self.config.num_layers):
-            dynamic_shapes[f"past_key_{layer}"] = {
-                0: batch_dim,
-                2: cache_dim
-            }
-
-            dynamic_shapes[f"past_value_{layer}"] = {
-                0: batch_dim,
-                2: cache_dim
-            }
+        dynamic_shapes = {
+            "tokens": tokens_dynamic,
+            "past_key_values": tuple(cache_dynamic for _ in example_cache)
+        }
 
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
 
         onnx_program = torch.onnx.export(
-            model=wrapper, 
-            args=(example_tokens, *example_cache), 
+            model=wrapper,
+            args=(example_tokens, *example_cache),
             input_names=input_names,
             output_names=output_names,
             dynamo=True,
@@ -141,7 +155,7 @@ class ONNXExporter:
 def main() -> None:
     config = Config()
 
-    checkpoint_file = f"tinyGPT_v{config.version}.pth" if Path(f"tinyGPT_v{config.version}.pth").exists() else "artifacts/models/tinygpt-v0.0.1.pth"
+    checkpoint_file = "artifacts/models/quillGPT_v0.0.2.pth" if Path("artifacts/models/quillGPT_v0.0.2.pth").exists() else (f"tinyGPT_v{config.version}.pth" if Path(f"tinyGPT_v{config.version}.pth").exists() else "artifacts/models/tinygpt-v0.0.1.pth")
     output_file = f"artifacts/models/tinyGPT_v{config.version}.onnx"
 
     exporter = ONNXExporter(

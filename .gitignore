@@ -10,4 +10,4 @@ wheels/
 .venv
 uv.lock
 
-artifacts/models/tinyGPT_v0.0.2.pth
+artifacts/models

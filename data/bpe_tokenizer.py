@@ -12,44 +12,29 @@ class BPETokenizer:
         self.token_to_id: Dict[str, int] = {}
         self.merges: Dict[Tuple[str, str], str] = {}
 
-    def build_initial_vocabulary(self, text: str) -> List[str]:
+    def build_initial_vocabulary(self, text: str) -> None:
         characters: List[str] = sorted(set(text))
 
         self.vocab = {token_id: character for token_id, character in enumerate(characters)}
         self.token_to_id = {token: token_id for token_id, token in self.vocab.items()}
 
-        return list(text)
-    
-    def count_pairs(self, tokens: List[str]) -> Counter[Tuple[str, str]]:
-        pairs: Counter[Tuple[str, str]] = Counter()
+    def train(self, text: str, max_words: int = 10000) -> None:
+        self.build_initial_vocabulary(text)
 
-        for first, second in zip(tokens, tokens[1:]):
-            pairs[(first, second)] += 1
-
-        return pairs
-    
-    def merge_pair(self, tokens: List[str], pair: Tuple[str, str], merged_token: str) -> List[str]:
-        merged: List[str] = []
-        index: int = 0
-
-        while index < len(tokens):
-            if index < len(tokens) - 1 and tokens[index] == pair[0] and tokens[index + 1] == pair[1]:
-                merged.append(merged_token)
-                index += 2
-            else:
-                merged.append(tokens[index])
-                index += 1
-
-        return merged
-    
-    def train(self, text: str) -> None:
-        tokens: List[str] = self.build_initial_vocabulary(text)
+        word_counts: Counter[str] = Counter(text.split())
+        word_splits: Dict[Tuple[str, ...], int] = {
+            tuple(list(w)): count for w, count in word_counts.most_common(max_words)
+        }
 
         target_merges: int = max(0, self.vocab_size - len(self.vocab))
         pbar: tqdm = tqdm(total=target_merges, desc="Training Tokenizer", dynamic_ncols=True, leave=True)
 
         while len(self.vocab) < self.vocab_size:
-            pair_counts: Counter[Tuple[str, str]] = self.count_pairs(tokens)
+            pair_counts: Counter[Tuple[str, str]] = Counter()
+
+            for word_tuple, count in word_splits.items():
+                for i in range(len(word_tuple) - 1):
+                    pair_counts[(word_tuple[i], word_tuple[i + 1])] += count
 
             if not pair_counts:
                 break
@@ -59,16 +44,34 @@ class BPETokenizer:
             if frequency < 2:
                 break
 
-            first, second = most_common_pair
-            merged_token: str = first + second
-
+            merged_token: str = most_common_pair[0] + most_common_pair[1]
             self.merges[most_common_pair] = merged_token
 
             new_token_id: int = len(self.vocab)
             self.vocab[new_token_id] = merged_token
             self.token_to_id[merged_token] = new_token_id
 
-            tokens = self.merge_pair(tokens, most_common_pair, merged_token)
+            new_word_splits: Dict[Tuple[str, ...], int] = {}
+
+            for word_tuple, count in word_splits.items():
+                new_word: List[str] = []
+                idx: int = 0
+
+                while idx < len(word_tuple):
+                    if (
+                        idx < len(word_tuple) - 1
+                        and word_tuple[idx] == most_common_pair[0]
+                        and word_tuple[idx + 1] == most_common_pair[1]
+                    ):
+                        new_word.append(merged_token)
+                        idx += 2
+                    else:
+                        new_word.append(word_tuple[idx])
+                        idx += 1
+
+                new_word_splits[tuple(new_word)] = count
+
+            word_splits = new_word_splits
             pbar.update(1)
             pbar.set_postfix_str(f"Vocab Size={len(self.vocab)}/{self.vocab_size}", refresh=False)
 
@@ -78,10 +81,21 @@ class BPETokenizer:
         tokens: List[str] = list(text)
 
         for pair, merged_token in self.merges.items():
-            tokens = self.merge_pair(tokens, pair, merged_token)
+            merged: List[str] = []
+            idx: int = 0
+
+            while idx < len(tokens):
+                if idx < len(tokens) - 1 and tokens[idx] == pair[0] and tokens[idx + 1] == pair[1]:
+                    merged.append(merged_token)
+                    idx += 2
+                else:
+                    merged.append(tokens[idx])
+                    idx += 1
+
+            tokens = merged
 
         return [self.token_to_id[token] for token in tokens if token in self.token_to_id]
-    
+
     def decode(self, token_ids: List[int]) -> str:
         return "".join(self.vocab[token_id] for token_id in token_ids if token_id in self.vocab)
 

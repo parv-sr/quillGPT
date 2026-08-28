@@ -101,7 +101,7 @@ class ONNXInferenceEngine:
                 (
                     batch_size,
                     self.num_heads,
-                    1,
+                    0,
                     self.head_dim
                 ),
                 dtype=np.float32
