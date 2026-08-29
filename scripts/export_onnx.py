@@ -155,7 +155,7 @@ class ONNXExporter:
 def main() -> None:
     config = Config()
 
-    checkpoint_file = "artifacts/models/quillGPT_v0.1.3_best.pth" if Path("artifacts/models/quillGPT_v0.0.2.pth").exists() else (f"tinyGPT_v{config.version}.pth" if Path(f"tinyGPT_v{config.version}.pth").exists() else "artifacts/models/tinygpt-v0.0.1.pth")
+    checkpoint_file = "artifacts/models/quillGPT_v0.1.4_best.pth" if Path("artifacts/models/quillGPT_v0.1.4_best.pth").exists() else (f"tinyGPT_v{config.version}.pth" if Path(f"tinyGPT_v{config.version}.pth").exists() else "artifacts/models/tinygpt-v0.0.1.pth")
     output_file = f"artifacts/models/tinyGPT_v{config.version}.onnx"
 
     exporter = ONNXExporter(

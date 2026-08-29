@@ -15,7 +15,7 @@ from data.corpus import TextCorpus
 from data.bpe_tokenizer import BPETokenizer
 
 
-MODEL_PATH = Path(r"/home/parv/quillGPT/quillGPT/artifacts/models/quillGPT_v0.1.3.onnx")
+MODEL_PATH = Path(r"/home/parv/quillGPT/quillGPT/artifacts/models/quillGPT_v0.1.4.onnx")
 CORPUS_PATH = Path("data/raw")
 TOKENIZER_PATH = Path("bpe_tokenizer.json")
 
