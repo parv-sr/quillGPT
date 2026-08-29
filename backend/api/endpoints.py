@@ -14,7 +14,7 @@ async def infer(infer_req: InferenceRequest, request: Request) -> Dict[str, Any]
         max_new_tokens=infer_req.max_new_tokens,
         temperature=infer_req.temperature,
         top_p=infer_req.top_p,
-        repitition_penalty=infer_req.reitition_penalty
+        repetition_penalty=infer_req.repetition_penalty
     )
 
     return InferenceResponse(
