@@ -11,3 +11,6 @@ wheels/
 uv.lock
 
 artifacts/models
+data/raw
+data/cleaned
+data/corpus_cleaned.tar.gz

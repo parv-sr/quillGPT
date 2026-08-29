@@ -1,61 +1,76 @@
-import json
-
 from pathlib import Path
-from typing import Dict, List, Tuple
-
-from tokenizers import Tokenizer, models, trainers, pre_tokenizers, decoders
+from typing import Iterable, Iterator, List, Union
+from tokenizers import Tokenizer, models, trainers, pre_tokenizers, decoders, normalizers
 
 
 class BPETokenizer:
-    def __init__(self, vocab_size: int) -> None:
-        self.vocab_size: int = vocab_size
-        self._init_empty_tokenizer()
+    SPECIAL_TOKENS = ["<unk>", "<pad>", "<bos>", "<eos>"]
 
-    def _init_empty_tokenizer(self) -> None:
+    def __init__(self, vocab_size: int = 30000) -> None:
+        self.target_vocab_size: int = vocab_size
+        self._init_tokenizer()
+
+    def _init_tokenizer(self) -> None:
         self.tokenizer = Tokenizer(models.BPE(unk_token="<unk>"))
-        self.tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=False)
+
+        self.tokenizer.normalizer = normalizers.NFKC()
+
+        self.tokenizer.pre_tokenizer = pre_tokenizers.Sequence([
+            pre_tokenizers.Digits(individual_digits=False),
+            pre_tokenizers.ByteLevel(add_prefix_space=False, use_regex=True)
+        ])
+
         self.tokenizer.decoder = decoders.ByteLevel()
 
-    def train(self, text: str) -> None:
+    @property
+    def vocab_size(self) -> int:
+        return self.tokenizer.get_vocab_size()
+
+    def train(self, input_data: Union[str, List[str], Path, Iterable[str]], min_frequency: int = 2) -> None:
+        """
+        Universal training method expected by train.py.
+        Handles string text, lists of texts, generators, or path instances.
+        """
         trainer = trainers.BpeTrainer(
-            vocab_size=self.vocab_size,
-            min_frequency=2,
+            vocab_size=self.target_vocab_size,
+            min_frequency=min_frequency,
             show_progress=True,
-            special_tokens=["<unk>"],
+            special_tokens=self.SPECIAL_TOKENS,
+            initial_alphabet=pre_tokenizers.ByteLevel.alphabet()
         )
 
-        self.tokenizer.train_from_iterator([text], trainer=trainer)
+        if isinstance(input_data, (str, Path)) and Path(input_data).is_file():
+            # If a single file path is passed
+            self.tokenizer.train(files=[str(input_data)], trainer=trainer)
+        elif isinstance(input_data, list) and all(isinstance(x, (str, Path)) and Path(x).is_file() for x in input_data):
+            # If a list of file paths is passed
+            self.tokenizer.train(files=[str(p) for p in input_data], trainer=trainer)
+        elif isinstance(input_data, str):
+            # If raw corpus text string is passed
+            self.tokenizer.train_from_iterator([input_data], trainer=trainer)
+        else:
+            # If an iterable/generator/list of text chunks is passed
+            self.tokenizer.train_from_iterator(input_data, trainer=trainer)
 
-        self.vocab_size = self.tokenizer.get_vocab_size()
+    def train_from_files(self, file_paths: List[Union[str, Path]], min_frequency: int = 2) -> None:
+        """Fast Rust-native training directly from a list of text files."""
+        self.train(input_data=file_paths, min_frequency=min_frequency)
 
-    def encode(self, text: str) -> List[int]:
-        encoding = self.tokenizer.encode(text)
+    def train_from_iterator(self, iterator: Iterator[str], min_frequency: int = 2) -> None:
+        """Train from a memory-efficient python generator yielding chunks/lines."""
+        self.train(input_data=iterator, min_frequency=min_frequency)
+
+    def encode(self, text: str, add_special_tokens: bool = False) -> List[int]:
+        encoding = self.tokenizer.encode(text, add_special_tokens=add_special_tokens)
         return encoding.ids
 
-    def decode(self, token_ids: List[int]) -> str:
-        return self.tokenizer.decode(token_ids)
+    def decode(self, token_ids: List[int], skip_special_tokens: bool = True) -> str:
+        return self.tokenizer.decode(token_ids, skip_special_tokens=skip_special_tokens)
 
-    def save(self, path: Path | str) -> None:
+    def save(self, path: Union[Path, str]) -> None:
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
         self.tokenizer.save(str(path))
 
-    def load(self, path: Path | str) -> None:
-        path_str = str(path)
-
-        try:
-            self.tokenizer = Tokenizer.from_file(path_str)
-            self.vocab_size = self.tokenizer.get_vocab_size()
-        except Exception:
-            with open(path_str, "r", encoding="utf-8") as f:
-                data = json.load(f)
-
-            vocab: Dict[str, int] = {v: int(k) for k, v in data["vocab"].items()}
-            merges: List[Tuple[str, str]] = [(item[0], item[1]) for item in data["merges"]]
-
-            bpe_model = models.BPE(vocab=vocab, merges=merges, unk_token="<unk>")
-            self.tokenizer = Tokenizer(bpe_model)
-
-            self.tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=False)
-
-            self.tokenizer.decoder = decoders.ByteLevel()
-
-            self.vocab_size = self.tokenizer.get_vocab_size()
+    def load(self, path: Union[Path, str]) -> None:
+        self.tokenizer = Tokenizer.from_file(str(path))

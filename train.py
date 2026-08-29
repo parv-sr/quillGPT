@@ -190,7 +190,7 @@ def main() -> None:
     config: Config = Config()
 
     logger.info("Loading corpus...")
-    corpus: TextCorpus = TextCorpus("data/raw")
+    corpus: TextCorpus = TextCorpus("data/cleaned")
     logger.info("Corpus loaded: %d characters", len(corpus.text))
 
     tokenizer: BPETokenizer = BPETokenizer(config.vocab_size)
