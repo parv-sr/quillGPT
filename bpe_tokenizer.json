@@ -5,7 +5,7 @@
   "added_tokens": [
     {
       "id": 0,
-      "content": "<|endoftext|>",
+      "content": "<unk>",
       "single_word": false,
       "lstrip": false,
       "rstrip": false,
@@ -30,14 +30,14 @@
   "model": {
     "type": "BPE",
     "dropout": null,
-    "unk_token": null,
+    "unk_token": "<unk>",
     "continuing_subword_prefix": null,
     "end_of_word_suffix": null,
     "fuse_unk": false,
     "byte_fallback": false,
     "ignore_merges": false,
     "vocab": {
-      "<|endoftext|>": 0,
+      "<unk>": 0,
       "!": 1,
       "\"": 2,
       "#": 3,
@@ -591,8 +591,8 @@
       "ap": 551,
       "old": 552,
       "ĠIt": 553,
-      "ĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠ": 554,
-      "Ġ'": 555,
+      "Ġ'": 554,
+      "ĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠ": 555,
       "ally": 556,
       "ife": 557,
       "te": 558,
@@ -5684,12 +5684,12 @@
         "t"
       ],
       [
-        "ĠĠĠĠĠĠĠĠ",
-        "ĠĠĠĠĠĠĠĠ"
-      ],
-      [
         "Ġ",
         "'"
+      ],
+      [
+        "ĠĠĠĠĠĠĠĠ",
+        "ĠĠĠĠĠĠĠĠ"
       ],
       [
         "all",
