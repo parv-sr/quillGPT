@@ -1,14 +1,14 @@
 class Config:
-    vocab_size = 8192
+    vocab_size = 16384
 
-    embed_dim = 512
+    embed_dim = 2048
     num_heads = 8
     num_layers = 12
-    feedforward_dim = 2048
+    feedforward_dim = 8192
 
     max_context = 512
 
-    dropout = 0.15
+    dropout = 0.1
 
     batch_size = 64
 
@@ -17,8 +17,8 @@ class Config:
 
     weight_decay = 0.1
 
-    warmup_fraction = 0.03
+    warmup_fraction = 0.05
 
-    epochs = 15
+    epochs = 5
 
     version: str = "0.1.4"
