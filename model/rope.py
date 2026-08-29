@@ -14,18 +14,28 @@ where:
 
 Output shape:
     (B, H, T, D)
+
+RoPE encodes position by rotating pairs of dimensions in Q and K using 
+interleaved half-rotations and supports dynamic sequence length scaling.
 """
 import torch
-
 from torch import nn
+
+
+def rotate_half(x: torch.Tensor) -> torch.Tensor:
+    """Rotates half the hidden dims of the input."""
+    x1 = x[..., : x.shape[-1] // 2]
+    x2 = x[..., x.shape[-1] // 2 :]
+    return torch.cat((-x2, x1), dim=-1)
 
 
 class RotaryPositionalEmbedding(nn.Module):
     def __init__(
         self,
         head_dim: int,
-        max_context: int,
-        base: float = 10000.0
+        max_context: int = 2048,
+        base: float = 10000.0,
+        scaling_factor: float = 1.0,
     ) -> None:
         super().__init__()
 
@@ -34,48 +44,42 @@ class RotaryPositionalEmbedding(nn.Module):
 
         self.head_dim = head_dim
         self.max_context = max_context
+        self.base = base
+        self.scaling_factor = scaling_factor
 
-        inverse_frequencies = 1.0 / (
-            base ** (
-                torch.arange(0, head_dim, 2).float() / head_dim
+    def _compute_cos_sin(
+        self, seq_len: int, device: torch.device, dtype: torch.dtype
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        inv_freq = 1.0 / (
+            self.base
+            ** (
+                torch.arange(0, self.head_dim, 2, device=device).float()
+                / self.head_dim
             )
         )
-
-        positions = torch.arange(max_context).float()
-
-        frequencies = torch.outer(
-            positions,
-            inverse_frequencies
+        t = (
+            torch.arange(seq_len, device=device, dtype=torch.float32)
+            / self.scaling_factor
         )
+        freqs = torch.outer(t, inv_freq)
+        emb = torch.cat((freqs, freqs), dim=-1)
+        
+        cos = emb.cos().to(dtype=dtype)
+        sin = emb.sin().to(dtype=dtype)
+        return cos, sin
 
-        cos = frequencies.cos()
-        sin = frequencies.sin()
-
-        self.register_buffer("cos", cos)
-        self.register_buffer("sin", sin)
-
-    def forward(self, x: torch.Tensor, position_offset: int = 0) -> torch.Tensor:
+    def forward(
+        self, x: torch.Tensor, position_offset: int = 0
+    ) -> torch.Tensor:
+        # x shape: (B, H, T, D)
         _, _, sequence_length, _ = x.shape
-
         end_position = position_offset + sequence_length
 
-        if end_position > self.max_context:
-            raise ValueError(
-                f"Sequence exceeds maximum context of {self.max_context}"
-            )
-
-        cos = self.cos[position_offset:end_position]
-        sin = self.sin[position_offset:end_position]
-
-        cos = cos.unsqueeze(0).unsqueeze(0)
-        sin = sin.unsqueeze(0).unsqueeze(0)
-
-        x_first, x_second = x.chunk(2, dim=-1)
-
-        rotated_first = x_first * cos - x_second * sin
-        rotated_second = x_first * sin + x_second * cos
-
-        return torch.cat(
-            [rotated_first, rotated_second],
-            dim=-1
+        cos, sin = self._compute_cos_sin(
+            end_position, device=x.device, dtype=x.dtype
         )
+
+        cos = cos[position_offset:end_position].unsqueeze(0).unsqueeze(0)
+        sin = sin[position_offset:end_position].unsqueeze(0).unsqueeze(0)
+
+        return (x * cos) + (rotate_half(x) * sin)

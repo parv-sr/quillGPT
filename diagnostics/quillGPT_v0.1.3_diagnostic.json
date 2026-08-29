@@ -2263,7 +2263,7 @@
         8192
       ],
       "correct": true,
-      "latency_ms": 5.942310206592083
+      "latency_ms": 5.822845734655857
     },
     {
       "sequence_length": 2,
@@ -2282,7 +2282,7 @@
         8192
       ],
       "correct": true,
-      "latency_ms": 4.519302397966385
+      "latency_ms": 4.624546505510807
     },
     {
       "sequence_length": 8,
@@ -2301,7 +2301,7 @@
         8192
       ],
       "correct": true,
-      "latency_ms": 5.4636262357234955
+      "latency_ms": 5.6926412507891655
     },
     {
       "sequence_length": 32,
@@ -2320,7 +2320,7 @@
         8192
       ],
       "correct": true,
-      "latency_ms": 10.004408657550812
+      "latency_ms": 10.100875981152058
     },
     {
       "sequence_length": 128,
@@ -2339,7 +2339,7 @@
         8192
       ],
       "correct": true,
-      "latency_ms": 25.26978775858879
+      "latency_ms": 25.000108405947685
     },
     {
       "sequence_length": 512,
@@ -2358,7 +2358,7 @@
         8192
       ],
       "correct": true,
-      "latency_ms": 113.33480477333069
+      "latency_ms": 114.90117944777012
     }
   ],
   "determinism_test": {
@@ -2366,50 +2366,50 @@
     "deterministic": true
   },
   "input_sensitivity_test": {
-    "maximum_difference": 11.031932830810547,
-    "mean_difference": 0.04485517740249634,
+    "maximum_difference": 10.706884384155273,
+    "mean_difference": 0.0504530668258667,
     "changed_position": 64
   },
   "onnx_latency": {
     "sequence_length": 512,
     "runs": 10,
-    "mean_ms": 113.92061468213797,
-    "median_ms": 113.91065083444118,
-    "min_ms": 113.52646630257368,
-    "max_ms": 114.32646308094263,
-    "tokens_per_second": 4494.35777210811
+    "mean_ms": 114.62761191651225,
+    "median_ms": 114.58180658519268,
+    "min_ms": 114.25874568521976,
+    "max_ms": 115.16126152127981,
+    "tokens_per_second": 4466.637587921744
   },
   "generation_tests": [
     {
       "prompt": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue",
       "temperatures": {
         "0.2": {
-          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue is a\nmoral translation of the old English language.  I have been a clergyman\nof the old time, and have been a clergyman of the Church, and have been\nin the Churchyard at the time of the Church, and have been a clergyman\nof the Church of England, and have been a clergyman of the Church of\nCountry, and have been a clergyman of the Church of England.  I have been\nin the Church",
-          "generation_seconds": 1.4931006385013461,
-          "tokens_per_second": 66.97472187834032,
-          "repetition_score": 0.3471074380165289,
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue is a name to the\npraise of the old man.  I am not a man of the world, but a man of the\nsame age, and a man of the same age, and a man of the same age, and of a\nvery handsome, well-tempered, and well-spoken, and well-tempered, and\ntall, and well-tempered, and well-tempered, and well-tempered",
+          "generation_seconds": 1.428365908563137,
+          "tokens_per_second": 70.0100719293944,
+          "repetition_score": 0.3223140495867769,
           "unique_token_ratio": 0.4065040650406504
         },
         "0.5": {
-          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue is not yet known; and what is this?”\n\nI have heard of the old man at the time of his youth and his youth in\nBerkshire, and of the old man who had been his father's son, whom I\nrecognised as the daughter of a man of great courage and of high spirit.\n\nI have seen him at the time of the year at the churchyard, and I have seen\nhim at the churchyard.  He had",
-          "generation_seconds": 1.2928219558671117,
-          "tokens_per_second": 77.35017149591087,
-          "repetition_score": 0.06611570247933884,
-          "unique_token_ratio": 0.5853658536585366
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue is a\n      little boy. He’s a boy, and he’s a grandson of the new house, and\n      comes to me to see him in the evening. I’m a pedlar at the\n      window, and he’s a jolly young gentleman, and he’s a flat-footed\n      gentleman. I’m a good-natured young gentleman, and I’m quite\n      of a fine gentleman in the house, and he's a good-",
+          "generation_seconds": 1.2693646280094981,
+          "tokens_per_second": 78.77957034048671,
+          "repetition_score": 0.14876033057851235,
+          "unique_token_ratio": 0.4959349593495935
         },
         "0.8": {
-          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue, Bucca and its mother.  I saw him there—as I heard him say—with his old face in his hand—as he looked at me with a shadowy silence.\nI got up and went up to Gruffy, and said to him, ‘I am in the way of going back to Paris, and to stay there.  I am ——!”  I asked him how he would make his friend thank me by the fireside. ",
-          "generation_seconds": 1.2919165203347802,
-          "tokens_per_second": 77.40438211447791,
-          "repetition_score": 0.008264462809917328,
-          "unique_token_ratio": 0.6666666666666666
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue, and the nimble president of the name.  It is not the first time I know of the name that I have heard of my uncle Todby in a jovial, stranded, and polished, and in a jovial, incongruous way; both of which, of course, I have ever spoken of as their own house-carriers.\nThis is one of the rule of the clergy, on whom I presume to name",
+          "generation_seconds": 1.2735188445076346,
+          "tokens_per_second": 78.52259150406353,
+          "repetition_score": 0.04132231404958675,
+          "unique_token_ratio": 0.6504065040650406
         },
         "1.0": {
-          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue after the elder breeding of all my people, the honour of the Hall is my legacy, and surrounded me by the Deceged. I think of the surface of all the world. What I have lived on else—not on pain, but in some degree more favourable to blessings—the life that endures the to-day, clouds, before summer had worse, sinks, and tips about my studies, than pleasure itself—at once disappear.\nOn",
-          "generation_seconds": 1.2923905737698078,
-          "tokens_per_second": 77.37598991325616,
-          "repetition_score": 0.0,
-          "unique_token_ratio": 0.7317073170731707
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue to 'Virgili riaudie_?' which means London.\nNicholas Rummel receives five-and-twenty-five acres, one by name. His\ncharacter is remarkable.  He excuses Russ, in 1963, his reply to the\nCouncil of the late Paper to his native city and wonderful fodal fodder,\nwhich I can show as strict as finger-post.  He relates",
+          "generation_seconds": 1.2778588542714715,
+          "tokens_per_second": 78.25590413662052,
+          "repetition_score": 0.008264462809917328,
+          "unique_token_ratio": 0.7642276422764228
         }
       }
     },
@@ -2417,32 +2417,32 @@
       "prompt": "There must not be any violence, for it is a sin to be wrathful. Instead we must",
       "temperatures": {
         "0.2": {
-          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nsay that this is the case, and we must not be mistaken.\n\n_The Supreme Division of the Supreme Division of the Supreme Division of\nthe Supreme Division of the Supreme Division of the Supreme Division of\nthe Supreme Division of the Supreme Division of the Supreme Division\nof the Supreme Division",
-          "generation_seconds": 1.2766204494982958,
-          "tokens_per_second": 78.33181744762071,
-          "repetition_score": 0.5378151260504201,
-          "unique_token_ratio": 0.3140495867768595
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nbe content to believe that God is the God of the world.\n\nAlma 5:17\n 17 And now, my brethren, I say unto you that God is the God of\nGod, and that he is the God of God, and that he is the God of\nGod, and that he is the God of God.\n\nAlma 5:18\n 18 And now, my brethren, I say unto you that God is the God of\nGod, and that he is",
+          "generation_seconds": 1.2605052702128887,
+          "tokens_per_second": 79.33326608234715,
+          "repetition_score": 0.40336134453781514,
+          "unique_token_ratio": 0.38016528925619836
         },
         "0.5": {
-          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nbe at the mercy of the devil, and be saved.\n\n2 Nephi 19:5\n 5 For the Lord God is my defence, and the righteousness of the\nGod of Israel; and because of the sin of the devil, he is God\nof judgment, and the devil of sin.\n\n2 Nephi 19:6\n 6 And the devil shall be saved, and shall be saved.\n\n2 Nephi 19:7\n 7 And the devil shall be saved; and",
-          "generation_seconds": 1.2736437683925033,
-          "tokens_per_second": 78.51488970594379,
-          "repetition_score": 0.16806722689075626,
-          "unique_token_ratio": 0.4380165289256198
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nneeds be mistaken; and there is no need of the world to be just.\n\n_This_ means _this_: _the_ is _true_; _the_ is _true_; _the_ is _the_\n__ is _true_; _the _soul_ is _true_; _the _soul_ is _soul_; _the _long_\n_soul_ is _true_; _the _d",
+          "generation_seconds": 1.2500669984146953,
+          "tokens_per_second": 79.99571233127311,
+          "repetition_score": 0.3613445378151261,
+          "unique_token_ratio": 0.38016528925619836
         },
         "0.8": {
-          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must be\nmore happy with the than with that that for which we can compare the\nworld with the brain.\n\nFor all this, we must choose the general principle of the whole work,\nof the body by the law of nature.\n\nWe shall not bear upon the judgment of a higher law, than upon\nthe conformity of a power. In the words of this law, we must appeal\nto the right of the principles of the human conscience. This is\n",
-          "generation_seconds": 1.2700599785894156,
-          "tokens_per_second": 78.73643897594852,
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must remember,\nthis is a happiness necessary to solve; and we can do nothing by these\nnights. If this be the case, it is a sort of _adventure_ to escape from\nthe irreproachable _spit_ of refinement, and a divine chance of\nburning, and cured, in the common fire; but it is a matter of any\ndepravity,--in short, all human beings are not immortal;",
+          "generation_seconds": 1.249283510260284,
+          "tokens_per_second": 80.0458816423226,
           "repetition_score": 0.01680672268907568,
-          "unique_token_ratio": 0.5371900826446281
+          "unique_token_ratio": 0.6776859504132231
         },
         "1.0": {
-          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must believe\ndown thereby to the point called trials. Ye know well enough how perfectly\nwe are about.\"\n\n\"What I already think,\" said Babalatchi,tering as though invisible.\n\n\"But we are curious?\" asked Ough Prior.\n\n\"There is perhaps in all things supernatural,\" answered the\npriest. \"But we must have some spirit of recognition arising from\nthee on which our final message is founded. But",
-          "generation_seconds": 1.2731240717694163,
-          "tokens_per_second": 78.54693993886846,
-          "repetition_score": 0.025210084033613467,
-          "unique_token_ratio": 0.7520661157024794
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nsay nothing more, then, that this assertion must be good and charity\nwished.\n\nTo judge and judge intemperant and such as are our obstinacy and not\ntheir punishment, we are brought to a sense quite sure by experience; but\nwhen it falls, or when we look on, it is fast and slow, we must soon\nturn from one point of the practical case, viz., to the other. The\ncandid",
+          "generation_seconds": 1.2499976037070155,
+          "tokens_per_second": 80.00015336304502,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.6859504132231405
         }
       }
     },
@@ -2450,32 +2450,32 @@
       "prompt": "It was a dark and stormy night",
       "temperatures": {
         "0.2": {
-          "text": "It was a dark and stormy night, and the wind blew up and\nswept and dried and dried and dried, and the wind blew and blew\nand dried and dried and dried and dried and dried and dried, and\nthe rain was blowing and the rain was blowing and the rain was\nsunset.  The rain was blowing and the rain was blowing, and the\nwater was still, and the wind was blowing and the",
-          "generation_seconds": 1.1148177729919553,
-          "tokens_per_second": 89.70075865548802,
-          "repetition_score": 0.42452830188679247,
-          "unique_token_ratio": 0.2962962962962963
+          "text": "It was a dark and stormy night, and I was glad to see it. I was\nso glad to see it, and I was glad to see it. I was glad to see it, and\nI was glad to see it. I was glad to see it, for I was glad to see it.\nI was glad to see it, for I was glad to see it. I was glad to see it\nagain, for I was glad to see it. I was glad to see it, for I was",
+          "generation_seconds": 1.1050161281600595,
+          "tokens_per_second": 90.49641670525482,
+          "repetition_score": 0.6603773584905661,
+          "unique_token_ratio": 0.18518518518518517
         },
         "0.5": {
-          "text": "It was a dark and stormy night. I remember it as a\ncry of the sea and the sea. I remember it was a good thing for me to\nsee. It was a good thing for me to do, and I was glad of it. I remember\nit as a good thing for me to do. I remember the sea and the sky, and\nthe sea and the sea and the sea and the sea and the sea. I wondered\nwhat I had seen in the world, and what I saw in",
-          "generation_seconds": 1.1091227950528264,
-          "tokens_per_second": 90.16134232029475,
-          "repetition_score": 0.2735849056603774,
-          "unique_token_ratio": 0.37037037037037035
+          "text": "It was a dark and stormy night.\n\n\"I was glad you were here, sir,\" said I.\n\n\"I was glad to see you, sir.\"\n\n\"I thought I was in the house,\" said he. \"I thought I could get a good\nplace in the house. I thought I would like to see you at the inn.\"\n\n\"Thank you,\" said I.\n\n\"I think I did,\" said he, \"but I didn't think I should like to see",
+          "generation_seconds": 1.0945844631642103,
+          "tokens_per_second": 91.35887029761167,
+          "repetition_score": 0.18867924528301883,
+          "unique_token_ratio": 0.42592592592592593
         },
         "0.8": {
-          "text": "It was a dark and stormy night, or a dark night, or a sea. The whole gale had already begun, and night\nhad come, and the wind had swelled, and the wind had cracked in the west\nand was rattling to and fro, and the wind had cleared and choked, and a\ndripping heave had come, and the wind had come right up upon the fence.\n\n'I don't know what I'd do to eat up this river yet",
-          "generation_seconds": 1.1048239702358842,
-          "tokens_per_second": 90.51215641044574,
-          "repetition_score": 0.1132075471698113,
-          "unique_token_ratio": 0.5833333333333334
+          "text": "It was a dark and stormy night of the night of a torch, and to-morrow\nof the sun.  The place was very quiet and a courtyard and empty, and in\nthe midst of that dull day that is growing dark here.  I was going\nout to see Avonlea and a little girl of eighteen, who had the best of\nher way home, and well knew that the change that young hero had had\nwith him for a long time before the little boy was",
+          "generation_seconds": 1.0962796108797193,
+          "tokens_per_second": 91.21760453043008,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.6388888888888888
         },
         "1.0": {
-          "text": "It was a dark and stormy night. The snow was grey, with gates blood,\nand the dark shadows at the big fields grew white with wet hills of\nfortune and revenge. I don't mind that odder can TRUN. It takes un care\nto dust ahead and be steady and warm as I went by, and for my part it\nwould not. Oh let me remember this morning, Mr. McLean. He valued the\nold man joyously. Misery had vanished in his mind",
-          "generation_seconds": 1.1098689958453178,
-          "tokens_per_second": 90.10072393619416,
+          "text": "It was a dark and stormy night in the morning, and so I slipped\naway and was over a whole day. It was no safe place for me if I\nchose. No man to live in the smoking house stopped me, so I came home.\nI was young, but I was very pretty. Everything was its peace, but\nthere was a prayer!\n\nI reached Lylock, where I could see the ghostly figure open, and\nthere came Henry Vane with me from Jerry",
+          "generation_seconds": 1.093989777378738,
+          "tokens_per_second": 91.40853239013414,
           "repetition_score": 0.0,
-          "unique_token_ratio": 0.7777777777777778
+          "unique_token_ratio": 0.6388888888888888
         }
       }
     },
@@ -2483,32 +2483,32 @@
       "prompt": "The object of my study was to understand",
       "temperatures": {
         "0.2": {
-          "text": "The object of my study was to understand that I was\nin the habit of writing to the author of the book.  I was now in the\ndrawing-room, and I was in the habit of writing to the author of\nthe book.  I was in the habit of writing to the author of the\nwriter, and I was in the habit of writing to the author of the\nwriter.  I was in the habit of writing to the author of the book,\nand I was in the habit",
-          "generation_seconds": 1.1127770217135549,
-          "tokens_per_second": 89.86526325463743,
-          "repetition_score": 0.4716981132075472,
-          "unique_token_ratio": 0.28703703703703703
+          "text": "The object of my study was to understand that the\nfellow was a man who had been a stranger to me.  I was not a man of\ncourse, but I was a man of the world, and I was a man of the world.\n\nI was now in the midst of a strange, savage, savage beast.  I was\nfighting for the first time in the forest, and I was in the midst of\nthe wild beasts of the forest.  I was a man of a strange,",
+          "generation_seconds": 1.1022791173309088,
+          "tokens_per_second": 90.72112355910629,
+          "repetition_score": 0.18867924528301883,
+          "unique_token_ratio": 0.4166666666666667
         },
         "0.5": {
-          "text": "The object of my study was to understand that the\nproprietors of the Department were to be subject to the publications.\nThe reason for my being at the commencement of the last year was to\nbe taken in their hands by the judges, and to give me the advice\nof the Senate of the House of Representatives.  I, however, was to be\ngrateful to the public, and was obliged to do so in some of the\nconventions which I",
-          "generation_seconds": 1.1051830826327205,
-          "tokens_per_second": 90.48274586486089,
-          "repetition_score": 0.009433962264150941,
-          "unique_token_ratio": 0.6018518518518519
+          "text": "The object of my study was to understand the effect of my\nconversation.  I was in the habit of telling you that I was a man of\npreference to the world.  I was in a hurry to think that I was in the\nworld.  I had the best of my dreams, and I was in a state of\ndetermination to talk to you about the world.  You know that I have\nalready spoken the truth, and I have been in a mood that I shall\nhave been",
+          "generation_seconds": 1.0963669950142503,
+          "tokens_per_second": 91.21033418075507,
+          "repetition_score": 0.1132075471698113,
+          "unique_token_ratio": 0.4722222222222222
         },
         "0.8": {
-          "text": "The object of my study was to understand theinctly well-\ntained and natural characteristics of my inquiries, and of the\npersonal and common sense of mine from the very first moment\nof my acquaintance with Mr. Jenkinson, whom it was to be\nengaged in the course of the last few years.  However,\nI had frequently heard of him and of his museums, which\nI gave to any use of my views and medical views, and\nwith which I was",
-          "generation_seconds": 1.1101932935416698,
-          "tokens_per_second": 90.0744046840584,
+          "text": "The object of my study was to understand the view\nof my father's ability; but this circumstance was to be found in the\ninference that I had witnessed as my relations to each other with\nthe other.  We were not to be persuaded of any design to prevent any\nsympathy between these two in a dream, and I resolved to restore my\nexactions, according to the nature of my duty of enjoining to\nprevent my escape from the failure of missions which",
+          "generation_seconds": 1.0971392504870892,
+          "tokens_per_second": 91.14613295951604,
           "repetition_score": 0.0,
-          "unique_token_ratio": 0.6574074074074074
+          "unique_token_ratio": 0.7037037037037037
         },
         "1.0": {
-          "text": "The object of my study was to understand a very decided\ntraveling scenery.  I had scarcely spoken since that in bestiality.  I had\nnever learned of the use of art I had worn so long in writing business:\nI appreciated that time exactly as moving to a publication, the life of\nwhich I had imbibed in brick decadence and degradation diffused in the\nmost trivial kind of manner.  Perhaps I would be mistaken blon",
-          "generation_seconds": 1.1082690823823214,
-          "tokens_per_second": 90.23079465957964,
-          "repetition_score": 0.018867924528301883,
-          "unique_token_ratio": 0.7222222222222222
+          "text": "The object of my study was to understand what the meaning of this\natonement ought to explain to me.\n\nI replied that if it assumed the physical impression I found, why, on\nthe whole, the question still continues to me beyond nature. But I\njustped to myself that there were two great facts: first, how would\nI gladly receive some of thesefrom the general point? What can I prescribe\nin the melancholy and loneliness of the endless infinite, what the\n",
+          "generation_seconds": 1.0949857765808702,
+          "tokens_per_second": 91.3253871774055,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.7129629629629629
         }
       }
     },
@@ -2516,32 +2516,32 @@
       "prompt": "In the beginning",
       "temperatures": {
         "0.2": {
-          "text": "In the beginning of the seventeenth century, the\n_Columbian_, which was the sign of the _Crown_, and which was the sign of\nthe _Crown_, which was the sign of the COCK AND CROWN, which was the\nsame sign in the seventeenth century. The COCK AND COCK was the sign of\nthe COCK AND COCK, which was the sign of a tavern",
-          "generation_seconds": 1.0505424048751593,
-          "tokens_per_second": 95.18892291823619,
-          "repetition_score": 0.3465346534653465,
-          "unique_token_ratio": 0.3592233009708738
+          "text": "In the beginning of the seventeenth century,\nthe history of the historical period was to be found in the history of\nthe historical period.\n\nThe history of the age of the age of the age of the age of the age of\nthe age of the age of the age of the age of the age of the age of\nthe age of the age of the age of the age of the age of the age of\nthe age of the age of the age. The history of the",
+          "generation_seconds": 1.0366022838279605,
+          "tokens_per_second": 96.4690137771262,
+          "repetition_score": 0.5742574257425743,
+          "unique_token_ratio": 0.22330097087378642
         },
         "0.5": {
-          "text": "In the beginning of the eighteenth century, there was a\nperfectly ancient sign, and in the middle ages it was a signboard.\nThe BULL AND BULL was the sign of a public-house in St Paul's Churchyard,\none of the seventeenth century BULL AND LEBON, and one of the oldest\nfruits in the seventeenth century.\n\nThe THREE BUNCHBOWL'S HEAD, in",
-          "generation_seconds": 1.0420477613806725,
-          "tokens_per_second": 95.96489115576038,
-          "repetition_score": 0.04950495049504955,
+          "text": "In the beginning of the seventeenth century, there was a\nlittle man named Thomas Carr, who was a man of great understanding and\ntradition. He was a tall, well-formed man, and was well dressed in\nappearance, and wore a richly dressed appearance of appearance. His hair\nwas somewhat like his hair, and wore a furrowed brown beard. His\nappearance was of a light blue, and his face was very fine and\nbeautiful. He was",
+          "generation_seconds": 1.034571268595755,
+          "tokens_per_second": 96.65839660880208,
+          "repetition_score": 0.03960396039603964,
           "unique_token_ratio": 0.5533980582524272
         },
         "0.8": {
-          "text": "In the beginning of the last century, the\nremains of the historical offenders, all historian, spectator, and critic,\nreplace the modern and modern dramatist. This circumstance is not to\nbe wondered at, for the historian says it is very small.\n\n[Illustration: FIG. 2.--THE SPRISON OF THE TRUE BALL.]\n\n[Illustration: FIGS., _Pealer of the Museum",
-          "generation_seconds": 1.0492870397865772,
-          "tokens_per_second": 95.3028067709097,
-          "repetition_score": 0.04950495049504955,
+          "text": "In the beginning of this century, the view\noccurred by the public, with the truth of what is more important, to\nimmediate in the comparatively recent periods which have stood in\nthe course of our inquiries.\n\nWith regard to this point, we may safely conclude that the\ntranslation of the judicial letter from the President of the United\nStates, the constitutional mode of shooting the various members of\nthe Senate, with a",
+          "generation_seconds": 1.0344841787591577,
+          "tokens_per_second": 96.66653396279867,
+          "repetition_score": 0.0,
           "unique_token_ratio": 0.6699029126213593
         },
         "1.0": {
-          "text": "In the beginning of the Infinite Audae, took the Genesis versed\nin her own Greatness over the plains of India.  Although their prayer was\nvacated also by the fire the Saviour thought nothing of so extreme a\nvague a nature, and than the general truth and hypocritical enquiries of\nGreece are this:\n\n\n     So universally was heaped with Rene omnipotent folk for seed",
-          "generation_seconds": 1.0674752900376916,
-          "tokens_per_second": 93.67898342309084,
-          "repetition_score": 0.0,
-          "unique_token_ratio": 0.8252427184466019
+          "text": "In the beginning of which we shall make the\nmost important deditions.\n\n1.  \"An original name,\" called Nippura Id. 2.\n\n2.  An instrument without any telescope or curvature of any kind.\ndoes not show itself in the substance, or of relations or words, but\nwhen possessed to bring about it the present quasi, thus passing, or the\nelevation.]\n\n3. That form",
+          "generation_seconds": 1.0334701929241419,
+          "tokens_per_second": 96.76137801038654,
+          "repetition_score": 0.00990099009900991,
+          "unique_token_ratio": 0.7087378640776699
         }
       }
     },
@@ -2549,32 +2549,32 @@
       "prompt": "The old man looked at the house and",
       "temperatures": {
         "0.2": {
-          "text": "The old man looked at the house and saw the old man.\n\n'What is the man?' said the man.\n\n'He is a man who is a man,' said the man.\n\n'He is a man who is a man,' said the man.\n\n'He is a man who is a man who is a man who is a man.'\n\n'He is a man who is a man who is a man who is a man who is a man. He is a\nman who is",
-          "generation_seconds": 1.1217464841902256,
-          "tokens_per_second": 89.1467024050347,
-          "repetition_score": 0.5849056603773585,
-          "unique_token_ratio": 0.21296296296296297
+          "text": "The old man looked at the house and saw the old man coming towards\nhim.\n\n'What is it?' said the man.\n\n'I am going to ask you to help me,' said the man.\n\n'I am going to ask you to help me,' said the man.\n\n'I am going to ask you to help me,' said the man.\n\n'I am going to ask you to help me,' said the man.\n\n'Very well, then,' said the man.",
+          "generation_seconds": 1.1006521405652165,
+          "tokens_per_second": 90.85522692814382,
+          "repetition_score": 0.5754716981132075,
+          "unique_token_ratio": 0.3055555555555556
         },
         "0.5": {
-          "text": "The old man looked at the house and said, 'Yes, my lord. You\nmust come and see my husband, and he shall be a good man.'\n\n'I am not a man,' said the old man, 'but I am a man who can come and\nbe good to you.'\n\n'You will not come to me,' said the old man, 'but you will come to me\nand bring me a good heart.'\n\nSo the old man went to the house and told him all his",
-          "generation_seconds": 1.1053454792127013,
-          "tokens_per_second": 90.4694522035106,
-          "repetition_score": 0.1132075471698113,
-          "unique_token_ratio": 0.4722222222222222
+          "text": "The old man looked at the house and said, 'If you will give me a\nsplendid dinner, I will give you a little money.'\n\n'I will give you a good dinner,' said the old woman, and she went on her\nway.\n\nThe old woman went on her way, and said to her husband:\n\n'Good-evening, my lord, I have a little money. I must give you a dollar and\na half, and you must give me a doll",
+          "generation_seconds": 1.096574181690812,
+          "tokens_per_second": 91.19310090431784,
+          "repetition_score": 0.06603773584905659,
+          "unique_token_ratio": 0.5
         },
         "0.8": {
-          "text": "The old man looked at the house and saw the house shut. He looked up\nat the fire.\n\n'He is asleep,' he answered. 'I am not asleep.'\n\n'Then we shall wake him.'\n\nSo he went on and came to the window. He caught it in his hand and went\noff to the fire. He stood on the stone bench, and noticed a golden\nspoon, which had been carefully shut off from its mouth, and opened\nopen. He strode down one",
-          "generation_seconds": 1.11121597699821,
-          "tokens_per_second": 89.99150666474002,
-          "repetition_score": 0.028301886792452824,
-          "unique_token_ratio": 0.6388888888888888
+          "text": "The old man looked at the house and saw the old man looking down at it.\n\n'Ha!' said he, 'I'm afraid that I should set down this wall in the dark\nwhere I am living.'\n\nSo the old fellow ran himself up into the room and said: 'I am the son\nof my father, and I am a fool that you have no husband. I am the son of\nmy father. Come, I will go with you to the wood.'\n\nSo the old man",
+          "generation_seconds": 1.0950219547376037,
+          "tokens_per_second": 91.32236990075934,
+          "repetition_score": 0.05660377358490565,
+          "unique_token_ratio": 0.5833333333333334
         },
         "1.0": {
-          "text": "The old man looked at the house and wondered whether the men would\nread our family or not. You never saw him look at it.\"\n\nWilson ended in silence for a moment.\n\n\n\n\nVI\n\nVENICE\n\n\nWHEN we BRUGG, lying near the doorway in the heart of the woods, sick\nbecause he saw the old murderer and the young heart as he told the\ngirl, and he felt that the blind woman had taken the whole distance,\nwith",
-          "generation_seconds": 1.1129459692165256,
-          "tokens_per_second": 89.85162152156987,
-          "repetition_score": 0.0,
-          "unique_token_ratio": 0.6944444444444444
+          "text": "The old man looked at the house and went to read it. He had been four years\nold--told last Trotter and didn't wish to see his line ride over\nhimself--and running along the road he'd been able to find another\ncaptain before he got there.  When I started into the tent he was  whipping.\nFirst came the captain, and says:\n\n\"Here's Jake, Huck Finn, to stand on a more.  When we get",
+          "generation_seconds": 1.0971993496641517,
+          "tokens_per_second": 91.14114042321444,
+          "repetition_score": 0.018867924528301883,
+          "unique_token_ratio": 0.75
         }
       }
     }
