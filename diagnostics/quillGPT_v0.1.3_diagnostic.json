@@ -1,0 +1,2615 @@
+{
+  "tokenizer_vocab_size": {
+    "configured": 4096,
+    "actual": 4096,
+    "difference": 0
+  },
+  "roundtrip_tests": [
+    {
+      "input": "Hello, world!",
+      "token_count": 6,
+      "ids": [
+        40,
+        393,
+        79,
+        12,
+        926,
+        1
+      ],
+      "decoded": "Hello, world!",
+      "exact": true
+    },
+    {
+      "input": "This is a test sentence.",
+      "token_count": 7,
+      "ids": [
+        1581,
+        261,
+        169,
+        3395,
+        1086,
+        498,
+        14
+      ],
+      "decoded": "This is a test sentence.",
+      "exact": true
+    },
+    {
+      "input": "Mr. Darcy said, \"I am not convinced.\"",
+      "token_count": 15,
+      "ids": [
+        3069,
+        14,
+        419,
+        198,
+        1780,
+        387,
+        12,
+        331,
+        41,
+        469,
+        268,
+        2667,
+        170,
+        854,
+        371
+      ],
+      "decoded": "Mr. Darcy said, \"I am not convinced.\"",
+      "exact": true
+    },
+    {
+      "input": "The quick brown fox jumps over the lazy dog.",
+      "token_count": 15,
+      "ids": [
+        406,
+        1882,
+        3969,
+        957,
+        88,
+        448,
+        360,
+        673,
+        545,
+        171,
+        206,
+        1118,
+        89,
+        2845,
+        14
+      ],
+      "decoded": "The quick brown fox jumps over the lazy dog.",
+      "exact": true
+    },
+    {
+      "input": "There must not be any violence, for it is a sin to be wrathful.",
+      "token_count": 19,
+      "ids": [
+        1426,
+        646,
+        268,
+        213,
+        503,
+        2728,
+        498,
+        12,
+        250,
+        244,
+        261,
+        169,
+        1872,
+        194,
+        213,
+        732,
+        565,
+        591,
+        14
+      ],
+      "decoded": "There must not be any violence, for it is a sin to be wrathful.",
+      "exact": true
+    },
+    {
+      "input": "My father’s family name being Pirrip, and my christian name Philip.",
+      "token_count": 21,
+      "ids": [
+        1951,
+        897,
+        1333,
+        83,
+        1927,
+        881,
+        720,
+        351,
+        238,
+        260,
+        80,
+        12,
+        190,
+        309,
+        657,
+        940,
+        678,
+        881,
+        2353,
+        887,
+        14
+      ],
+      "decoded": "My father’s family name being Pirrip, and my christian name Philip.",
+      "exact": true
+    },
+    {
+      "input": "One\nTwo\nThree",
+      "token_count": 7,
+      "ids": [
+        3144,
+        136,
+        52,
+        2136,
+        136,
+        1592,
+        520
+      ],
+      "decoded": "One\nTwo\nThree",
+      "exact": true
+    },
+    {
+      "input": "It's wasn't couldn't shouldn't.",
+      "token_count": 11,
+      "ids": [
+        870,
+        295,
+        240,
+        78,
+        501,
+        3461,
+        501,
+        572,
+        78,
+        501,
+        14
+      ],
+      "decoded": "It's wasn't couldn't shouldn't.",
+      "exact": true
+    },
+    {
+      "input": "1234567890",
+      "token_count": 8,
+      "ids": [
+        1680,
+        19,
+        3742,
+        22,
+        23,
+        24,
+        25,
+        16
+      ],
+      "decoded": "1234567890",
+      "exact": true
+    },
+    {
+      "input": "— em dash — en dash… ellipsis",
+      "token_count": 15,
+      "ids": [
+        2330,
+        930,
+        200,
+        1496,
+        1243,
+        157,
+        513,
+        200,
+        1496,
+        599,
+        100,
+        224,
+        196,
+        2607,
+        182
+      ],
+      "decoded": "— em dash — en dash… ellipsis",
+      "exact": true
+    }
+  ],
+  "corpus_token_statistics": {
+    "characters": 139678893,
+    "tokens": 43303538,
+    "compression_ratio_chars_per_token": 3.2255769263010334,
+    "unique_tokens_used": 4095,
+    "vocabulary_utilization": 0.999755859375,
+    "most_common_tokens": [
+      [
+        136,
+        2280490
+      ],
+      [
+        12,
+        1955319
+      ],
+      [
+        171,
+        1350714
+      ],
+      [
+        14,
+        1065222
+      ],
+      [
+        187,
+        770043
+      ],
+      [
+        190,
+        746401
+      ],
+      [
+        194,
+        592124
+      ],
+      [
+        169,
+        471802
+      ],
+      [
+        202,
+        397383
+      ],
+      [
+        214,
+        280686
+      ],
+      [
+        83,
+        274393
+      ],
+      [
+        229,
+        270082
+      ],
+      [
+        140,
+        252782
+      ],
+      [
+        240,
+        240818
+      ],
+      [
+        27,
+        239986
+      ],
+      [
+        208,
+        223631
+      ],
+      [
+        251,
+        203639
+      ],
+      [
+        195,
+        198717
+      ],
+      [
+        244,
+        198239
+      ],
+      [
+        26,
+        189804
+      ],
+      [
+        184,
+        183704
+      ],
+      [
+        261,
+        175927
+      ],
+      [
+        252,
+        175624
+      ],
+      [
+        254,
+        172037
+      ],
+      [
+        250,
+        167132
+      ]
+    ]
+  },
+  "token_length_statistics": {
+    "mean": 4.5335775335775335,
+    "median": 4,
+    "min": 1,
+    "max": 32
+  },
+  "suspicious_tokens": [
+    [
+      12,
+      ",",
+      1955319
+    ],
+    [
+      14,
+      ".",
+      1065222
+    ],
+    [
+      27,
+      ";",
+      239986
+    ],
+    [
+      26,
+      ":",
+      189804
+    ],
+    [
+      13,
+      "-",
+      160510
+    ],
+    [
+      2,
+      "\"",
+      138605
+    ],
+    [
+      7,
+      "'",
+      59695
+    ],
+    [
+      1,
+      "!",
+      56803
+    ],
+    [
+      31,
+      "?",
+      56548
+    ],
+    [
+      63,
+      "_",
+      40824
+    ],
+    [
+      61,
+      "]",
+      22285
+    ],
+    [
+      9,
+      ")",
+      18847
+    ],
+    [
+      59,
+      "[",
+      15730
+    ],
+    [
+      10,
+      "*",
+      14308
+    ],
+    [
+      64,
+      "`",
+      8630
+    ],
+    [
+      92,
+      "|",
+      5825
+    ],
+    [
+      29,
+      "=",
+      5501
+    ],
+    [
+      8,
+      "(",
+      4855
+    ],
+    [
+      30,
+      ">",
+      4002
+    ],
+    [
+      93,
+      "}",
+      2654
+    ],
+    [
+      91,
+      "{",
+      2597
+    ],
+    [
+      11,
+      "+",
+      1831
+    ],
+    [
+      28,
+      "<",
+      1547
+    ],
+    [
+      114,
+      "¶",
+      1324
+    ],
+    [
+      15,
+      "/",
+      1302
+    ],
+    [
+      100,
+      "¦",
+      1297
+    ],
+    [
+      102,
+      "¨",
+      1035
+    ],
+    [
+      4,
+      "$",
+      922
+    ],
+    [
+      105,
+      "«",
+      570
+    ],
+    [
+      6,
+      "&",
+      515
+    ],
+    [
+      94,
+      "~",
+      483
+    ],
+    [
+      62,
+      "^",
+      385
+    ],
+    [
+      3,
+      "#",
+      376
+    ],
+    [
+      112,
+      "´",
+      270
+    ],
+    [
+      96,
+      "¢",
+      249
+    ],
+    [
+      101,
+      "§",
+      247
+    ],
+    [
+      107,
+      "¯",
+      155
+    ],
+    [
+      97,
+      "£",
+      130
+    ],
+    [
+      32,
+      "@",
+      111
+    ],
+    [
+      108,
+      "°",
+      88
+    ],
+    [
+      98,
+      "¤",
+      80
+    ],
+    [
+      95,
+      "¡",
+      77
+    ],
+    [
+      106,
+      "®",
+      70
+    ],
+    [
+      5,
+      "%",
+      39
+    ],
+    [
+      60,
+      "\\",
+      34
+    ],
+    [
+      103,
+      "©",
+      29
+    ],
+    [
+      118,
+      "»",
+      25
+    ],
+    [
+      109,
+      "±",
+      17
+    ],
+    [
+      99,
+      "¥",
+      10
+    ],
+    [
+      115,
+      "·",
+      1
+    ],
+    [
+      122,
+      "¿",
+      1
+    ]
+  ],
+  "single_character_tokens": [
+    [
+      136,
+      "Ċ",
+      2280490
+    ],
+    [
+      12,
+      ",",
+      1955319
+    ],
+    [
+      14,
+      ".",
+      1065222
+    ],
+    [
+      83,
+      "s",
+      274393
+    ],
+    [
+      140,
+      "Ġ",
+      252782
+    ],
+    [
+      27,
+      ";",
+      239986
+    ],
+    [
+      26,
+      ":",
+      189804
+    ],
+    [
+      13,
+      "-",
+      160510
+    ],
+    [
+      2,
+      "\"",
+      138605
+    ],
+    [
+      65,
+      "a",
+      116422
+    ],
+    [
+      89,
+      "y",
+      106072
+    ],
+    [
+      80,
+      "p",
+      86765
+    ],
+    [
+      69,
+      "e",
+      81157
+    ],
+    [
+      77,
+      "m",
+      78165
+    ],
+    [
+      66,
+      "b",
+      77460
+    ],
+    [
+      76,
+      "l",
+      74791
+    ],
+    [
+      41,
+      "I",
+      72698
+    ],
+    [
+      84,
+      "t",
+      70805
+    ],
+    [
+      79,
+      "o",
+      64715
+    ],
+    [
+      70,
+      "f",
+      64604
+    ],
+    [
+      67,
+      "c",
+      64325
+    ],
+    [
+      82,
+      "r",
+      64002
+    ],
+    [
+      68,
+      "d",
+      60397
+    ],
+    [
+      7,
+      "'",
+      59695
+    ],
+    [
+      78,
+      "n",
+      59249
+    ],
+    [
+      71,
+      "g",
+      57842
+    ],
+    [
+      1,
+      "!",
+      56803
+    ],
+    [
+      31,
+      "?",
+      56548
+    ],
+    [
+      73,
+      "i",
+      55793
+    ],
+    [
+      51,
+      "S",
+      51026
+    ],
+    [
+      85,
+      "u",
+      49994
+    ],
+    [
+      87,
+      "w",
+      49788
+    ],
+    [
+      86,
+      "v",
+      44752
+    ],
+    [
+      33,
+      "A",
+      42993
+    ],
+    [
+      37,
+      "E",
+      42796
+    ],
+    [
+      45,
+      "M",
+      41453
+    ],
+    [
+      63,
+      "_",
+      40824
+    ],
+    [
+      72,
+      "h",
+      40137
+    ],
+    [
+      35,
+      "C",
+      33533
+    ],
+    [
+      44,
+      "L",
+      33441
+    ],
+    [
+      52,
+      "T",
+      32896
+    ],
+    [
+      75,
+      "k",
+      32515
+    ],
+    [
+      47,
+      "O",
+      28635
+    ],
+    [
+      48,
+      "P",
+      28416
+    ],
+    [
+      36,
+      "D",
+      26274
+    ],
+    [
+      23,
+      "7",
+      25767
+    ],
+    [
+      25,
+      "9",
+      25663
+    ],
+    [
+      34,
+      "B",
+      25407
+    ],
+    [
+      22,
+      "6",
+      25037
+    ],
+    [
+      21,
+      "5",
+      24823
+    ],
+    [
+      24,
+      "8",
+      24811
+    ],
+    [
+      40,
+      "H",
+      24391
+    ],
+    [
+      17,
+      "1",
+      23171
+    ],
+    [
+      20,
+      "4",
+      22731
+    ],
+    [
+      18,
+      "2",
+      22339
+    ],
+    [
+      61,
+      "]",
+      22285
+    ],
+    [
+      50,
+      "R",
+      22273
+    ],
+    [
+      90,
+      "z",
+      21654
+    ],
+    [
+      46,
+      "N",
+      21431
+    ],
+    [
+      39,
+      "G",
+      20922
+    ],
+    [
+      19,
+      "3",
+      20836
+    ],
+    [
+      9,
+      ")",
+      18847
+    ],
+    [
+      38,
+      "F",
+      18388
+    ],
+    [
+      57,
+      "Y",
+      17216
+    ],
+    [
+      88,
+      "x",
+      17119
+    ],
+    [
+      74,
+      "j",
+      16451
+    ],
+    [
+      59,
+      "[",
+      15730
+    ],
+    [
+      16,
+      "0",
+      15165
+    ],
+    [
+      53,
+      "U",
+      15034
+    ],
+    [
+      10,
+      "*",
+      14308
+    ],
+    [
+      54,
+      "V",
+      14147
+    ],
+    [
+      55,
+      "W",
+      13812
+    ],
+    [
+      43,
+      "K",
+      12219
+    ],
+    [
+      42,
+      "J",
+      9842
+    ],
+    [
+      64,
+      "`",
+      8630
+    ],
+    [
+      56,
+      "X",
+      7404
+    ],
+    [
+      124,
+      "Ã",
+      7233
+    ],
+    [
+      92,
+      "|",
+      5825
+    ],
+    [
+      29,
+      "=",
+      5501
+    ],
+    [
+      8,
+      "(",
+      4855
+    ],
+    [
+      30,
+      ">",
+      4002
+    ],
+    [
+      135,
+      "ĉ",
+      3237
+    ],
+    [
+      58,
+      "Z",
+      3019
+    ],
+    [
+      93,
+      "}",
+      2654
+    ],
+    [
+      91,
+      "{",
+      2597
+    ],
+    [
+      49,
+      "Q",
+      1941
+    ],
+    [
+      11,
+      "+",
+      1831
+    ],
+    [
+      81,
+      "q",
+      1753
+    ],
+    [
+      28,
+      "<",
+      1547
+    ],
+    [
+      114,
+      "¶",
+      1324
+    ],
+    [
+      15,
+      "/",
+      1302
+    ],
+    [
+      100,
+      "¦",
+      1297
+    ],
+    [
+      157,
+      "Ķ",
+      1195
+    ],
+    [
+      102,
+      "¨",
+      1035
+    ],
+    [
+      4,
+      "$",
+      922
+    ],
+    [
+      165,
+      "ł",
+      682
+    ],
+    [
+      160,
+      "ĺ",
+      576
+    ],
+    [
+      105,
+      "«",
+      570
+    ],
+    [
+      6,
+      "&",
+      515
+    ],
+    [
+      94,
+      "~",
+      483
+    ]
+  ],
+  "whitespace_tokens": [],
+  "special_character_frequency": [
+    [
+      ",",
+      2087720
+    ],
+    [
+      ".",
+      1252451
+    ],
+    [
+      "\"",
+      421161
+    ],
+    [
+      "-",
+      417442
+    ],
+    [
+      "'",
+      333456
+    ],
+    [
+      ";",
+      241910
+    ],
+    [
+      ":",
+      193639
+    ],
+    [
+      "_",
+      107417
+    ],
+    [
+      "?",
+      103810
+    ],
+    [
+      "!",
+      83989
+    ],
+    [
+      ")",
+      45399
+    ],
+    [
+      "(",
+      45111
+    ],
+    [
+      "[",
+      34475
+    ],
+    [
+      "]",
+      33853
+    ],
+    [
+      "*",
+      19799
+    ],
+    [
+      "~",
+      16029
+    ],
+    [
+      "|",
+      14615
+    ],
+    [
+      "`",
+      13588
+    ],
+    [
+      "}",
+      10427
+    ],
+    [
+      "{",
+      10370
+    ],
+    [
+      "’",
+      7813
+    ],
+    [
+      "“",
+      7574
+    ],
+    [
+      "”",
+      5521
+    ],
+    [
+      "=",
+      5501
+    ],
+    [
+      "&",
+      5423
+    ],
+    [
+      "—",
+      4599
+    ],
+    [
+      ">",
+      4002
+    ],
+    [
+      "<",
+      3876
+    ],
+    [
+      "+",
+      3778
+    ],
+    [
+      "‘",
+      2222
+    ],
+    [
+      "/",
+      1302
+    ],
+    [
+      "$",
+      922
+    ],
+    [
+      "^",
+      385
+    ],
+    [
+      "#",
+      376
+    ],
+    [
+      "@",
+      111
+    ],
+    [
+      "",
+      108
+    ],
+    [
+      "£",
+      90
+    ],
+    [
+      "–",
+      79
+    ],
+    [
+      "",
+      42
+    ],
+    [
+      "%",
+      39
+    ],
+    [
+      "\\",
+      34
+    ],
+    [
+      "\u0002",
+      31
+    ],
+    [
+      "°",
+      25
+    ],
+    [
+      "§",
+      23
+    ],
+    [
+      "♭",
+      15
+    ],
+    [
+      "\u0007",
+      8
+    ],
+    [
+      "♯",
+      5
+    ],
+    [
+      "\b",
+      3
+    ],
+    [
+      "",
+      2
+    ],
+    [
+      "",
+      2
+    ],
+    [
+      "̄",
+      2
+    ],
+    [
+      "\u0001",
+      1
+    ],
+    [
+      "\u0013",
+      1
+    ],
+    [
+      "÷",
+      1
+    ],
+    [
+      "×",
+      1
+    ]
+  ],
+  "word_statistics": {
+    "word_count": 24580087,
+    "unique_words": 355414,
+    "mean_word_length": 4.352726823139397,
+    "median_word_length": 4,
+    "max_word_length": 80
+  },
+  "tokenization_throughput": {
+    "characters": 1000000,
+    "tokens": 351851
+  },
+  "corpus_statistics": {
+    "characters": 139678893,
+    "megabytes_utf8_estimate": 139.750623,
+    "lines": 2883490,
+    "blank_lines": 568322,
+    "very_short_lines": 156269,
+    "replacement_characters": 0,
+    "boilerplate_hits": {
+      "Project Gutenberg": 628,
+      "START OF THE PROJECT GUTENBERG": 0,
+      "END OF THE PROJECT GUTENBERG": 181,
+      "www.gutenberg.org": 15,
+      "gutenberg.org": 15
+    }
+  },
+  "character_distribution": [
+    [
+      " ",
+      24875202
+    ],
+    [
+      "e",
+      13049050
+    ],
+    [
+      "t",
+      9277969
+    ],
+    [
+      "a",
+      8131759
+    ],
+    [
+      "o",
+      7813587
+    ],
+    [
+      "n",
+      7110818
+    ],
+    [
+      "h",
+      6682331
+    ],
+    [
+      "i",
+      6635244
+    ],
+    [
+      "s",
+      6385749
+    ],
+    [
+      "r",
+      6078471
+    ],
+    [
+      "d",
+      4463241
+    ],
+    [
+      "l",
+      4123203
+    ],
+    [
+      "u",
+      2904650
+    ],
+    [
+      "\n",
+      2883484
+    ],
+    [
+      "m",
+      2501558
+    ],
+    [
+      "c",
+      2442400
+    ],
+    [
+      "f",
+      2363316
+    ],
+    [
+      "w",
+      2216868
+    ],
+    [
+      ",",
+      2087720
+    ],
+    [
+      "g",
+      1965864
+    ],
+    [
+      "y",
+      1922833
+    ],
+    [
+      "p",
+      1691144
+    ],
+    [
+      "b",
+      1472033
+    ],
+    [
+      ".",
+      1252451
+    ],
+    [
+      "v",
+      985333
+    ],
+    [
+      "k",
+      727949
+    ],
+    [
+      "I",
+      546753
+    ],
+    [
+      "T",
+      424544
+    ],
+    [
+      "\"",
+      421161
+    ],
+    [
+      "-",
+      417442
+    ],
+    [
+      "A",
+      364810
+    ],
+    [
+      "'",
+      333456
+    ],
+    [
+      "S",
+      264711
+    ],
+    [
+      ";",
+      241910
+    ],
+    [
+      "E",
+      211685
+    ],
+    [
+      "H",
+      210470
+    ],
+    [
+      "M",
+      194990
+    ],
+    [
+      ":",
+      193639
+    ],
+    [
+      "O",
+      174954
+    ],
+    [
+      "C",
+      171017
+    ],
+    [
+      "L",
+      170240
+    ],
+    [
+      "1",
+      168478
+    ],
+    [
+      "0",
+      162759
+    ],
+    [
+      "B",
+      158431
+    ],
+    [
+      "W",
+      157944
+    ],
+    [
+      "R",
+      153100
+    ],
+    [
+      "x",
+      152005
+    ],
+    [
+      "N",
+      149114
+    ],
+    [
+      "G",
+      120139
+    ],
+    [
+      "D",
+      119465
+    ],
+    [
+      "P",
+      118923
+    ],
+    [
+      "2",
+      117963
+    ],
+    [
+      "_",
+      107417
+    ],
+    [
+      "?",
+      103810
+    ],
+    [
+      "F",
+      102362
+    ],
+    [
+      "q",
+      96424
+    ],
+    [
+      "j",
+      94046
+    ],
+    [
+      "3",
+      84923
+    ],
+    [
+      "!",
+      83989
+    ],
+    [
+      "4",
+      79683
+    ],
+    [
+      "z",
+      67483
+    ],
+    [
+      "5",
+      65451
+    ],
+    [
+      "6",
+      62169
+    ],
+    [
+      "J",
+      62043
+    ],
+    [
+      "8",
+      57638
+    ],
+    [
+      "Y",
+      57096
+    ],
+    [
+      "7",
+      55729
+    ],
+    [
+      "9",
+      52417
+    ],
+    [
+      "U",
+      48182
+    ],
+    [
+      "K",
+      47189
+    ],
+    [
+      ")",
+      45399
+    ],
+    [
+      "(",
+      45111
+    ],
+    [
+      "V",
+      35435
+    ],
+    [
+      "[",
+      34475
+    ],
+    [
+      "]",
+      33853
+    ],
+    [
+      "*",
+      19799
+    ],
+    [
+      "X",
+      18422
+    ],
+    [
+      "~",
+      16029
+    ],
+    [
+      "|",
+      14615
+    ],
+    [
+      "`",
+      13588
+    ],
+    [
+      "}",
+      10427
+    ],
+    [
+      "{",
+      10370
+    ],
+    [
+      "Q",
+      8386
+    ],
+    [
+      "’",
+      7813
+    ],
+    [
+      "Z",
+      7737
+    ],
+    [
+      "“",
+      7574
+    ],
+    [
+      "”",
+      5521
+    ],
+    [
+      "=",
+      5501
+    ],
+    [
+      "&",
+      5423
+    ],
+    [
+      "—",
+      4599
+    ],
+    [
+      " ",
+      4266
+    ],
+    [
+      ">",
+      4002
+    ],
+    [
+      "<",
+      3876
+    ],
+    [
+      "é",
+      3864
+    ],
+    [
+      "+",
+      3778
+    ],
+    [
+      "\t",
+      3237
+    ],
+    [
+      "‘",
+      2222
+    ],
+    [
+      "ö",
+      1324
+    ],
+    [
+      "/",
+      1302
+    ],
+    [
+      "æ",
+      1297
+    ]
+  ],
+  "train_validation_split": {
+    "train_tokens": 38973184,
+    "validation_tokens": 4330354,
+    "train_fraction": 0.8999999953814397,
+    "validation_fraction": 0.10000000461856026
+  },
+  "validation_vocabulary_analysis": {
+    "train_unique_tokens": 4094,
+    "validation_unique_tokens": 4044,
+    "validation_tokens_unseen_in_train": 1,
+    "unseen_fraction": 0.0002472799208704253
+  },
+  "context_window_analysis": {
+    "max_context": 512,
+    "approximate_full_windows": 84577,
+    "tokens_per_window": 512,
+    "tokens_lost_to_remainder": 114
+  },
+  "onnx_metadata": {
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "inputs": [
+      {
+        "name": "tokens",
+        "shape": [
+          "batch",
+          "sequence"
+        ],
+        "type": "tensor(int64)"
+      },
+      {
+        "name": "past_key_0",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_0",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_1",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_1",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_2",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_2",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_3",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_3",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_4",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_4",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_5",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_5",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_6",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_6",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_7",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_7",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_8",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_8",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_9",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_9",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_10",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_10",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_key_11",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "past_value_11",
+        "shape": [
+          "batch",
+          8,
+          "cache",
+          64
+        ],
+        "type": "tensor(float)"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "logits",
+        "shape": [
+          "batch",
+          "sequence",
+          4096
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_0",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_0",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_1",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_1",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_2",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_2",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_3",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_3",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_4",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_4",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_5",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_5",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_6",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_6",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_7",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_7",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_8",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_8",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_9",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_9",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_10",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_10",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_key_11",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      },
+      {
+        "name": "present_value_11",
+        "shape": [
+          "batch",
+          8,
+          "cache + sequence",
+          64
+        ],
+        "type": "tensor(float)"
+      }
+    ]
+  },
+  "parameter_estimate": {
+    "estimated_parameters": 35926016,
+    "estimated_parameters_millions": 35.926016,
+    "configuration": {
+      "vocab_size": 4096,
+      "embed_dim": 512,
+      "num_heads": 8,
+      "num_layers": 12,
+      "feedforward_dim": 1536,
+      "max_context": 512
+    }
+  },
+  "shape_tests": [
+    {
+      "sequence_length": 1,
+      "input_shape": [
+        1,
+        1
+      ],
+      "output_shape": [
+        1,
+        1,
+        4096
+      ],
+      "expected_shape": [
+        1,
+        1,
+        4096
+      ],
+      "correct": true,
+      "latency_ms": 11.433430947363377
+    },
+    {
+      "sequence_length": 2,
+      "input_shape": [
+        1,
+        2
+      ],
+      "output_shape": [
+        1,
+        2,
+        4096
+      ],
+      "expected_shape": [
+        1,
+        2,
+        4096
+      ],
+      "correct": true,
+      "latency_ms": 5.142122507095337
+    },
+    {
+      "sequence_length": 8,
+      "input_shape": [
+        1,
+        8
+      ],
+      "output_shape": [
+        1,
+        8,
+        4096
+      ],
+      "expected_shape": [
+        1,
+        8,
+        4096
+      ],
+      "correct": true,
+      "latency_ms": 4.13789227604866
+    },
+    {
+      "sequence_length": 32,
+      "input_shape": [
+        1,
+        32
+      ],
+      "output_shape": [
+        1,
+        32,
+        4096
+      ],
+      "expected_shape": [
+        1,
+        32,
+        4096
+      ],
+      "correct": true,
+      "latency_ms": 7.375981658697128
+    },
+    {
+      "sequence_length": 128,
+      "input_shape": [
+        1,
+        128
+      ],
+      "output_shape": [
+        1,
+        128,
+        4096
+      ],
+      "expected_shape": [
+        1,
+        128,
+        4096
+      ],
+      "correct": true,
+      "latency_ms": 17.41744577884674
+    },
+    {
+      "sequence_length": 512,
+      "input_shape": [
+        1,
+        512
+      ],
+      "output_shape": [
+        1,
+        512,
+        4096
+      ],
+      "expected_shape": [
+        1,
+        512,
+        4096
+      ],
+      "correct": true,
+      "latency_ms": 82.5401321053505
+    }
+  ],
+  "determinism_test": {
+    "maximum_difference": 0.0,
+    "deterministic": true
+  },
+  "input_sensitivity_test": {
+    "maximum_difference": 12.201801300048828,
+    "mean_difference": 0.0818878635764122,
+    "changed_position": 64
+  },
+  "onnx_latency": {
+    "sequence_length": 512,
+    "runs": 10,
+    "mean_ms": 82.51334875822067,
+    "median_ms": 82.12695829570293,
+    "min_ms": 81.6497839987278,
+    "max_ms": 84.62439943104982,
+    "tokens_per_second": 6205.056608479853
+  },
+  "generation_tests": [
+    {
+      "prompt": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue",
+      "temperatures": {
+        "0.2": {
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue, and my\nname.  I have been a great friend of my father, and have been a\nmember of my father, and have been a great friend of mine, and have\ndied in the summer, and have been a great friend of my father, and have\nbeen a great friend of my father.  I have been a great friend of my\nfather, and have been a great friend of my father, and have been a\ngreat friend of mine,",
+          "generation_seconds": 1.1969857914373279,
+          "tokens_per_second": 83.54318047495039,
+          "repetition_score": 0.4227642276422764,
+          "unique_token_ratio": 0.36
+        },
+        "0.5": {
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue is, says I, “the same name should be so much the same as that of the other two of these\npersons, or of the other of them.  I am sure that I have a great deal of\nmischief with them.  I am sure that I have not the slightest knowledge of\nthe language, which I have not seen in Pirrip, but in Milan.  I am\nquite satisfied with the appearance of the _",
+          "generation_seconds": 1.180139091797173,
+          "tokens_per_second": 84.73577453291134,
+          "repetition_score": 0.11382113821138207,
+          "unique_token_ratio": 0.592
+        },
+        "0.8": {
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue is pleased with music, and I am quite so glad to see you. So, when I got there, I found him to be a great favourite with people of your birth, and, as your son used to do, I plunged him down.\n“I had thought of making him famous for the Golden Sun,” said my father, “and I had made him a great success, and he has always been proud of his own people.”\n“We have",
+          "generation_seconds": 1.1780776251107454,
+          "tokens_per_second": 84.88404997132467,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.704
+        },
+        "1.0": {
+          "text": "My father’s family name being Pirrip, and my christian name Philip, my infant tongue occasionally commended by their parents, as a suspicion about them that when they were married there would be no end.\n“Then the grass grew thicker and every-sided, until the countrypeople passed by stopping suddenly towards evening to repair their young discourses. These were the wind or rain; they were tedious, but not slow, imagination could long be perceived; and their form might, on the whole, produce bodily strength",
+          "generation_seconds": 1.185255371965468,
+          "tokens_per_second": 84.37000360029879,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.8
+        }
+      }
+    },
+    {
+      "prompt": "There must not be any violence, for it is a sin to be wrathful. Instead we must",
+      "temperatures": {
+        "0.2": {
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nbegin to be unjust, and the law is not so unjust as to be a\ncorruptible and unjust, as to be a man of the law. It is not a\ndestruction of the law, but it is a law of the law. It is a law of\nthe law, and it is a law of the law. It is a law of the law, and\nit is a law of the law. It is a law of",
+          "generation_seconds": 1.1727146031334996,
+          "tokens_per_second": 85.272239070614,
+          "repetition_score": 0.29508196721311475,
+          "unique_token_ratio": 0.3629032258064516
+        },
+        "0.5": {
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must have\na plague, and the pangs of death are too much for us. I want to know\nthe truth, and do it with me, and the first thing I can do. I have\ntold you that I have a right to know, and I do not know how to know\nhow to do it.\"\n\n\"I did not think I could,\" said Diggory, \"that such a thing as this is\ntold, and that I",
+          "generation_seconds": 1.1683068592101336,
+          "tokens_per_second": 85.59395094847581,
+          "repetition_score": 0.024590163934426257,
+          "unique_token_ratio": 0.5887096774193549
+        },
+        "0.8": {
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must\nconsult; and John Jones will say the truth, that it is a crime to\npersuade us to speak. Benechemians are usually a little drunk. The\nfuneral is a mere scarecrow, and the eunuch who had patiently read\nEnglish errors so as to restore the blind man to the churches and\npreach the venerable voters in the gard",
+          "generation_seconds": 1.1705641858279705,
+          "tokens_per_second": 85.42889079531115,
+          "repetition_score": 0.008196721311475419,
+          "unique_token_ratio": 0.7580645161290323
+        },
+        "1.0": {
+          "text": "There must not be any violence, for it is a sin to be wrathful. Instead we must be\nstruck with these deaf words--for theparest is tenfold recipe.\n\nWith the exposure of these truthful words our thoughts commenced, by\na short key of the recipe through which Bruno is released.\n\n'I must embrace it,' he said, and threw himself upon his seat.\n\nPrince Marvel drew down a well-nigh shaded piece of lead",
+          "generation_seconds": 1.165257789194584,
+          "tokens_per_second": 85.8179202295821,
+          "repetition_score": 0.024590163934426257,
+          "unique_token_ratio": 0.7419354838709677
+        }
+      }
+    },
+    {
+      "prompt": "It was a dark and stormy night",
+      "temperatures": {
+        "0.2": {
+          "text": "It was a dark and stormy night, and I was\nsure I wasn't going to be a good one.  I hadn't been in the house\nbefore, but I was so glad I was out of the way, and I was so glad I\ncouldn't sleep.  I was so glad I was so glad I was in the house, and\nso was I.  I was so glad I was out of the house, but I was so glad I\ncouldn't",
+          "generation_seconds": 1.0102496538311243,
+          "tokens_per_second": 98.98543357156768,
+          "repetition_score": 0.3271028037383178,
+          "unique_token_ratio": 0.3669724770642202
+        },
+        "0.5": {
+          "text": "It was a dark and stormy night, and I hadn't time to think of it. I had been\nkilled in the night, and had been out of it before, and was looking\nlike a star, and the night was very dark, and I was in a cellar.\n\nI had been there a long time, but I didn't want to go down. I had\na long talk with the men, and I was afraid I wasn't going to be\ndone. I was",
+          "generation_seconds": 1.0047919303178787,
+          "tokens_per_second": 99.52309227678981,
+          "repetition_score": 0.04672897196261683,
+          "unique_token_ratio": 0.47706422018348627
+        },
+        "0.8": {
+          "text": "It was a dark and stormy night, and the sound of the\nshafts flew up from the spot where it passed, and now the little chimney\nshe knew it was gone, and the hay was coming.  I gladly turned my head\nfor the breakfast, and sat in a little cottage on the grass.  She was\nswollering so, she said,                I'm keeping a bit alone.  I wish I'd come\nout and get one of the",
+          "generation_seconds": 1.0088509684428573,
+          "tokens_per_second": 99.12266839010735,
+          "repetition_score": 0.01869158878504673,
+          "unique_token_ratio": 0.6788990825688074
+        },
+        "1.0": {
+          "text": "It was a dark and stormy night when I\nexpected to be Bath without knowing any half-hopeless family I would not\nblame for it.  I had no idea, but afterward, she had taken me to a rest\nin that small spot on which we were laid there, I should be glad if God\nwould be able to show us the noonday frogs alike, and hopeless, starless\ndays.  I had obtained no part at all, only",
+          "generation_seconds": 1.0029003350064158,
+          "tokens_per_second": 99.71080526098366,
+          "repetition_score": 0.01869158878504673,
+          "unique_token_ratio": 0.7614678899082569
+        }
+      }
+    },
+    {
+      "prompt": "The object of my study was to understand",
+      "temperatures": {
+        "0.2": {
+          "text": "The object of my study was to understand that it was a\nscientific work of art, and that it was a great work of art, and that\nit was a work of art.  I had no idea what it was, but I had no\ndifference to it.  It was a work of art, and I had no idea what it\nwas.  I had no idea what it was, but I had no idea what it was.\n\n\"I had no idea what it was,\" I",
+          "generation_seconds": 1.0003700191155076,
+          "tokens_per_second": 99.96301177479961,
+          "repetition_score": 0.34905660377358494,
+          "unique_token_ratio": 0.3425925925925926
+        },
+        "0.5": {
+          "text": "The object of my study was to understand that it was a very\nlow, or in some way the most difficult of imagination, that I was\nfelt to be a sort of cultivated, and that I was a little mistaken.  I\nwas very much interested in my own experience, and I was delighted to\nmake a little of the relations of my mind.  I was deeply interested in\nthe matter, and especially in the conversation of the people, in the",
+          "generation_seconds": 0.9937393013387918,
+          "tokens_per_second": 100.63001419514893,
+          "repetition_score": 0.028301886792452824,
+          "unique_token_ratio": 0.5462962962962963
+        },
+        "0.8": {
+          "text": "The object of my study was to understand a friend. I was to tell him about the business. But at first I was labouring in the wrong. I did not feel so much interested in him.\n“He was fond of me. I had better get away from him and finish him. He knew everything without a doubt, and I felt so sorry that I wanted to be held with a distracting ingratitude of the mind. His burden was not so great and gratifying",
+          "generation_seconds": 0.9947794824838638,
+          "tokens_per_second": 100.52479143448969,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.6851851851851852
+        },
+        "1.0": {
+          "text": "The object of my study was to understand.  I drew back with\ngroping nervousness.  My prospect of walking in the snow without,\nsome to my sensations, somehow and the change between my disease and\none impulse to appreciate my own impression that I was not the strongest\npossible ties.  Still more frequently I realized that the inhabitants\nof the two world imagined as if the world had passed from them,",
+          "generation_seconds": 0.9937371397390962,
+          "tokens_per_second": 100.6302330878514,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.7314814814814815
+        }
+      }
+    },
+    {
+      "prompt": "In the beginning",
+      "temperatures": {
+        "0.2": {
+          "text": "In the beginning of the world, the\nsame is the same as that which is the same.  I have seen it in the\ncourse of the world, and I have seen it in the same way, and I have\ndone it in the same way.  It is the same with the other world, and\nthe same with the other world.  It is the same with the other\nthings, and the same with the other.  It is the same with the\n",
+          "generation_seconds": 0.9397731786593795,
+          "tokens_per_second": 106.40865505722735,
+          "repetition_score": 0.3267326732673267,
+          "unique_token_ratio": 0.32038834951456313
+        },
+        "0.5": {
+          "text": "In the beginning of this range, and the\nsunset, the earth, and the sky, the earth, and the earth, and the\nsun, and all the earth, and all the earth, and all that is in it,\nare the earth, and all that is therein, and all that is therein.\n\n6:7 And there is no man that is not able to do all these things,\nwhich are done in the earth: but the heavens",
+          "generation_seconds": 0.938066216185689,
+          "tokens_per_second": 106.60228273289093,
+          "repetition_score": 0.28712871287128716,
+          "unique_token_ratio": 0.39805825242718446
+        },
+        "0.8": {
+          "text": "In the beginning to come out a wheel was the main\nbank, and the floors and brake up the doors. The hotel was in its\nmiddle, and the cyclists were in its place, it was rather\nslight, for the sand had gripped its swell-croker for its own\nsize, and were giving way and biting this petrifying thing away in a\nlittle while.\n\nThey were",
+          "generation_seconds": 0.9403862794861197,
+          "tokens_per_second": 106.33928012502017,
+          "repetition_score": 0.00990099009900991,
+          "unique_token_ratio": 0.6699029126213593
+        },
+        "1.0": {
+          "text": "In the beginning of the first month, success was\ndiscussed. And for these second testimony, I counted on the instant\nthat I was on my command.\n\n\"Besides the rate of first intervening time I have to also mention it.\nFor once, I have ceased to refuse as the one wish of, not even an\ninstructor; but I have come to think that no question of existence is\nconversable to",
+          "generation_seconds": 0.9365085680037737,
+          "tokens_per_second": 106.77958901449907,
+          "repetition_score": 0.0,
+          "unique_token_ratio": 0.6990291262135923
+        }
+      }
+    },
+    {
+      "prompt": "The old man looked at the house and",
+      "temperatures": {
+        "0.2": {
+          "text": "The old man looked at the house and saw the old man's face.\n\n\"I am a very old man,\" said the man.\n\n\"I am a very old man,\" said the man.\n\n\"I am a very old man,\" said the man.\n\n\"I am a good man,\" said the man.\n\n\"A good man,\" said the man.\n\n\"A good man,\" said the man.\n\n\"I am a good man,\" said the man.\n\n\"",
+          "generation_seconds": 0.9934596372768283,
+          "tokens_per_second": 100.65834206823938,
+          "repetition_score": 0.679245283018868,
+          "unique_token_ratio": 0.2037037037037037
+        },
+        "0.5": {
+          "text": "The old man looked at the house and looked at me.\n\n\"I am very glad to see you,\" he said, \"and I am glad to see you.  I am\nvery glad to see you.\"\n\n\"Do you think I shall have some trouble?\" I asked.\n\n\"I think I shall have a good time,\" he answered.  \"I have no time to\nfind.\"\n\n\"Thank you,\" he answered.  \"I have no business to ask.\"\n\n",
+          "generation_seconds": 0.9937737584114075,
+          "tokens_per_second": 100.62652505521433,
+          "repetition_score": 0.19811320754716977,
+          "unique_token_ratio": 0.4537037037037037
+        },
+        "0.8": {
+          "text": "The old man looked at the house and looked at it:\n\n\"Do you think I could stand it?\"\n\n\"Why, yes! How long are you to see the husband you did it?\"\n\n\"He has been to the house and he hath had one, and can have no objection\nwhere he comes. He is dead, and his mother must have been dead.\"\n\n\"You'll have nothing to do with him,\" said the old man, who was beginning\nto turn away from his troubled",
+          "generation_seconds": 0.9971433142200112,
+          "tokens_per_second": 100.28648698128447,
+          "repetition_score": 0.05660377358490565,
+          "unique_token_ratio": 0.6388888888888888
+        },
+        "1.0": {
+          "text": "The old man looked at the house and addressed the old man.\n\n\"Are you getting rid of her this morning?\" he said.\n\n\"Really, is she?\" asked the man.\n\n\"Friend Margaret came as an oak-tree?\" answered the dressmaker\ncontenting.  \"We hadn't a gift for her address, were we? She was her\nhealth now.\"\n\n\"Give her a dollar!\"",
+          "generation_seconds": 0.9942731820046902,
+          "tokens_per_second": 100.5759803340731,
+          "repetition_score": 0.05660377358490565,
+          "unique_token_ratio": 0.7129629629629629
+        }
+      }
+    }
+  ],
+  "estimated_loss": {
+    "train_loss": 2.6741235216146695,
+    "validation_loss": 3.394285291686692,
+    "train_perplexity": 14.499635651305702,
+    "validation_perplexity": 29.793352307208703,
+    "generalization_gap": 0.7201617700720226
+  }
+}

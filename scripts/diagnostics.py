@@ -70,6 +70,9 @@ class ONNXDiagnosticEngine:
         self.inputs = self.session.get_inputs()
         self.outputs = self.session.get_outputs()
 
+        self.input_names = [inp.name for inp in self.inputs]
+        self.output_names = [out.name for out in self.inputs]
+
         self.input_name = self.inputs[0].name
         self.output_name = self.outputs[0].name
 
@@ -91,10 +94,31 @@ class ONNXDiagnosticEngine:
             raise ValueError("tokens must have shape (batch, sequence)")
 
         tokens = np.asarray(tokens, dtype=np.int64)
+        batch_size, seq_len = tokens.shape
+
+        input_feed: Dict[str, np.ndarray] = {self.input_name: tokens}
+
+        # Iterate over self.inputs (NodeArg objects) instead of self.input_names
+        for inp in self.inputs[1:]:
+            # Check type string from NodeArg object
+            dtype = np.float32 if "float" in str(inp.type) else np.float16
+
+            # Build zero-filled cache shape for prefill pass
+            shape = []
+            for dim in inp.shape:
+                if isinstance(dim, int):
+                    shape.append(dim)
+                elif dim == "batch_size" or dim == self.inputs[0].shape[0]:
+                    shape.append(batch_size)
+                else:
+                    # past_sequence_length starts at 0 for initial forward pass
+                    shape.append(0)
+
+            input_feed[inp.name] = np.zeros(shape, dtype=dtype)
 
         outputs = self.session.run(
             [self.output_name],
-            {self.input_name: tokens}
+            input_feed
         )
 
         return outputs[0]
