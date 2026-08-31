@@ -1,8 +1,10 @@
+import gc
 import logging
 import math
 from pathlib import Path
 from typing import Any, List
 
+import numpy as np
 import torch
 from torch import nn
 from tqdm import tqdm
@@ -12,7 +14,6 @@ if torch.cuda.is_available():
 
 from config import Config
 from data.bpe_tokenizer import BPETokenizer
-from data.corpus import TextCorpus
 from data.dataloader import LanguageModelDataLoader
 from data.dataset import LanguageModelDataset, train_validation_split
 from model.gpt import GPT
@@ -40,7 +41,6 @@ class Trainer:
         )
         self.model.to(self.device)
 
-        # Detect Ampere/Ada support for bfloat16
         self.use_bf16: bool = (
             self.device.type == "cuda" and torch.cuda.is_bf16_supported()
         )
@@ -48,7 +48,6 @@ class Trainer:
             torch.bfloat16 if self.use_bf16 else torch.float16
         )
 
-        # GradScaler is only necessary for FP16, not BF16
         self.scaler: torch.amp.GradScaler | None = (
             torch.amp.GradScaler("cuda")
             if (self.device.type == "cuda" and not self.use_bf16)
@@ -189,9 +188,10 @@ class Trainer:
 def main() -> None:
     config: Config = Config()
 
-    logger.info("Loading corpus...")
-    corpus: TextCorpus = TextCorpus("data/cleaned")
-    logger.info("Corpus loaded: %d characters", len(corpus.text))
+    data_dir = Path("data/cleaned")
+    file_paths = sorted([str(p) for p in data_dir.glob("*.txt")])
+    if not file_paths:
+        raise FileNotFoundError(f"No .txt files found in {data_dir}")
 
     tokenizer: BPETokenizer = BPETokenizer(config.vocab_size)
     tokenizer_path: str = f"bpe_tokenizer_{config.vocab_size}.json"
@@ -201,15 +201,35 @@ def main() -> None:
         tokenizer.load(tokenizer_path)
     else:
         logger.info(
-            "Training BPE tokenizer with vocabulary size %d...",
+            "Training BPE tokenizer with vocabulary size %d directly from files...",
             config.vocab_size,
         )
-        tokenizer.train(corpus.text)
+        tokenizer.train_from_files(file_paths)
         tokenizer.save(tokenizer_path)
         logger.info("Tokenizer saved to %s", tokenizer_path)
 
     logger.info("Tokenizer vocabulary size: %d", tokenizer.vocab_size)
-    tokens: List[int] = tokenizer.encode(corpus.text)
+
+    BATCH_SIZE = 1000
+    token_chunks: List[np.ndarray] = []
+
+    for i in tqdm(range(0, len(file_paths), BATCH_SIZE), desc="Encoding batches"):
+        batch_paths = file_paths[i : i + BATCH_SIZE]
+        batch_texts = []
+        for fp in batch_paths:
+            with open(fp, "r", encoding="utf-8", errors="ignore") as f:
+                batch_texts.append(f.read())
+
+        encodings = tokenizer.tokenizer.encode_batch(batch_texts)
+        batch_ids = [
+            token_id for enc in encodings for token_id in enc.ids
+        ]
+        token_chunks.append(np.array(batch_ids, dtype=np.uint16))
+
+    tokens: np.ndarray = np.concatenate(token_chunks)
+    del token_chunks
+    gc.collect()
+
     logger.info("Corpus tokenized: %d tokens", len(tokens))
 
     train_tokens, validation_tokens = train_validation_split(tokens)

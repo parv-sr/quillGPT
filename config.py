@@ -15,5 +15,5 @@ class Config:
     min_learning_rate = 3e-5
     weight_decay = 0.1
     warmup_fraction = 0.05
-    epochs = 5
+    epochs = 3
     version: str = "0.2.3"
