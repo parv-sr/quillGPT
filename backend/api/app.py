@@ -16,8 +16,8 @@ TOKENIZER_PATH: str = "bpe_tokenizer_16384.json"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    corpus = TextCorpus("data/raw")
-    print("Corpus loaded")
+    #corpus = TextCorpus("data/raw")
+    #print("Corpus loaded")
 
     tokenizer = BPETokenizer(config.vocab_size)
     tokenizer.load(TOKENIZER_PATH)

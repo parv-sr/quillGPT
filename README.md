@@ -36,4 +36,6 @@ This will start the inference server and load the model and inference engine int
 
 ```/infer/generate``` Endpoint will generate the responses.
 
+V2 Features 235M parameters.
+
 ##### Authored by: Parv Sharma, FLAME University
