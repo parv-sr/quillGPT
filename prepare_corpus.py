@@ -6,6 +6,18 @@ from config import Config
 from data.bpe_tokenizer import BPETokenizer
 
 
+def process_file_block(tokenizer: BPETokenizer, file_paths: list[str]) -> np.ndarray:
+    texts = []
+    for fp in file_paths:
+        with open(fp, "r", encoding="utf-8", errors="ignore") as f_in:
+            texts.append(f_in.read())
+    encodings = tokenizer.tokenizer.encode_batch(texts)
+    arrays = [np.array(enc.ids, dtype=np.uint16) for enc in encodings if enc.ids]
+    if not arrays:
+        return np.empty(0, dtype=np.uint16)
+    return np.concatenate(arrays)
+
+
 def prepare_corpus() -> None:
     config = Config()
     cleaned_dir = Path("data/cleaned")
@@ -42,27 +54,25 @@ def prepare_corpus() -> None:
     train_bin_path = tokens_dir / "train.bin"
     val_bin_path = tokens_dir / "validation.bin"
 
+    block_size = 512
+
     train_token_count = 0
     with open(train_bin_path, "wb") as f_train:
-        for fp in train_files:
-            with open(fp, "r", encoding="utf-8", errors="ignore") as f_in:
-                text = f_in.read()
-            ids = tokenizer.encode(text)
-            if ids:
-                arr = np.array(ids, dtype=np.uint16)
-                f_train.write(arr.tobytes())
-                train_token_count += len(ids)
+        for i in range(0, len(train_files), block_size):
+            block = train_files[i : i + block_size]
+            block_arr = process_file_block(tokenizer, block)
+            if len(block_arr) > 0:
+                f_train.write(block_arr.tobytes())
+                train_token_count += int(len(block_arr))
 
     val_token_count = 0
     with open(val_bin_path, "wb") as f_val:
-        for fp in val_files:
-            with open(fp, "r", encoding="utf-8", errors="ignore") as f_in:
-                text = f_in.read()
-            ids = tokenizer.encode(text)
-            if ids:
-                arr = np.array(ids, dtype=np.uint16)
-                f_val.write(arr.tobytes())
-                val_token_count += len(ids)
+        for i in range(0, len(val_files), block_size):
+            block = val_files[i : i + block_size]
+            block_arr = process_file_block(tokenizer, block)
+            if len(block_arr) > 0:
+                f_val.write(block_arr.tobytes())
+                val_token_count += int(len(block_arr))
 
     metadata = {
         "train_tokens": train_token_count,
