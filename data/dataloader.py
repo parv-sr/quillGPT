@@ -9,7 +9,7 @@ class LanguageModelDataLoader:
         train_dataset: LanguageModelDataset,
         validation_dataset: LanguageModelDataset,
         batch_size: int,
-        num_workers: int = 4,
+        num_workers: int = 2,
         pin_memory: bool = True,
     ) -> None:
         use_pin = pin_memory and torch.cuda.is_available()
@@ -17,11 +17,12 @@ class LanguageModelDataLoader:
         self.train_loader = DataLoader(
             train_dataset,
             batch_size=batch_size,
-            shuffle=True,
+            shuffle=False,
             drop_last=True,
             num_workers=num_workers,
             pin_memory=use_pin,
             persistent_workers=(num_workers > 0),
+            prefetch_factor=4 if num_workers > 0 else None,
         )
 
         self.validation_loader = DataLoader(
@@ -32,4 +33,5 @@ class LanguageModelDataLoader:
             num_workers=num_workers,
             pin_memory=use_pin,
             persistent_workers=(num_workers > 0),
+            prefetch_factor=4 if num_workers > 0 else None,
         )
