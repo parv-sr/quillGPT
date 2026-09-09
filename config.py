@@ -16,4 +16,4 @@ class Config:
     weight_decay = 0.1
     warmup_fraction = 0.05
     epochs = 3
-    version: str = "0.2.3"
+    version: str = "0.2.5"

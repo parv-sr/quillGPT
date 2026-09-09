@@ -188,10 +188,13 @@ class Trainer:
 def main() -> None:
     config: Config = Config()
 
-    data_dir = Path("data/cleaned")
-    file_paths = sorted([str(p) for p in data_dir.glob("*.txt")])
-    if not file_paths:
-        raise FileNotFoundError(f"No .txt files found in {data_dir}")
+    train_bin_path = Path("data/tokens/train.bin")
+    val_bin_path = Path("data/tokens/validation.bin")
+
+    if not train_bin_path.exists() or not val_bin_path.exists():
+        logger.info("Token binary files not found. Running prepare_corpus.py...")
+        from prepare_corpus import prepare_corpus
+        prepare_corpus()
 
     tokenizer: BPETokenizer = BPETokenizer(config.vocab_size)
     tokenizer_path: str = f"bpe_tokenizer_{config.vocab_size}.json"
@@ -200,6 +203,10 @@ def main() -> None:
         logger.info("Loading tokenizer from %s", tokenizer_path)
         tokenizer.load(tokenizer_path)
     else:
+        data_dir = Path("data/cleaned")
+        file_paths = sorted([str(p) for p in data_dir.glob("*.txt")])
+        if not file_paths:
+            raise FileNotFoundError(f"No .txt files found in {data_dir}")
         logger.info(
             "Training BPE tokenizer with vocabulary size %d directly from files...",
             config.vocab_size,
@@ -210,31 +217,11 @@ def main() -> None:
 
     logger.info("Tokenizer vocabulary size: %d", tokenizer.vocab_size)
 
-    BATCH_SIZE = 1000
-    token_chunks: List[np.ndarray] = []
+    train_tokens: np.ndarray = np.memmap(train_bin_path, dtype=np.uint16, mode="r")
+    validation_tokens: np.ndarray = np.memmap(val_bin_path, dtype=np.uint16, mode="r")
 
-    for i in tqdm(range(0, len(file_paths), BATCH_SIZE), desc="Encoding batches"):
-        batch_paths = file_paths[i : i + BATCH_SIZE]
-        batch_texts = []
-        for fp in batch_paths:
-            with open(fp, "r", encoding="utf-8", errors="ignore") as f:
-                batch_texts.append(f.read())
-
-        encodings = tokenizer.tokenizer.encode_batch(batch_texts)
-        batch_ids = [
-            token_id for enc in encodings for token_id in enc.ids
-        ]
-        token_chunks.append(np.array(batch_ids, dtype=np.uint16))
-
-    tokens: np.ndarray = np.concatenate(token_chunks)
-    del token_chunks
-    gc.collect()
-
-    logger.info("Corpus tokenized: %d tokens", len(tokens))
-
-    train_tokens, validation_tokens = train_validation_split(tokens)
-    logger.info("Training tokens: %d", len(train_tokens))
-    logger.info("Validation tokens: %d", len(validation_tokens))
+    logger.info("Training tokens loaded via memmap: %d", len(train_tokens))
+    logger.info("Validation tokens loaded via memmap: %d", len(validation_tokens))
 
     train_dataset: LanguageModelDataset = LanguageModelDataset(
         train_tokens, config.max_context
