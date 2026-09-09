@@ -33,7 +33,7 @@ class Trainer:
         config: Config,
         vocab_size: int,
     ) -> None:
-        self.model: nn.Module = model
+        self.model: nn.Module = torch.compile(model)
         self.train_loader: Any = train_loader
         self.validation_loader: Any = validation_loader
         self.device: torch.device = torch.device(
