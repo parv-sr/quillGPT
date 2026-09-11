@@ -15,3 +15,5 @@ data/raw
 data/cleaned
 data/corpus_cleaned.tar.gz
 data/tokens
+*.pt[h]
+checkpoints/
