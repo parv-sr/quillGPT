@@ -22,64 +22,116 @@ import torch
 from torch import nn
 
 
-def rotate_half(x: torch.Tensor) -> torch.Tensor:
-    """Rotates half the hidden dims of the input."""
-    x1 = x[..., : x.shape[-1] // 2]
-    x2 = x[..., x.shape[-1] // 2 :]
-    return torch.cat((-x2, x1), dim=-1)
-
-
 class RotaryPositionalEmbedding(nn.Module):
     def __init__(
         self,
         head_dim: int,
-        max_context: int = 2048,
+        max_context: int,
         base: float = 10000.0,
-        scaling_factor: float = 1.0,
     ) -> None:
         super().__init__()
 
         if head_dim % 2 != 0:
-            raise ValueError("RoPE requires an even head dimension")
+            raise ValueError(
+                "RoPE head dimension must be even."
+            )
 
-        self.head_dim = head_dim
-        self.max_context = max_context
-        self.base = base
-        self.scaling_factor = scaling_factor
-
-    def _compute_cos_sin(
-        self, seq_len: int, device: torch.device, dtype: torch.dtype
-    ) -> tuple[torch.Tensor, torch.Tensor]:
         inv_freq = 1.0 / (
-            self.base
+            base
             ** (
-                torch.arange(0, self.head_dim, 2, device=device).float()
-                / self.head_dim
+                torch.arange(
+                    0,
+                    head_dim,
+                    2,
+                    dtype=torch.float32,
+                )
+                / head_dim
             )
         )
-        t = (
-            torch.arange(seq_len, device=device, dtype=torch.float32)
-            / self.scaling_factor
+
+        positions = torch.arange(
+            max_context,
+            dtype=torch.float32,
         )
-        freqs = torch.outer(t, inv_freq)
-        emb = torch.cat((freqs, freqs), dim=-1)
-        
-        cos = emb.cos().to(dtype=dtype)
-        sin = emb.sin().to(dtype=dtype)
-        return cos, sin
+
+        frequencies = torch.outer(
+            positions,
+            inv_freq,
+        )
+
+        self.register_buffer(
+            "cos_cached",
+            frequencies.cos(),
+            persistent=False,
+        )
+
+        self.register_buffer(
+            "sin_cached",
+            frequencies.sin(),
+            persistent=False,
+        )
+
+        self.max_context = max_context
+        self.head_dim = head_dim
+
+    @staticmethod
+    def rotate_half(
+        x: torch.Tensor,
+    ) -> torch.Tensor:
+        x_even = x[..., ::2]
+        x_odd = x[..., 1::2]
+
+        rotated = torch.stack(
+            (-x_odd, x_even),
+            dim=-1,
+        )
+
+        return rotated.flatten(-2)
 
     def forward(
-        self, x: torch.Tensor, position_offset: int = 0
+        self,
+        x: torch.Tensor,
+        start_pos: int = 0,
     ) -> torch.Tensor:
-        # x shape: (B, H, T, D)
-        _, _, sequence_length, _ = x.shape
-        end_position = position_offset + sequence_length
+        sequence_length = x.size(-2)
 
-        cos, sin = self._compute_cos_sin(
-            end_position, device=x.device, dtype=x.dtype
+        end_pos = (
+            start_pos
+            + sequence_length
         )
 
-        cos = cos[position_offset:end_position].unsqueeze(0).unsqueeze(0)
-        sin = sin[position_offset:end_position].unsqueeze(0).unsqueeze(0)
+        if end_pos > self.max_context:
+            raise ValueError(
+                f"RoPE position {end_pos} exceeds "
+                f"max_context={self.max_context}"
+            )
 
-        return (x * cos) + (rotate_half(x) * sin)
+        cos = self.cos_cached[
+            start_pos:end_pos
+        ].to(
+            dtype=x.dtype
+        )
+
+        sin = self.sin_cached[
+            start_pos:end_pos
+        ].to(
+            dtype=x.dtype
+        )
+
+        cos = torch.repeat_interleave(
+            cos,
+            2,
+            dim=-1,
+        )
+
+        sin = torch.repeat_interleave(
+            sin,
+            2,
+            dim=-1,
+        )
+
+        return (
+            x * cos[None, None, :, :]
+            + self.rotate_half(x)
+            * sin[None, None, :, :]
+        )

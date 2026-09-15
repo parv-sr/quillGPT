@@ -1,5 +1,6 @@
 import json
 import random
+import shutil
 from pathlib import Path
 from typing import Iterable
 
@@ -12,18 +13,12 @@ from data.bpe_tokenizer import BPETokenizer
 
 CHUNK_CHARS = 4 * 1024 * 1024
 ENCODE_BATCH_CHUNKS = 8
-
+TOKEN_SHARD_SIZE = 1_000_000
 VALIDATION_FRACTION = 0.001
-
 RANDOM_SEED = 42
 
 
 def iter_text_chunks(path: Path) -> Iterable[str]:
-    """
-    Yield bounded-size chunks, preferentially ending on line boundaries.
-
-    This avoids reading an entire potentially huge file into RAM.
-    """
     buffer: list[str] = []
     buffered_chars = 0
 
@@ -42,135 +37,257 @@ def iter_text_chunks(path: Path) -> Iterable[str]:
 
         if buffer:
             chunk = "".join(buffer)
+
             if chunk:
                 yield chunk
 
 
-def split_files_by_size(
-    file_paths: list[Path],
-    validation_fraction: float,
-    seed: int,
-) -> tuple[list[Path], list[Path]]:
-    """
-    File-level train/validation split, but approximately by bytes instead
-    of file count. This handles corpora where files have very different sizes.
-    """
-    if len(file_paths) < 2:
-        raise ValueError(
-            "Need at least two cleaned files for a file-level "
-            "train/validation split."
-        )
-
-    paths = list(file_paths)
-
-    rng = random.Random(seed)
-    rng.shuffle(paths)
-
-    total_bytes = sum(p.stat().st_size for p in paths)
-    target_val_bytes = max(1, int(total_bytes * validation_fraction))
-
-    val_files: list[Path] = []
-    train_files: list[Path] = []
-
-    val_bytes = 0
-
-    for i, path in enumerate(paths):
-        files_remaining = len(paths) - i
-
-        if val_bytes < target_val_bytes and files_remaining > 1:
-            val_files.append(path)
-            val_bytes += path.stat().st_size
-        else:
-            train_files.append(path)
-
-    if not train_files:
-        train_files.append(val_files.pop())
-
-    if not val_files:
-        val_files.append(train_files.pop())
-
-    return train_files, val_files
-
-
-def encode_and_write_batch(
-    tokenizer,
-    texts: list[str],
-    output_file,
-) -> int:
-    """
-    Tokenize a bounded batch and immediately stream uint16 IDs to disk.
-    """
+def encode_batch(tokenizer, texts: list[str]) -> list[np.ndarray]:
     if not texts:
-        return 0
-    
-    encode_batch = getattr(
+        return []
+
+    encode_fn = getattr(
         tokenizer,
         "encode_batch_fast",
         tokenizer.encode_batch,
     )
 
-    encodings = encode_batch(
+    encodings = encode_fn(
         texts,
         add_special_tokens=False,
     )
-    written = 0
+
+    arrays: list[np.ndarray] = []
 
     for encoding in encodings:
-        ids = encoding.ids
-
-        if not ids:
+        if not encoding.ids:
             continue
 
-        arr = np.asarray(ids, dtype=np.uint16)
-        arr.tofile(output_file)
-        written += arr.size
+        arrays.append(
+            np.asarray(
+                encoding.ids,
+                dtype=np.uint16,
+            )
+        )
 
-    return written
+    return arrays
 
 
-def write_token_file(
+def flush_shard(
+    token_buffer: np.ndarray,
+    shard_dir: Path,
+    shard_index: int,
+) -> tuple[np.ndarray, int]:
+    if token_buffer.size < TOKEN_SHARD_SIZE:
+        return token_buffer, shard_index
+
+    shard = token_buffer[:TOKEN_SHARD_SIZE]
+
+    shard_path = shard_dir / f"shard_{shard_index:06d}.bin"
+
+    shard.tofile(shard_path)
+
+    remaining = token_buffer[TOKEN_SHARD_SIZE:].copy()
+
+    return remaining, shard_index + 1
+
+
+def build_token_shards(
     file_paths: list[Path],
-    output_path: Path,
     tokenizer,
     eos_id: int,
+    shard_dir: Path,
+) -> tuple[list[Path], int]:
+    shard_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    for old_shard in shard_dir.glob("*.bin"):
+        old_shard.unlink()
+
+    eos = np.asarray(
+        [eos_id],
+        dtype=np.uint16,
+    )
+
+    token_buffer = np.empty(
+        0,
+        dtype=np.uint16,
+    )
+
+    shard_index = 0
+    total_tokens = 0
+
+    progress = tqdm(
+        file_paths,
+        desc="Tokenizing corpus",
+        unit="file",
+        dynamic_ncols=True,
+    )
+
+    for path in progress:
+        text_batch: list[str] = []
+
+        for text_chunk in iter_text_chunks(path):
+            text_batch.append(text_chunk)
+
+            if len(text_batch) < ENCODE_BATCH_CHUNKS:
+                continue
+
+            arrays = encode_batch(
+                tokenizer,
+                text_batch,
+            )
+
+            text_batch.clear()
+
+            if arrays:
+                arrays.append(eos[:0])
+
+                new_tokens = np.concatenate(arrays)
+
+                token_buffer = np.concatenate(
+                    (
+                        token_buffer,
+                        new_tokens,
+                    )
+                )
+
+                total_tokens += new_tokens.size
+
+                while token_buffer.size >= TOKEN_SHARD_SIZE:
+                    token_buffer, shard_index = flush_shard(
+                        token_buffer,
+                        shard_dir,
+                        shard_index,
+                    )
+
+        if text_batch:
+            arrays = encode_batch(
+                tokenizer,
+                text_batch,
+            )
+
+            if arrays:
+                new_tokens = np.concatenate(arrays)
+
+                token_buffer = np.concatenate(
+                    (
+                        token_buffer,
+                        new_tokens,
+                    )
+                )
+
+                total_tokens += new_tokens.size
+
+                while token_buffer.size >= TOKEN_SHARD_SIZE:
+                    token_buffer, shard_index = flush_shard(
+                        token_buffer,
+                        shard_dir,
+                        shard_index,
+                    )
+
+        token_buffer = np.concatenate(
+            (
+                token_buffer,
+                eos,
+            )
+        )
+
+        total_tokens += 1
+
+        while token_buffer.size >= TOKEN_SHARD_SIZE:
+            token_buffer, shard_index = flush_shard(
+                token_buffer,
+                shard_dir,
+                shard_index,
+            )
+
+        progress.set_postfix_str(
+            f"{total_tokens / 1e9:.3f}B tokens",
+            refresh=False,
+        )
+
+    if token_buffer.size:
+        shard_path = shard_dir / f"shard_{shard_index:06d}.bin"
+
+        token_buffer.tofile(shard_path)
+
+        shard_index += 1
+
+    shards = sorted(
+        shard_dir.glob("shard_*.bin")
+    )
+
+    return shards, total_tokens
+
+
+def split_shards(
+    shards: list[Path],
+    validation_fraction: float,
+    seed: int,
+) -> tuple[list[Path], list[Path]]:
+    if len(shards) < 2:
+        raise RuntimeError(
+            "Not enough token shards to construct "
+            "train and validation sets."
+        )
+
+    shuffled = list(shards)
+
+    rng = random.Random(seed)
+    rng.shuffle(shuffled)
+
+    validation_count = max(
+        1,
+        round(
+            len(shuffled)
+            * validation_fraction
+        ),
+    )
+
+    validation_shards = shuffled[:validation_count]
+    train_shards = shuffled[validation_count:]
+
+    if not train_shards:
+        train_shards.append(
+            validation_shards.pop()
+        )
+
+    rng.shuffle(train_shards)
+    rng.shuffle(validation_shards)
+
+    return train_shards, validation_shards
+
+
+def concatenate_shards(
+    shards: list[Path],
+    output_path: Path,
     description: str,
 ) -> int:
     total_tokens = 0
 
-    eos = np.asarray([eos_id], dtype=np.uint16)
-
     with output_path.open("wb") as output_file:
         progress = tqdm(
-            file_paths,
+            shards,
             desc=description,
-            unit="file",
+            unit="shard",
             dynamic_ncols=True,
         )
 
-        for path in progress:
-            text_batch: list[str] = []
+        for shard_path in progress:
+            shard = np.memmap(
+                shard_path,
+                dtype=np.uint16,
+                mode="r",
+            )
 
-            for chunk in iter_text_chunks(path):
-                text_batch.append(chunk)
+            shard.tofile(output_file)
 
-                if len(text_batch) >= ENCODE_BATCH_CHUNKS:
-                    total_tokens += encode_and_write_batch(
-                        tokenizer,
-                        text_batch,
-                        output_file,
-                    )
+            total_tokens += len(shard)
 
-                    text_batch.clear()
-
-            if text_batch:
-                total_tokens += encode_and_write_batch(
-                    tokenizer,
-                    text_batch,
-                    output_file,
-                )
-
-            eos.tofile(output_file)
-            total_tokens += 1
+            del shard
 
             progress.set_postfix_str(
                 f"{total_tokens / 1e9:.3f}B tokens",
@@ -185,9 +302,16 @@ def prepare_corpus() -> None:
 
     cleaned_dir = Path("data/cleaned")
     tokens_dir = Path("data/tokens")
-    tokens_dir.mkdir(parents=True, exist_ok=True)
+    shard_dir = tokens_dir / "shards_tmp"
 
-    file_paths = sorted(cleaned_dir.rglob("*.txt"))
+    tokens_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    file_paths = sorted(
+        cleaned_dir.rglob("*.txt")
+    )
 
     if not file_paths:
         raise FileNotFoundError(
@@ -200,12 +324,16 @@ def prepare_corpus() -> None:
 
     if not tokenizer_path.exists():
         raise FileNotFoundError(
-            f"{tokenizer_path} does not exist. "
-            "Corpus preparation will not retrain the tokenizer automatically."
+            f"{tokenizer_path} does not exist."
         )
 
-    tokenizer_wrapper = BPETokenizer(config.vocab_size)
-    tokenizer_wrapper.load(tokenizer_path)
+    tokenizer_wrapper = BPETokenizer(
+        config.vocab_size
+    )
+
+    tokenizer_wrapper.load(
+        tokenizer_path
+    )
 
     tokenizer = tokenizer_wrapper.tokenizer
 
@@ -213,73 +341,134 @@ def prepare_corpus() -> None:
 
     if eos_id is None:
         raise RuntimeError(
-            "<eos> does not exist in the loaded tokenizer."
+            "<eos> does not exist in the tokenizer."
         )
 
-    if tokenizer.get_vocab_size() > np.iinfo(np.uint16).max:
+    if (
+        tokenizer.get_vocab_size()
+        > np.iinfo(np.uint16).max
+    ):
         raise ValueError(
-            "Vocabulary is too large for uint16 token storage."
+            "Vocabulary is too large for uint16."
         )
-
-    train_files, val_files = split_files_by_size(
-        file_paths,
-        validation_fraction=VALIDATION_FRACTION,
-        seed=RANDOM_SEED,
-    )
-
-    train_bin_path = tokens_dir / "train.bin"
-    val_bin_path = tokens_dir / "validation.bin"
 
     print(f"Cleaned files: {len(file_paths):,}")
-    print(f"Train files:   {len(train_files):,}")
-    print(f"Val files:     {len(val_files):,}")
     print(f"Tokenizer:     {tokenizer_path}")
     print(f"EOS ID:        {eos_id}")
-
-    train_token_count = write_token_file(
-        train_files,
-        train_bin_path,
-        tokenizer,
-        eos_id,
-        "Tokenizing train",
+    print(
+        f"Shard size:    "
+        f"{TOKEN_SHARD_SIZE:,} tokens"
     )
 
-    val_token_count = write_token_file(
-        val_files,
-        val_bin_path,
+    shards, raw_token_count = build_token_shards(
+        file_paths,
         tokenizer,
         eos_id,
-        "Tokenizing validation",
+        shard_dir,
+    )
+
+    print()
+    print(f"Temporary shards: {len(shards):,}")
+    print(f"Raw tokens:       {raw_token_count:,}")
+
+    train_shards, validation_shards = split_shards(
+        shards,
+        VALIDATION_FRACTION,
+        RANDOM_SEED,
+    )
+
+    train_bin_path = (
+        tokens_dir / "train.bin"
+    )
+
+    validation_bin_path = (
+        tokens_dir / "validation.bin"
+    )
+
+    train_token_count = concatenate_shards(
+        train_shards,
+        train_bin_path,
+        "Building train.bin",
+    )
+
+    validation_token_count = concatenate_shards(
+        validation_shards,
+        validation_bin_path,
+        "Building validation.bin",
     )
 
     metadata = {
-        "train_tokens": int(train_token_count),
-        "validation_tokens": int(val_token_count),
-        "train_files": len(train_files),
-        "validation_files": len(val_files),
-        "vocab_size": tokenizer.get_vocab_size(),
+        "train_tokens": int(
+            train_token_count
+        ),
+        "validation_tokens": int(
+            validation_token_count
+        ),
+        "total_tokens": int(
+            train_token_count
+            + validation_token_count
+        ),
+        "cleaned_files": len(
+            file_paths
+        ),
+        "train_shards": len(
+            train_shards
+        ),
+        "validation_shards": len(
+            validation_shards
+        ),
+        "token_shard_size": (
+            TOKEN_SHARD_SIZE
+        ),
+        "validation_fraction": (
+            VALIDATION_FRACTION
+        ),
+        "vocab_size": (
+            tokenizer.get_vocab_size()
+        ),
         "dtype": "uint16",
-        "validation_fraction": VALIDATION_FRACTION,
         "eos_id": eos_id,
         "seed": RANDOM_SEED,
     }
 
-    meta_path = tokens_dir / "meta.json"
+    meta_path = (
+        tokens_dir / "meta.json"
+    )
 
-    with meta_path.open("w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2)
+    with meta_path.open(
+        "w",
+        encoding="utf-8",
+    ) as f:
+        json.dump(
+            metadata,
+            f,
+            indent=2,
+        )
 
     print()
-    print(f"Train tokens:      {train_token_count:,}")
-    print(f"Validation tokens: {val_token_count:,}")
+    print(
+        f"Train tokens:      "
+        f"{train_token_count:,}"
+    )
+    print(
+        f"Validation tokens: "
+        f"{validation_token_count:,}"
+    )
     print(
         f"Train binary:      "
-        f"{train_bin_path.stat().st_size / (1024**3):.2f} GiB"
+        f"{train_bin_path.stat().st_size / (1024 ** 3):.2f} GiB"
     )
     print(
         f"Validation binary: "
-        f"{val_bin_path.stat().st_size / (1024**3):.2f} GiB"
+        f"{validation_bin_path.stat().st_size / (1024 ** 3):.2f} GiB"
     )
+
+    shutil.rmtree(
+        shard_dir,
+        ignore_errors=True,
+    )
+
+    print("Temporary shards removed.")
 
 
 if __name__ == "__main__":

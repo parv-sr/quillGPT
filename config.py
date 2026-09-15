@@ -15,18 +15,18 @@ class Config:
 
     max_train_tokens = 12_000_000_000
 
-    learning_rate = 3e-4
-    min_learning_rate = 3e-5
+    learning_rate = 2e-4
+    min_learning_rate = 2e-5
     weight_decay = 0.1
 
     warmup_tokens = 100_000_000
 
     validation_interval_tokens = 250_000_000
 
-    validation_batches = 128
+    validation_batches = 512
 
     checkpoint_interval_tokens = 500_000_000
 
     num_workers = 2
 
-    version = "0.3.0"
+    version = "0.4.0"
