@@ -1,0 +1,807 @@
+(base) parv@nano:~/quillGPT$ cd quillGPT
+(base) parv@nano:~/quillGPT/quillGPT$ ls
+artifacts  backend  bpe_tokenizer_16384.json  checkpoints  config.py  data  diagnostics  docs  generate.py  model  prepare_corpus.py  __pycache__  pyproject.toml  quillGPT_v0.3.0_best.pth
+  README.md  scripts  train.py  uv.lock
+(base) parv@nano:~/quillGPT/quillGPT$ source .venv/bin/activate
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ ls
+artifacts  backend  bpe_tokenizer_16384.json  checkpoints  config.py  data  diagnostics  docs  generate.py  model  prepare_corpus.py  __pycache__  pyproject.toml  quillGPT_v0.3.0_best.pth
+  README.md  scripts  train.py  uv.lock
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run python3 train.py
+2026-09-10 20:11:10,644 | INFO | Loading tokenizer from bpe_tokenizer_16384.json
+2026-09-10 20:11:10,678 | INFO | Training tokens loaded via memmap: 12,637,750,833
+2026-09-10 20:11:10,679 | INFO | Validation tokens loaded via memmap: 11,562,174
+2026-09-10 20:11:11,505 | INFO | Model parameters: 235,082,752
+2026-09-10 20:11:11,510 | INFO | Device: NVIDIA RTX A4500
+2026-09-10 20:11:11,510 | INFO | Microbatch size: 12
+2026-09-10 20:11:11,510 | INFO | Gradient accumulation steps: 16
+2026-09-10 20:11:11,510 | INFO | Context length: 512
+2026-09-10 20:11:11,510 | INFO | Effective batch tokens: 98,304
+2026-09-10 20:11:11,510 | INFO | Target training tokens: 12,000,000,000
+2026-09-10 20:11:11,510 | INFO | Warmup tokens: 100,000,000
+2026-09-10 20:11:11,510 | INFO | Validation interval: 250,000,000 tokens
+2026-09-10 20:11:11,510 | INFO | Checkpoint interval: 500,000,000 tokens
+2026-09-10 20:11:13,341 | INFO | Planned optimizer steps: 122,071
+2026-09-10 20:11:13,341 | INFO | Warmup optimizer steps: 1,018
+2026-09-10 20:11:13,341 | INFO | Precision mode: bfloat16
+Training Pass 1:   0%|
+           | 0.00/12.0G [00:00<?, ?tok/s]W0910 20:11:27.970000 43700 .venv/lib/python3.13/site-packages/torch/_inductor/utils.py:1953] [0/0] Not enough SMs to use max_autotune_gemm mode
+Training Pass 1:   2%|█▎                                                                       | 225M/12.0G [2:17:09<171:33:51, 19.1ktok/s, Loss=3.8581, Val=n/a, PPL=47.37, LR=3.00e-04, T
+ok/sTraining Pass 1:   2%|▋                                  | 225M/12.0G [2:17:11<171:33:50, 19.1ktok/s, Loss=3.8518, Val=n/a, PPL=47.08, LR=3.00e-04, Tok/s=18,933, VRAM=8.52/8.83G, Step
+=2,290] Training Pass 1:   2%|▋                                  | 227M/12.0G [Training Pass 1:   2%| | 227M/12.0G [2:18:34<184:52:57, 17.7ktok/s, Loss=3.8553, Val=n/a, PPL=47.24, LR=3.00
+e-04, Tok/s=19,041, VRAM=8.52/8.83G, Step= Training Pass 1:   2%| | 227M/12.0G [2:18:37<183:46:13, 17.8ktok/s, Loss=3.8553, Val=n/a, PPL=47.24, LR=3.00e-04, Tok/s=Validation at 250,085,37
+6 tokens | Loss=4.6177 | PPL=101.26
+New best model saved to quillGPT_v0.3.0_best.pth
+Validation at 500,072,448 tokens | Loss=4.2628 | PPL=71.01
+New best model saved to quillGPT_v0.3.0_best.pth
+Checkpoint saved at 500,072,448 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+Validation at 750,059,520 tokens | Loss=4.2362 | PPL=69.15
+New best model saved to quillGPT_v0.3.0_best.pth
+Validation at 1,000,046,592 tokens | Loss=4.7526 | PPL=115.89
+Checkpoint saved at 1,000,046,592 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+Training Pass 1:  10%|██                  | 1.23G/12.0G [12:46:20<91:39:09, 32.7ktok/s, Loss=3.2475, Val=4.7526, PPL=25.73, LR=2.94e-04, Tok/s=32Training Pass 1:  10%| | 1.23G/12.0G [12:4
+6:21<90:36:12, 33.0ktok/s, Loss=3.2475, Val=4.7526, PPL=25.73, LR=2.94e-04, Tok/s=32,645, VRAM=8.52/8. Training Pass 1:  10%| | 1.23G/12.0G [12:46:46<91:45:43, 32.6ktok/s, LosValidation a
+t 1,250,033,664 tokens | Loss=3.9323 | PPL=51.03
+New best model saved to quillGPT_v0.3.0_best.pth
+Training Pass 1:  11%|██▏                 | 1.28G/12.0G [13:12:53<90:20:57, 33.0ktok/s, Loss=3.5267, Val=3.9323, PPL=34.01, LR=2.94e-04, Tok/s=32Training Pass 1:  11%| | 1.28G/12.0G [13:1
+2:54<91:45:28, 32.5ktok/s, Loss=3.5267, Val=3.9323, PPL=34.01, LR=2.94e-04, Tok/s=32,607, VRAM=8.52/8. Training Pass 1:  11%| | 1.28G/12.0G [13:13:00<91:28:33, 32.6ktok/s, LosValidation a
+t 1,500,020,736 tokens | Loss=3.9801 | PPL=53.52
+Checkpoint saved at 1,500,020,736 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+Validation at 1,750,007,808 tokens | Loss=3.9313 | PPL=50.98
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Validation at 2,000,093,184 tokens | Loss=3.7648 | PPL=43.16
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Checkpoint saved at 2,000,093,184 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 2,250,080,256 tokens | Loss=3.6080 | PPL=36.89
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Training Pass 1:  21%|██████████████                                                      | 2.48G/12.0G [25:44:28<81:20:02, 32.5ktok/s, Loss=3.4072, Val=3.6080, PPL=30.18, LR=2.74e-04, To
+k/s=32,612, VRAM=8.52/8.83G, Step=25,240]^Validation at 2,500,067,328 tokens | Loss=3.9039 | PPL=49.60
+
+Checkpoint saved at 2,500,067,328 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 2,750,054,400 tokens | Loss=3.8177 | PPL=45.50
+
+Validation at 3,000,041,472 tokens | Loss=3.7892 | PPL=44.22
+
+Checkpoint saved at 3,000,041,472 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 3,250,028,544 tokens | Loss=3.8902 | PPL=48.92
+
+Validation at 3,500,015,616 tokens | Loss=3.7584 | PPL=42.88
+
+Checkpoint saved at 3,500,015,616 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 3,750,002,688 tokens | Loss=3.7642 | PPL=43.13
+
+Validation at 4,000,088,064 tokens | Loss=3.5286 | PPL=34.08
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Checkpoint saved at 4,000,088,064 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 4,250,075,136 tokens | Loss=3.7181 | PPL=41.19
+
+Training Pass 1:  37%|█████████████████████████                                           | 4.43G/12.0G [42:19:22<64:37:15, 32.6ktok/s, Loss=3.4723, Val=3.7181, PPL=32.21, LR=2.21e-04, To
+k/s=32,606, VRAM=8.52/8.83G, Step=45,020]^Training Pass 1:  37%|█████████████████████████                                           | 4.43G/12.0G [42:19:24<64:42:29, 32.5ktok/s, Loss=3.47
+23, Val=3.7181, PPL=32.21, LR=2.21e-04, Tok/s=32,606, VRAM=8.52/8.83G, Step=45,020]^Training Pass 1:  37%|█████████████████████████▍                                          | 4.49G/12.0G
+ [42:50:20<64:06:47, 32.6ktok/s, Loss=3.1778, Val=3.7181, PPL=23.99, LR=2.19e-04, Tok/s=32,564, VRAM=8.52/8.83G, Step=45,630]^Training Pass 1:  37%|█████████████████████████▍
+                             | 4.49G/12.0G [42:50:32<64:03:02, 32.6ktok/s, Loss=3.1887, Val=3.7181, PPL=24.26, LR=2.19e-04, Tok/s=32,583, VRAM=8.52/8.83G, Step=45,640]^Training Pass 1:  3
+7%|█████████████████████████▍                                          | 4.49G/12.0G [42:50:41<71:44:23, 29.1ktok/s, Loss=3.1887, Val=3.7181, PPL=24.26, LR=2.19e-04, Tok/s=32,583, VRAM=8.
+52/8.83G, Step=45,640]
+Traceback (most recent call last):
+  File "/home/parv/quillGPT/quillGPT/train.py", line 671, in train
+    scaled_loss.backward()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/autograd/graph.py", line 979, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1227, in <module>
+    main()
+    ~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1223, in main
+    trainer.train()
+    ~~~~~~~~~~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1001, in train
+    self.save_checkpoint()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 249, in save_checkpoint
+    self._atomic_save(
+    ~~~~~~~~~~~~~~~~~^
+        self._checkpoint_state(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.latest_checkpoint_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 204, in _atomic_save
+    os.replace(
+    ~~~~~~~~~~^
+        tmp_path,
+        ^^^^^^^^^
+        path,
+        ^^^^^
+    )
+    ^
+KeyboardInterrupt
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run python3 train.py
+2026-09-12 17:12:03,162 | INFO | Loading tokenizer from bpe_tokenizer_16384.json
+2026-09-12 17:12:03,185 | INFO | Training tokens loaded via memmap: 12,637,750,833
+2026-09-12 17:12:03,185 | INFO | Validation tokens loaded via memmap: 11,562,174
+2026-09-12 17:12:04,027 | INFO | Model parameters: 235,082,752
+2026-09-12 17:12:04,028 | INFO | Device: NVIDIA RTX A4500
+2026-09-12 17:12:04,028 | INFO | Microbatch size: 12
+2026-09-12 17:12:04,028 | INFO | Gradient accumulation steps: 16
+2026-09-12 17:12:04,028 | INFO | Context length: 512
+2026-09-12 17:12:04,028 | INFO | Effective batch tokens: 98,304
+2026-09-12 17:12:04,028 | INFO | Target training tokens: 12,000,000,000
+2026-09-12 17:12:04,028 | INFO | Warmup tokens: 100,000,000
+2026-09-12 17:12:04,028 | INFO | Validation interval: 250,000,000 tokens
+2026-09-12 17:12:04,028 | INFO | Checkpoint interval: 500,000,000 tokens
+2026-09-12 17:12:05,614 | INFO | Planned optimizer steps: 122,071
+2026-09-12 17:12:05,614 | INFO | Warmup optimizer steps: 1,018
+2026-09-12 17:12:05,614 | INFO | Precision mode: bfloat16
+Validation at 250,085,376 tokens | Loss=4.6205 | PPL=101.55
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Validation at 500,072,448 tokens | Loss=4.2698 | PPL=71.51
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Checkpoint saved at 500,072,448 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 750,059,520 tokens | Loss=4.2323 | PPL=68.87
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Validation at 1,000,046,592 tokens | Loss=4.7526 | PPL=115.89
+
+Checkpoint saved at 1,000,046,592 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 1,250,033,664 tokens | Loss=3.9337 | PPL=51.10
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Validation at 1,500,020,736 tokens | Loss=3.9930 | PPL=54.21
+
+Checkpoint saved at 1,500,020,736 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 1,750,007,808 tokens | Loss=3.9389 | PPL=51.36
+
+Validation at 2,000,093,184 tokens | Loss=3.7695 | PPL=43.36
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Checkpoint saved at 2,000,093,184 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 2,250,080,256 tokens | Loss=3.6073 | PPL=36.87
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Validation at 2,500,067,328 tokens | Loss=3.9017 | PPL=49.49
+
+Checkpoint saved at 2,500,067,328 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 2,750,054,400 tokens | Loss=3.8168 | PPL=45.46
+
+Validation at 3,000,041,472 tokens | Loss=3.7737 | PPL=43.54
+
+Checkpoint saved at 3,000,041,472 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 3,250,028,544 tokens | Loss=3.8713 | PPL=48.01
+
+Validation at 3,500,015,616 tokens | Loss=3.7539 | PPL=42.69
+
+Checkpoint saved at 3,500,015,616 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 3,750,002,688 tokens | Loss=3.7754 | PPL=43.61
+
+Validation at 4,000,088,064 tokens | Loss=3.5312 | PPL=34.16
+
+New best model saved to quillGPT_v0.3.0_best.pth
+
+Checkpoint saved at 4,000,088,064 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Validation at 4,250,075,136 tokens | Loss=3.7202 | PPL=41.27
+
+Validation at 4,500,062,208 tokens | Loss=3.6896 | PPL=40.03
+
+Checkpoint saved at 4,500,062,208 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Training Pass 1:  39%|██████████████████████████▍                                         | 4.67G/12.0G [46:51:08<62:30:32, 32.6ktok/s, Loss=3.0569, Val=3.6896, PPL=21.26, LR=2.13e-04, To
+Training Pass 1:  39%|██████████                | 4.67G/12.0G [46:51:09<62:30:31, 32.6ktok/s, Loss=3.0572, Val=3.6896, PPL=21.27, LR=2.13e-04, Tok/s=32,607, VRAM=8.52/8.83G, Step=47,460]
+Validation at 4,750,049,280 tokens | Loss=3.4831 | PPL=32.56
+New best model saved to quillGPT_v0.3.0_best.pth
+Validation at 5,000,036,352 tokens | Loss=4.0879 | PPL=59.61
+
+Checkpoint saved at 5,000,036,352 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+
+Training Pass 1:  42%|█████████████████████████████                                        | 5.05G/12.0G [50:09:34<59:07:58, 32.6ktok/s, Loss=1.4847, Val=4.0879, PPL=4.41, LR=2.00e-04, To
+Training Pass 1:  42%|███████████▎               | 5.05G/12.0G [50:09:35<59:05:44, 32.7ktok/s, Loss=1.4847, Val=4.0879, PPL=4.41, LR=2.00e-04, Tok/s=32,615, VRAM=8.52/8.83G, Step=51,400]
+Validation at 5,250,023,424 tokens | Loss=3.7207 | PPL=41.29
+Validation at 5,500,010,496 tokens | Loss=3.4972 | PPL=33.02
+Checkpoint saved at 5,500,010,496 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+Validation at 5,750,095,872 tokens | Loss=3.9311 | PPL=50.96
+Validation at 6,000,082,944 tokens | Loss=3.5990 | PPL=36.56
+Checkpoint saved at 6,000,082,944 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+Validation at 6,250,070,016 tokens | Loss=3.9122 | PPL=50.01
+Validation at 6,500,057,088 tokens | Loss=3.5684 | PPL=35.46
+Checkpoint saved at 6,500,057,088 tokens to checkpoints/quillGPT_v0.3.0_latest.pt
+Training Pass 1:  56%|███████████████            | 6.72G/12.0G [64:21:00<44:59:13, 32.6ktok/s, Loss=1.4662, Val=3.5684, PPL=4.33, LR=1.41e-04, Tok/s=32,607, VRAM=8.52/8.83G, Step=68,320]^
+C2026-09-15 09:33:15,615 | INFO | Interrupted. Checkpoint saved to checkpoints/quillGPT_v0.3.0_latest.pt
+Training Pass 1:  56%|███████████████            | 6.72G/12.0G [64:21:09<50:36:55, 29.0ktok/s, Loss=1.4662, Val=3.5684, PPL=4.33, LR=1.41e-04, Tok/s=32,607, VRAM=8.52/8.83G, Step=68,320]
+Traceback (most recent call last):
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1227, in <module>
+    main()
+    ~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1223, in main
+    trainer.train()
+    ~~~~~~~~~~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 671, in train
+    scaled_loss.backward()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/autograd/graph.py", line 979, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+KeyboardInterrupt
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run RAYON_NUM_THREADS=12 TOKENIZERS_PARALLELISM=true python3 prepare_corpus.py
+error: Failed to spawn: `RAYON_NUM_THREADS=12`
+  Caused by: No such file or directory (os error 2)
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run env RAYON_NUM_THREADS=12 TOKENIZERS_PARALLELISM=true python3 prepare_corpus.py
+Cleaned files: 28,715
+Tokenizer:     bpe_tokenizer_16384.json
+EOS ID:        3
+Shard size:    1,000,000 tokens
+Tokenizing corpus: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 28715/28715 [1:39:15<00:00,  4.82file/s, 12.649B tokens]
+
+Temporary shards: 12,650
+Raw tokens:       12,649,313,007
+Building train.bin: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 12637/12637 [00:11<00:00, 1104.15shard/s, 12.636B tokens]
+Building validation.bin: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 13/13 [00:00<00:00, 579.76shard/s, 0.013B tokens]
+
+Train tokens:      12,636,313,007
+Validation tokens: 13,000,000
+Train binary:      23.54 GiB
+Validation binary: 0.02 GiB
+Temporary shards removed.
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ ls -lah
+total 899M
+drwxrwxr-x 13 parv parv 4.0K Sep 14 16:46 .
+drwxrwxr-x  5 parv parv 4.0K Sep  8 10:33 ..
+drwxrwxr-x  3 parv parv 4.0K Aug 27 23:08 artifacts
+drwxrwxr-x  5 parv parv 4.0K Aug 27 23:12 backend
+-rw-rw-r--  1 parv parv 1.1M Aug 30 04:08 bpe_tokenizer_16384.json
+drwxrwxr-x  2 parv parv 4.0K Sep 15 09:33 checkpoints
+-rw-rw-r--  1 parv parv  540 Sep 15 09:29 config.py
+drwxrwxr-x  5 parv parv 4.0K Sep  9 14:37 data
+drwxrwxr-x  2 parv parv 4.0K Aug 29 14:51 diagnostics
+drwxrwxr-x  2 parv parv 4.0K Aug 28 20:08 docs
+-rw-rw-r--  1 parv parv 3.8K Aug 28 22:31 generate.py
+drwxrwxr-x  8 parv parv 4.0K Sep 11 09:23 .git
+-rw-rw-r--  1 parv parv  216 Sep 11 09:03 .gitignore
+drwxrwxr-x  3 parv parv 4.0K Aug 28 20:22 model
+-rw-rw-r--  1 parv parv  10K Sep 15 09:21 prepare_corpus.py
+drwxrwxr-x  2 parv parv 4.0K Sep 15 09:36 __pycache__
+-rw-rw-r--  1 parv parv  437 Aug 29 00:44 pyproject.toml
+-rw-rw-r--  1 parv parv    5 Aug 27 23:08 .python-version
+-rw-rw-r--  1 parv parv 897M Sep 14 16:46 quillGPT_v0.3.0_best.pth
+-rw-rw-r--  1 parv parv 1.2K Sep 11 09:22 README.md
+drwxrwxr-x  4 parv parv 4.0K Aug 30 01:30 scripts
+-rw-rw-r--  1 parv parv  33K Sep  9 23:00 train.py
+-rw-rw-r--  1 parv parv 404K Aug 29 00:44 uv.lock
+drwxrwxr-x  5 parv parv 4.0K Aug 27 23:11 .venv
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ cd model
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ ls -lah
+total 44K
+drwxrwxr-x  3 parv parv 4.0K Aug 28 20:22 .
+drwxrwxr-x 13 parv parv 4.0K Sep 14 16:46 ..
+-rw-rw-r--  1 parv parv 5.0K Aug 27 23:08 attention.py
+-rw-rw-r--  1 parv parv 2.1K Aug 27 23:08 block.py
+-rw-rw-r--  1 parv parv  423 Aug 27 23:08 embedding.py
+-rw-rw-r--  1 parv parv  733 Aug 27 23:08 feedforward.py
+-rw-rw-r--  1 parv parv 1.8K Aug 27 23:08 gpt.py
+-rw-rw-r--  1 parv parv    0 Aug 27 23:08 __init__.py
+drwxrwxr-x  2 parv parv 4.0K Aug 29 19:56 __pycache__
+-rw-rw-r--  1 parv parv 2.8K Sep 15 09:32 rope.py
+-rw-rw-r--  1 parv parv 1.6K Aug 27 23:08 transformer.py
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ cd ..
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ cd data
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data$ ls -lah
+total 4.1G
+drwxrwxr-x  5 parv parv 4.0K Sep  9 14:37 .
+drwxrwxr-x 13 parv parv 4.0K Sep 14 16:46 ..
+-rw-rw-r--  1 parv parv 3.4K Aug 30 03:34 bpe_tokenizer.py
+drwxrwxr-x  2 parv parv 1.3M Sep  9 10:07 cleaned
+-rw-rw-r--  1 parv parv 4.1G Aug 30 03:17 corpus_cleaned.tar.gz
+-rw-rw-r--  1 parv parv  815 Aug 28 22:06 corpus.py
+-rw-rw-r--  1 parv parv 1.1K Sep  9 22:34 dataloader.py
+-rw-rw-r--  1 parv parv  951 Sep  9 22:27 dataset.py
+-rw-rw-r--  1 parv parv    0 Aug 27 23:08 __init__.py
+drwxrwxr-x  2 parv parv 4.0K Sep  9 23:01 __pycache__
+-rw-rw-r--  1 parv parv  988 Aug 27 23:08 tokenizer.py
+drwxrwxr-x  2 parv parv 4.0K Sep 15 11:15 tokens
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data$ cd tokens
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data/tokens$ ls -lah
+total 24G
+drwxrwxr-x 2 parv parv 4.0K Sep 15 11:15 .
+drwxrwxr-x 5 parv parv 4.0K Sep  9 14:37 ..
+-rw-rw-r-- 1 parv parv  311 Sep 15 11:15 meta.json
+-rw-rw-r-- 1 parv parv  24G Sep 15 11:15 train.bin
+-rw-rw-r-- 1 parv parv  25M Sep 15 11:15 validation.bin
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data/tokens$ du -sh train.bin
+24G     train.bin
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data/tokens$ du -sh validation.bin
+25M     validation.bin
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data/tokens$ cd ..
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data$ tmux attach -t quillgpt
+sessions should be nested with care, unset $TMUX to force
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/data$ cd ..
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ cd ..
+(tinygpt) (base) parv@nano:~/quillGPT$ cd ..
+(tinygpt) (base) parv@nano:~$ tmux attach -t quillgpt
+sessions should be nested with care, unset $TMUX to force
+(tinygpt) (base) parv@nano:~$ tmux ls
+quillgpt: 1 windows (created Thu Sep 10 20:10:08 2026) (attached)
+(tinygpt) (base) parv@nano:~$ cd quillGPT/quillGPT
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run python3 train.py
+Traceback (most recent call last):
+  File "/home/parv/quillGPT/quillGPT/train.py", line 18, in <module>
+    from model.gpt import GPT
+  File "/home/parv/quillGPT/quillGPT/model/gpt.py", line 11, in <module>
+    from .attention import KeyValueCache
+  File "/home/parv/quillGPT/quillGPT/model/attention.py", line 68, in <module>
+    from .rope import RotaryPositionalEmbedding
+ImportError: cannot import name 'RotaryPositionalEmbedding' from 'model.rope' (/home/parv/quillGPT/quillGPT/model/rope.py)
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ ls -lah
+total 899M
+drwxrwxr-x 13 parv parv 4.0K Sep 14 16:46 .
+drwxrwxr-x  5 parv parv 4.0K Sep  8 10:33 ..
+drwxrwxr-x  3 parv parv 4.0K Aug 27 23:08 artifacts
+drwxrwxr-x  5 parv parv 4.0K Aug 27 23:12 backend
+-rw-rw-r--  1 parv parv 1.1M Aug 30 04:08 bpe_tokenizer_16384.json
+drwxrwxr-x  2 parv parv 4.0K Sep 15 09:33 checkpoints
+-rw-rw-r--  1 parv parv  540 Sep 15 09:29 config.py
+drwxrwxr-x  5 parv parv 4.0K Sep  9 14:37 data
+drwxrwxr-x  2 parv parv 4.0K Aug 29 14:51 diagnostics
+drwxrwxr-x  2 parv parv 4.0K Aug 28 20:08 docs
+-rw-rw-r--  1 parv parv 3.8K Aug 28 22:31 generate.py
+drwxrwxr-x  8 parv parv 4.0K Sep 11 09:23 .git
+-rw-rw-r--  1 parv parv  216 Sep 11 09:03 .gitignore
+drwxrwxr-x  3 parv parv 4.0K Aug 28 20:22 model
+-rw-rw-r--  1 parv parv  10K Sep 15 09:21 prepare_corpus.py
+drwxrwxr-x  2 parv parv 4.0K Sep 15 09:36 __pycache__
+-rw-rw-r--  1 parv parv  437 Aug 29 00:44 pyproject.toml
+-rw-rw-r--  1 parv parv    5 Aug 27 23:08 .python-version
+-rw-rw-r--  1 parv parv 897M Sep 14 16:46 quillGPT_v0.3.0_best.pth
+-rw-rw-r--  1 parv parv 1.2K Sep 11 09:22 README.md
+drwxrwxr-x  4 parv parv 4.0K Aug 30 01:30 scripts
+-rw-rw-r--  1 parv parv  33K Sep  9 23:00 train.py
+-rw-rw-r--  1 parv parv 404K Aug 29 00:44 uv.lock
+drwxrwxr-x  5 parv parv 4.0K Aug 27 23:11 .venv
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ cd model
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ ls
+attention.py  block.py  embedding.py  feedforward.py  gpt.py  __init__.py  __pycache__  rope.py  transformer.py
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ cat rope.py
+"""
+Rotary Positional Embeddings (RoPE).
+
+RoPE encodes position by rotating pairs of dimensions in Q and K.
+
+Input shape:
+    (B, H, T, D)
+
+where:
+    B = batch size
+    H = number of attention heads
+    T = sequence length
+    D = head dimension
+
+Output shape:
+    (B, H, T, D)
+
+RoPE encodes position by rotating pairs of dimensions in Q and K using
+interleaved half-rotations and supports dynamic sequence length scaling.
+"""
+import torch
+from torch import nn
+
+
+class RotaryEmbedding(nn.Module):
+    def __init__(
+        self,
+        head_dim: int,
+        max_context: int,
+        base: float = 10000.0,
+    ) -> None:
+        super().__init__()
+
+        if head_dim % 2 != 0:
+            raise ValueError(
+                "RoPE head dimension must be even."
+            )
+
+        inv_freq = 1.0 / (
+            base
+            ** (
+                torch.arange(
+                    0,
+                    head_dim,
+                    2,
+                    dtype=torch.float32,
+                )
+                / head_dim
+            )
+        )
+
+        positions = torch.arange(
+            max_context,
+            dtype=torch.float32,
+        )
+
+        frequencies = torch.outer(
+            positions,
+            inv_freq,
+        )
+
+        self.register_buffer(
+            "cos_cached",
+            frequencies.cos(),
+            persistent=False,
+        )
+
+        self.register_buffer(
+            "sin_cached",
+            frequencies.sin(),
+            persistent=False,
+        )
+
+        self.max_context = max_context
+        self.head_dim = head_dim
+
+    @staticmethod
+    def rotate_half(
+        x: torch.Tensor,
+    ) -> torch.Tensor:
+        x_even = x[..., ::2]
+        x_odd = x[..., 1::2]
+
+        rotated = torch.stack(
+            (-x_odd, x_even),
+            dim=-1,
+        )
+
+        return rotated.flatten(-2)
+
+    def forward(
+        self,
+        x: torch.Tensor,
+        start_pos: int = 0,
+    ) -> torch.Tensor:
+        sequence_length = x.size(-2)
+
+        end_pos = (
+            start_pos
+            + sequence_length
+        )
+
+        if end_pos > self.max_context:
+            raise ValueError(
+                f"RoPE position {end_pos} exceeds "
+                f"max_context={self.max_context}"
+            )
+
+        cos = self.cos_cached[
+            start_pos:end_pos
+        ].to(
+            dtype=x.dtype
+        )
+
+        sin = self.sin_cached[
+            start_pos:end_pos
+        ].to(
+            dtype=x.dtype
+        )
+
+        cos = torch.repeat_interleave(
+            cos,
+            2,
+            dim=-1,
+        )
+
+        sin = torch.repeat_interleave(
+            sin,
+            2,
+            dim=-1,
+        )
+
+        return (
+            x * cos[None, None, :, :]
+            + self.rotate_half(x)
+            * sin[None, None, :, :]
+        )(tinygpt) (base) parv@nano:~/quillGPT/quillGP
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ neovim rope.py
+neovim: command not found
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ vim rope.py
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT/model$ cd ..
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run python3 train.py
+2026-09-15 11:35:51,379 | INFO | Loading tokenizer from bpe_tokenizer_16384.json
+2026-09-15 11:35:51,406 | INFO | Training tokens loaded via memmap: 12,636,313,007
+2026-09-15 11:35:51,406 | INFO | Validation tokens loaded via memmap: 13,000,000
+2026-09-15 11:35:52,317 | INFO | Model parameters: 235,082,752
+2026-09-15 11:35:52,318 | INFO | Device: NVIDIA RTX A4500
+2026-09-15 11:35:52,318 | INFO | Microbatch size: 12
+2026-09-15 11:35:52,318 | INFO | Gradient accumulation steps: 16
+2026-09-15 11:35:52,318 | INFO | Context length: 512
+2026-09-15 11:35:52,318 | INFO | Effective batch tokens: 98,304
+2026-09-15 11:35:52,318 | INFO | Target training tokens: 12,000,000,000
+2026-09-15 11:35:52,318 | INFO | Warmup tokens: 100,000,000
+2026-09-15 11:35:52,318 | INFO | Validation interval: 250,000,000 tokens
+2026-09-15 11:35:52,318 | INFO | Checkpoint interval: 500,000,000 tokens
+2026-09-15 11:35:53,629 | INFO | Planned optimizer steps: 122,071
+2026-09-15 11:35:53,629 | INFO | Warmup optimizer steps: 1,018
+2026-09-15 11:35:53,629 | INFO | Precision mode: bfloat16
+Training Pass 1:   0%|                                                                                                                                      | 0.00/12.0G [00:01<?, ?tok/s]
+Traceback (most recent call last):
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1227, in <module>
+    main()
+    ~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 1223, in main
+    trainer.train()
+    ~~~~~~~~~~~~~^^
+  File "/home/parv/quillGPT/quillGPT/train.py", line 645, in train
+    logits = self.model(x)
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/_dynamo/eval_frame.py", line 511, in __call__
+    return super().__call__(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/_dynamo/eval_frame.py", line 1166, in compile_wrapper
+    result = fn(*args, **kwargs)
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/parv/quillGPT/quillGPT/model/gpt.py", line 59, in forward
+    x = self.transformer(x)
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/parv/quillGPT/quillGPT/model/transformer.py", line 45, in forward
+    x = block(x)
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/parv/quillGPT/quillGPT/model/block.py", line 83, in forward
+    x = x + self.attention(self.rms_norm1(x))
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/parv/quillGPT/quillGPT/model/attention.py", line 129, in forward
+    q = self.rope(q, position_offset=past_length)
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/parv/quillGPT/quillGPT/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+TypeError: RotaryPositionalEmbedding.forward() got an unexpected keyword argument 'position_offset'
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$ uv run python3 train.py
+2026-09-15 11:56:41,928 | INFO | Loading tokenizer from bpe_tokenizer_16384.json
+2026-09-15 11:56:41,951 | INFO | Training tokens loaded via memmap: 12,636,313,007
+2026-09-15 11:56:41,951 | INFO | Validation tokens loaded via memmap: 13,000,000
+2026-09-15 11:56:42,792 | INFO | Model parameters: 235,082,752
+2026-09-15 11:56:42,793 | INFO | Device: NVIDIA RTX A4500
+2026-09-15 11:56:42,793 | INFO | Microbatch size: 12
+2026-09-15 11:56:42,793 | INFO | Gradient accumulation steps: 16
+2026-09-15 11:56:42,793 | INFO | Context length: 512
+2026-09-15 11:56:42,793 | INFO | Effective batch tokens: 98,304
+2026-09-15 11:56:42,793 | INFO | Target training tokens: 12,000,000,000
+2026-09-15 11:56:42,793 | INFO | Warmup tokens: 100,000,000
+2026-09-15 11:56:42,793 | INFO | Validation interval: 250,000,000 tokens
+2026-09-15 11:56:42,793 | INFO | Checkpoint interval: 500,000,000 tokens
+2026-09-15 11:56:44,106 | INFO | Planned optimizer steps: 122,071
+2026-09-15 11:56:44,106 | INFO | Warmup optimizer steps: 1,018
+2026-09-15 11:56:44,106 | INFO | Precision mode: bfloat16
+Training Pass 1:   0%|                                                                                                                                      | 0.00/12.0G [00:00<?, ?tok/s]W
+0915 11:56:56.790000 832659 .venv/lib/python3.13/site-packages/torch/_inductor/utils.py:1953] [0/0] Not enough SMs to use max_autotune_gemm mode
+Validation at 250,085,376 tokens | Loss=4.4492 | PPL=85.56
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 500,072,448 tokens | Loss=3.9263 | PPL=50.72
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 500,072,448 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 750,059,520 tokens | Loss=3.7774 | PPL=43.70
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 1,000,046,592 tokens | Loss=3.6256 | PPL=37.55
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 1,000,046,592 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 1,250,033,664 tokens | Loss=3.6159 | PPL=37.19
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 1,500,020,736 tokens | Loss=3.5558 | PPL=35.02
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 1,500,020,736 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 1,750,007,808 tokens | Loss=3.4619 | PPL=31.88
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 2,000,093,184 tokens | Loss=3.4448 | PPL=31.34
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 2,000,093,184 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 2,250,080,256 tokens | Loss=3.4102 | PPL=30.27
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 2,500,067,328 tokens | Loss=3.4237 | PPL=30.68
+Checkpoint saved at 2,500,067,328 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 2,750,054,400 tokens | Loss=3.3829 | PPL=29.46
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 3,000,041,472 tokens | Loss=3.3408 | PPL=28.24
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 3,000,041,472 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 3,250,028,544 tokens | Loss=3.3365 | PPL=28.12
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 3,500,015,616 tokens | Loss=3.3135 | PPL=27.48
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 3,500,015,616 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 3,750,002,688 tokens | Loss=3.2973 | PPL=27.04
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 4,000,088,064 tokens | Loss=3.2957 | PPL=27.00
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 4,000,088,064 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 4,250,075,136 tokens | Loss=3.2654 | PPL=26.19
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 4,500,062,208 tokens | Loss=3.2687 | PPL=26.28
+Checkpoint saved at 4,500,062,208 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 4,750,049,280 tokens | Loss=3.2413 | PPL=25.57
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 5,000,036,352 tokens | Loss=3.2210 | PPL=25.05
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 5,000,036,352 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 5,250,023,424 tokens | Loss=3.2162 | PPL=24.93
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 5,500,010,496 tokens | Loss=3.2022 | PPL=24.59
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 5,500,010,496 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 5,750,095,872 tokens | Loss=3.2008 | PPL=24.55
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 6,000,082,944 tokens | Loss=3.1824 | PPL=24.11
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 6,000,082,944 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 6,250,070,016 tokens | Loss=3.1704 | PPL=23.82
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 6,500,057,088 tokens | Loss=3.1860 | PPL=24.19
+Checkpoint saved at 6,500,057,088 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 6,750,044,160 tokens | Loss=3.1602 | PPL=23.58
+New best model saved to quillGPT_v0.4.0_best.pth
+Training Pass 1:  58%|██████████████▉           | 6.92G/12.0G [77:04:16<64:32:10, 21.9ktok/s, Loss=3.2738, Val=3.1602, PPL=26.41, LR=8.95e-05, Tok/s=21,274, VRAM=8.53/8.84G, Step=70,390]^
+Validation at 7,000,031,232 tokens | Loss=3.1359 | PPL=23.01
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 7,000,031,232 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 7,250,018,304 tokens | Loss=3.1480 | PPL=23.29
+Validation at 7,500,005,376 tokens | Loss=3.1177 | PPL=22.60
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 7,500,005,376 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 7,750,090,752 tokens | Loss=3.1196 | PPL=22.64
+Training Pass 1:  66%|█████████████████▊         | 7.94G/12.0G [86:03:18<33:44:28, 33.4ktok/s, Loss=1.8652, Val=3.1196, PPL=6.46, LR=6.70e-05, Tok/s=3Training Pass 1:  66%|▋| 7.94G/12.0G
+[86:03:19<33:40:48, 33.5ktok/s, Loss=                                                                            Validation at 8,000,077,824 tokens | Loss=3.1155 | PPL=22.54
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 8,000,077,824 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 8,250,064,896 tokens | Loss=3.0943 | PPL=22.07
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 8,500,051,968 tokens | Loss=3.0935 | PPL=22.05
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 8,500,051,968 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Training Pass 1:  73%|██████████████████▉       | 8.72G/12.0G [92:36:06<27:16:33, 33.4ktok/s, Loss=2.9536, Val=3.0935, PPL=19.18, LR=5.16e-05, Tok/s=33,509, VRAM=8.53/8.84G,Training Pass
+1:  73%|████████▋   | 8.72G/12.0G [92:36:07<27:13:11, 33.4ktok/s, Loss=2.9536, Val=3.0935, PPL=19.18, LR=5.16e-05, Tok/s=33,509, VRAM=8.53/8.84G, Step=88,730] Validation at 8,750,039,040
+tokens | Loss=3.0849 | PPL=21.86
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 9,000,026,112 tokens | Loss=3.0749 | PPL=21.65
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 9,000,026,112 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 9,250,013,184 tokens | Loss=3.0798 | PPL=21.75
+Validation at 9,500,000,256 tokens | Loss=3.0728 | PPL=21.60
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 9,500,000,256 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 9,750,085,632 tokens | Loss=3.0643 | PPL=21.42
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 10,000,072,704 tokens | Loss=3.0572 | PPL=21.27
+
+New best model saved to quillGPT_v0.4.0_best.pth
+
+Checkpoint saved at 10,000,072,704 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+
+Validation at 10,250,059,776 tokens | Loss=3.0572 | PPL=21.27
+
+New best model saved to quillGPT_v0.4.0_best.pth
+
+Validation at 10,500,046,848 tokens | Loss=3.0523 | PPL=21.16
+
+New best model saved to quillGPT_v0.4.0_best.pth
+
+Checkpoint saved at 10,500,046,848 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+
+Training Pass 1:  88%|███████████████████████████████████████▌     | 10.5G/12.0G [107:50:50<12:03:39, 33.4ktok/s, Loss=2.9977, Val=3.0523, PPL=20.04, LR=2.65e-05, Tok/s=33,487, VRAM=8.53/
+Training Pass 1:  88%|█████████████████████   | 10.5G/12.0G [107:50:51<12:04:32, 33.4ktok/s, Loss=2.9977, Val=3.0523, PPL=20.04, LR=2.65e-05, Tok/s=33,487, VRAM=8.53/8.84G, Step=107,310]
+Validation at 10,750,033,920 tokens | Loss=3.0445 | PPL=21.00
+New best model saved to quillGPT_v0.4.0_best.pth
+Training Pass 1:  91%|██████████████████████▋  | 10.9G/12.0G [110:45:06<9:10:45, 33.3ktok/s, Loss=3.1834, Val=3.0445, PPL=24.13, LR=2.38e-05, Tok/s=33,430, VRAM=8.53/8.84G, Step=110,860]r
+Training Pass 1:  91%|██████████████████████▊  | 10.9G/12.0G [110:58:52<8:55:10, 33.5ktok/s, Loss=3.2476, Val=3.0445, PPL=25.73, LR=2.36e-05, Tok/s=33,426, VRAM=8.53/8.84G, Training Pass
+1:  91%|▉| 10.9G/12.0G [110:58:53<8:48:12, 33.9ktok/s, Loss=3.2476, Val=3.0                                                                                           Validation at 11,000,
+020,992 tokens | Loss=3.0445 | PPL=21.00
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 11,000,020,992 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 11,250,008,064 tokens | Loss=3.0448 | PPL=21.01
+Validation at 11,500,093,440 tokens | Loss=3.0375 | PPL=20.85
+New best model saved to quillGPT_v0.4.0_best.pth
+Checkpoint saved at 11,500,093,440 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Validation at 11,750,080,512 tokens | Loss=3.0326 | PPL=20.75
+New best model saved to quillGPT_v0.4.0_best.pth
+Validation at 12,000,067,584 tokens | Loss=3.0339 | PPL=20.78
+Checkpoint saved at 12,000,067,584 tokens to checkpoints/quillGPT_v0.4.0_latest.pt
+Training Pass 1: 100%|███████████████████████████| 12.0G/12.0G [120:00:15<00:00, 27.5ktok/s, Loss=2.9897, Val=3.0326, PPL=19.88, LR=2.00e-05, Tok/s=32,521, VRAM=8.53/8.84G, Step=122,070]2
+026-09-20 11:57:10,735 | INFO | Training complete.
+2026-09-20 11:57:10,735 | INFO | Final model saved to quillGPT_v0.4.0.pth
+2026-09-20 11:57:10,735 | INFO | Final checkpoint saved to checkpoints/quillGPT_v0.4.0_latest.pt
+2026-09-20 11:57:10,735 | INFO | Tokens seen: 12,000,067,584
+2026-09-20 11:57:10,735 | INFO | Optimizer steps: 122,071
+2026-09-20 11:57:10,735 | INFO | Best validation loss: 3.0326
+Training Pass 1: 100%|███████████████████████████| 12.0G/12.0G [120:00:26<00:00, 27.8ktok/s, Loss=2.9897, Val=3.0326, PPL=19.88, LR=2.00e-05, Tok/s=32,521, VRAM=8.53/8.84G, Step=122,070]
+(tinygpt) (base) parv@nano:~/quillGPT/quillGPT$
