@@ -126,8 +126,8 @@ class CausalSelfAttention(nn.Module):
         else:
             past_length = past_key_value[0].size(-2)
 
-        q = self.rope(q, position_offset=past_length)
-        k = self.rope(k, position_offset=past_length)
+        q = self.rope(q, start_pos=past_length)
+        k = self.rope(k, start_pos=past_length)
 
         if past_key_value is not None:
             past_k, past_v = past_key_value

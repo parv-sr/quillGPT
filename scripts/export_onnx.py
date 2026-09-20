@@ -184,8 +184,8 @@ def main() -> None:
     config = Config()
 
     checkpoint_file = (
-        "artifacts/models/quillGPT_v0.2.3.pth"
-        if Path("artifacts/models/quillGPT_v0.2.3.pth").exists()
+        "artifacts/models/quillGPT_v0.4.0.pth"
+        if Path("artifacts/models/quillGPT_v0.4.0.pth").exists()
         else (
             f"quillGPT_v{config.version}.pth"
             if Path(f"quillGPT_v{config.version}.pth").exists()
