@@ -1,0 +1,238 @@
+1. Low entropy coherence test 
+
+Request:
+{
+  "prompt": "The most important lesson I learned from studying mathematics was that",
+  "max_new_tokens": 200,
+  "temperature": 0.6,
+  "top_p": 0.85,
+  "repetition_penalty": 1.10
+}
+
+Response: 
+
+{
+  "text": "The most important lesson I learned from studying mathematics was that you can’t be perfect and it is okay to learn.\nYou are not perfect, but if you are a good student, you will have the ability to improve your chances of success in life. If you do not know how to improve your chances of success in life, then you may end up being an ignorant person who doesn’t understand the basics of mathematics.\nIf you don’t know how to improve your chances of success in life, then you might end up being a bad student. It is okay to start your career by learning mathematics. But if you don’t know how to improve your chances of success in life, then you will end up being an ignorant person.\nIf you want to become a better student, then you should learn mathematics. You must learn mathematics as well. If you want to become a better student, then you should learn mathematics.\nIf you want to become a better student, then you"
+}
+
+{
+  "text": "The most important lesson I learned from studying mathematics was that it is not about the numbers, it is about the way things work.\nThe first step to becoming a mathematics teacher is knowing how to make a profit on your students. You should also know what they are doing in order to earn money. This is because they have already been taught by you.\nThe second step to becoming a successful mathematics teacher is learning to make money online. This is one of the easiest ways to earn money online. It is very easy to do and you can start making money today with no money.\nThe third step is learning to read. This is another great way to learn to read and read books. You will be able to learn to read and read a lot more easily than you would if you were teaching a class.\nYou can learn to read and read in a different way by using the internet. You can even learn to read through a book or watch a movie.\nThis is the best way to learn to"
+}
+
+{
+  "text": "The most important lesson I learned from studying mathematics was that there is a lot of difference between the two. It's just as important to learn the difference between two things as it is to learn the difference between them.\n\nIt seems like you're going to have to find some other way to get the most out of your time in the world. You can't go back and change your life forever. You will always be stuck on the same page, but you won't ever stop learning.\n\nI'm not saying that it's wrong, but I think the best thing for me would be to focus on the good stuff.\n\nThe issue with your writing is that it doesn't make sense.\n\nIf you want to write about yourself, then you need to do something about it. I don't know how to do this, but I've been trying to figure out how to do it.\n\nI don't know how to do it. I've tried to read it in my head, but it isn't very"
+}
+
+For my own curiosity, I tested one sample with the same settings, but 0.9 temperature. Following is the response:
+
+{
+  "text": "The most important lesson I learned from studying mathematics was that math is not about teaching math but it really helps you learn and improve your skills!\nWe can understand math at its basic level (social intelligence, mathematical reasoning, problem solving, geometry, etc.). But how do you know what math really means? Here are a few tips.\nLearn to make math things! You don’t want to lose sight of the math that makes all these mistakes. It might seem silly but understanding is the key to making your math better.\nIt is not about learning to tell how much money you have. It’s more about knowing how much money you have made.\nMathematics can be your ultimate tool to learn math! While it is more expensive than any other discipline, many students end up working with the same amount of money as they would for college or at their job.\nTo learn to make it through a math class, you need a strong"
+}
+
+2. General prose test
+
+Request:
+
+{
+  "prompt": "For centuries, people have looked at the night sky and wondered",
+  "max_new_tokens": 200,
+  "temperature": 0.8,
+  "top_p": 0.9,
+  "repetition_penalty": 1.12
+}
+
+Response:
+
+{
+  "text": "For centuries, people have looked at the night sky and wondered why the stars never have a chance to shine.\nWhat’s the latest in the history of the night sky?\nWhat is a star like in the sky?\nWhat do you think about a star like in the sky?\nIn this episode, we will learn how astronomers can use the objects that get their information from an object as part of their daily work. We will be discussing some of the important observations that scientists have made over the years, including stars, planets and solar systems.\nAs a star, it’s very common for galaxies to look down on us while they are far away. So what exactly is it that these galaxies do?\nWhat are galaxy formations?\nThey are found in all the globe's food sources. They hold around 7 billion light-years of energy.\nThis is the area known as the Milky Way. It's where stars go when they join forces with each"
+}
+
+{
+  "text": "For centuries, people have looked at the night sky and wondered how far it would take to see the light.\nIn 1947, the American Arts Institute asked artists to paint an image of a celestial object that was rising above their head. The artist then created one of his own paintings of a mosaic. A painting by Joseph Cox, written in 1843, by the artist’s brother, William Cox, depicting the sun rising above its surface and taking a picture. It also represented the “clouds” which were forming around the moon. The artist painted the moon and stars on the same subject.\nOn September 12, 2011, Cox presented an art exhibit to schools in Oregon. He called it “a figurative painting.” When I asked him about it, he said it was very similar to a painting of water. There is no such thing as water. It’s like a tree that grows to 5 feet high. It doesn’t look like any"
+}
+
+{
+  "text": "For centuries, people have looked at the night sky and wondered why they had chosen to live in a tiny apartment.\nBut today, you can expect a different kind of daylight from the heavens than ever before — even if it means living in a small apartment with only 4 people, or hanging out in the bathroom with your clothes on.\nWhen you’re hungry, there are lots of options. You may be hungry for the same food as before or you might have found that there is no better way to enjoy food than by eating at the same time.\nSome folks also find that while traveling allows them to try new restaurants, others have discovered a more convenient alternative to shopping for food. And some people make the mistake of having their kids eat too many bowls of rice, or not eat enough rice to satisfy their hunger.\nYou should always consult a medical doctor if you are taking prescription drugs.\nIf you’ve been taken advantage of by an elderly loved one, or who has experience with sen"
+}
+
+3. Scientific continuation test
+
+Request: 
+
+{
+  "prompt": "The reason the Earth experiences different seasons is primarily because",
+  "max_new_tokens": 200,
+  "temperature": 0.5,
+  "top_p": 0.85,
+  "repetition_penalty": 1.08
+}
+
+Response: 
+
+{
+  "text": "The reason the Earth experiences different seasons is primarily because of the fact that the temperature in the Earth's atmosphere is higher than the rest of the world.\nThe Earth's atmosphere is composed of a large amount of water and is usually dry. It also contains a lot of carbon dioxide, which is an essential component for the life of the planet.\nIn order to maintain the Earth's atmosphere, it is necessary to maintain the temperature in the Earth's atmosphere.\nThe temperature of the Earth's atmosphere is usually 15-20 degrees Fahrenheit.\nThere are many reasons why the Earth's atmosphere is warmer than the rest of the world.\nFirst, the climate is extremely cold.\nSecond, the climate is very cold.\nThird, the climate is very cold.\nFourth, the climate is very cold.\nFifth, the climate is very hot.\nThe climate is very hot.\nFifth, the climate is very hot.\nFinally, the climate"
+}
+
+{
+  "text": "The reason the Earth experiences different seasons is primarily because of the climate change, which causes extreme weather events.\nThe Earth’s surface temperature is also influenced by the climate change. The temperature of the earth is lower than that of the Earth, and it is more affected by the climate change.\nIn addition to the factors affecting the Earth’s climate, there are other factors that affect the Earth’s climate. These include climate change, climate change, and the climate change.\nTherefore, it is important to understand what is happening in the Earth’s atmosphere and how it affects the climate.\nThe Earth is a planet that has many different types of landscapes. This means that the climate is very different from the one in the Earth’s atmosphere.\nIt is important to know the difference between the two types of landscapes.\nThe climate is very different from the one in the Earth’s atmosphere. It is also very different from the one in the Earth’s atmosphere.\nThe climate"
+}
+
+{
+  "text": "The reason the Earth experiences different seasons is primarily because it is a colder climate. The Earth’s atmosphere is warm and humid, but the temperature in the atmosphere is higher than that in the Earth’s atmosphere.\nThe temperature of the earth varies greatly from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe temperature of the Earth varies from year to year, depending on the season.\nThe"
+}
+
+4. Technical prose test
+
+Request:
+
+{
+  "prompt": "In Python, a dictionary is useful when we need to",
+  "max_new_tokens": 200,
+  "temperature": 0.55,
+  "top_p": 0.85,
+  "repetition_penalty": 1.08
+}
+
+Response:
+
+{
+  "text": "In Python, a dictionary is useful when we need to write a dictionary to an object.\n\n#######################################################################################################################################################################################"
+}
+
+{
+  "text": "In Python, a dictionary is useful when we need to know how to use a word in a sentence.\nPython is the most widely used language in the world for many reasons, including its ability to quickly and easily use new words and phrases.\nThis article will discuss some of the key differences between Python and other languages such as Python 3.\nPython is an open-source language that allows users to create their own language. It is widely used by people who want to learn more about languages.\nPython is a widely used language in the world. It is easy to use, and it has many advantages over other languages.\nPython is a very popular language among people because it is easy to learn and it has many advantages.\nPython is also a very popular language in the world. It is easy to learn, and it has many advantages.\nPython is also very easy to learn and it has many benefits"
+}
+
+{
+  "text": "In Python, a dictionary is useful when we need to translate the words in a sentence into a word.\n\nThe most popular type of dictionary is the word dictionary. It's used to help you learn about a particular word or phrase. It's also used for a variety of other purposes. It's an easy way to learn more about a particular word or phrase.\n\nThe most popular type of dictionary is the word dictionary. It's used to help you learn about a specific word or phrase. It's also used for a variety of other purposes. It's used for a variety of different purposes. It's used for a variety of different purposes.\n\nThe most common type of dictionary is the word dictionary. It's used to help you learn about a particular word or phrase. It's also used for a variety of other purposes. It's used for a variety of different purposes. It's used for a variety of different purposes. It's used for a variety of different purposes.\n\nThe most"
+}
+
+5. Narrative test
+
+Request:
+
+{
+  "prompt": "When Mira opened the door, she immediately realized that something was wrong.",
+  "max_new_tokens": 200,
+  "temperature": 0.9,
+  "top_p": 0.95,
+  "repetition_penalty": 1.12
+}
+
+Response:
+
+{
+  "text": "When Mira opened the door, she immediately realized that something was wrong. She found Mira taking her tray of rice and urinating outside the door instead.\nDescription: Mira wipes out all traces of pollution in her body with a towel while looking at Mira. However, Mira does not realize that since she believes that life should be so easy, most of her life is spent living in the real world. So she sits at home thinking about why she went to school in the first place. Mira finally find some reason for her behavior on her own. But then she finds something else: Mira knows that crying everyday of her father’s birthday has upset her in the past. This tells Mira that he doesn’t want this anyone’s happiness anymore. Mira still thinks she may have put out the fire but she only sees Mira as her self-abused sister. Mira discovers that she must make another choice before mira can do it and that as long as"
+}
+
+{
+  "text": "When Mira opened the door, she immediately realized that something was wrong. Do you remember what she experienced when she asked her to talk to you about her mother?\nI think it’s a very natural thing in life, but even if I was there by now and told my mother that they had so much problems together, I would know how it was going on with him because of this mystery. I won’t blame you for wanting to continue pretending like these things have happened since childhood because your parents are now thrown into prison. But again, you must be thinking about it sometimes. I used to wonder just how awkward things were in reality without people talking to each other. Let’s see.\nWhen Mira started talking to me yesterday, she said her mother is confused. That feeling finally passed. It certainly cannot feel like it is really a thing in our family right now. People are always trying to figure out who the kids are. Did you hear from his parents before?\n\nThe Heritage Movement Golf Club is"
+}
+
+{
+  "text": "When Mira opened the door, she immediately realized that something was wrong.\nAlready there were several clues around these three men. Ernestrix passed out, making both of them fall to their death. The girls threw the quilt and blankets from the bathroom window of an Italian restaurant in the middle of the night. This made both of them start looking up at the old decorations. He read a letter from Mab, who replied that another marriage would be renewed after Mira arrived.\nOn the evening after they arrived, Mira left before one or two of her family members happened to come over. She raised her hand to show the suffering Mira had caused to Mira, saying in particular that Mira’s condition was not healthy or serious; therefore, she knew it would be bad for Mira to keep the children alive in a non-residential school. She moved forward quickly and stopped at last again. Mira reached around and opened the door of the one bedroom where she kept her family. “Why is"
+}
+
+6. Long range consistency test
+
+Request:
+
+{
+  "prompt": "Arjun put the red key inside his coat pocket before entering the station. Twenty minutes later,",
+  "max_new_tokens": 200,
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "repetition_penalty": 1.10
+}
+
+Response:
+
+{
+  "text": "Arjun put the red key inside his coat pocket before entering the station. Twenty minutes later, the car came to a stop at an intersection and there was another car coming in front of the scene. The police said that they found 24-year-old Rohit Shankar’s car in the parking lot and took him out.\nIn a statement issued by police, the police said that they were waiting for the police to arrive at the scene and take the car back to the station. “The police said that they have arrested and taken him out of the station,” the statement said.\nMajid is also accused of trying to seduce a girl by robbing her father. “Addressing this case, the police said that he had ordered the car to be repaired at the place where he killed his father,” the statement added.\n\nBuilding a strong brand with positive attitudes towards diversity and inclusion has always been part of my job description and I am currently working on the architecture for the Global Air"
+}
+
+{
+  "text": "Arjun put the red key inside his coat pocket before entering the station. Twenty minutes later, he was heading towards the market to buy his lunch. He was a very busy man and didn’t want to be left out in traffic.\nHis brain had been running for some time but had not found its place. He looked around at the houses and walked towards the market.\n“What are you going to do?” the man asked.\nHe replied, “I don’t know,” he said.\n“I’m sorry, I just wanted to tell you that I have no idea where you are,” he said.\n“You need help,” the man said.\nThe man went on to say that the police were looking for him.\n\nOn 12th December 2014, the FCA announced a two-year extension of the HSE's annual budget for 2015-16. The announcement was made by the Minister for Education and Culture, and was followed by a series of recommendations on how to reduce the"
+}
+
+{
+  "text": "Arjun put the red key inside his coat pocket before entering the station. Twenty minutes later, he returned with a cufflink and a ring.\n“Hello,” Mulga asked as he looked at the ring. “Did you find anything?” he asked.\n“What is it?” The man raised his head. “We don’t know.” He was surprised to see that he had not noticed the ring inside. “I’m sorry,” he said.\n“What happened?” Mulga asked as he stared at the ring on the table before him.\nMulga, however, hadn’t seen anything since the incident. He had been able to identify the missing ring from the table when he first saw it in 1986. In the same way, he now remembers what happened when he was looking at the ring.\nHe opened the ring, which looked like the ring of the last king. It was empty. Mulga could only think about what he would have done if he had found the ring. He didn’"
+}
+
+7. Abstract reasoning prose test
+
+Request:
+
+{
+  "prompt": "A society cannot rely entirely on rules, because rules themselves",
+  "max_new_tokens": 200,
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "repetition_penalty": 1.10
+}
+
+Response:
+
+{
+  "text": "A society cannot rely entirely on rules, because rules themselves are not enough to sustain a community.\nLastly, the death penalty is one of the most powerful forms of punishment in the world. It could be the death penalty for anyone who has been convicted of a crime that has been committed by another individual, or it could be the death penalty for those who have been convicted of a crime that is more serious than the crime itself.\nWhat Is the Death Penalty for An Elder Lawyer?\nAn Elder Lawyer may be able to help you with your case without having to provide any other legal advice, but this can also include matters that could affect the quality of life and the outcomes of a life sentence.\nIf you are thinking about getting a life sentence for an elderly loved one, then you should consider contacting a lawyer. If you are considering going through the death penalty, you will need to speak with someone from the Law Office of Jones & Walsh.\nThe death penalty for an elderly"
+}
+
+{
+  "text": "A society cannot rely entirely on rules, because rules themselves are created by the people who are in charge of them. It is no surprise then that the United Nations has a number of memberships and political commissions.\nIt should be noted that this can only happen if there is an economic agreement with the government. For instance, when there is a general agreement among the groups that the US should use energy to create energy, the government does not have to use it. This means that it must be used with the purpose of making power available to all people. If the government cannot agree to a certain set of policies, then the government will not be able to make energy available to all people.\nThis is a problem that is often overlooked or ignored in the civil society. It is a common problem among the various organizations involved in the civil society. It affects every person in society. In order for a society to function properly, it must be able to do what it wants. The fact that the government is not"
+}
+
+{
+  "text": "A society cannot rely entirely on rules, because rules themselves are not always the same, and they don't necessarily apply to all of us.\nSo yes, it is a good idea for me to take some time off from my work to reflect on how I have been through these experiences, but that doesn't mean I will just continue working with this blog.\nI do want to add that my opinion of what happened was about as much as anyone else's. I was trying to be honest about my own feelings towards what had happened, which were very subjective, but in my mind, I wasn't really making any assumptions about who was hurt or anything.\nWhen I took some time off from my work to rest after a long day, I felt like I could handle being outdoors. I didn't need to go to the beach or whatever other activity I was doing (or at least I couldn't) to relax in the hot sun. I even did a few things with my body and had a nice time.\n"
+}
+
+8. Wikipedia-ish language test
+
+Request: 
+
+{
+  "prompt": "The Industrial Revolution was a period of major economic and technological change that began",
+  "max_new_tokens": 200,
+  "temperature": 0.55,
+  "top_p": 0.85,
+  "repetition_penalty": 1.08
+}
+
+Response:
+
+{
+  "text": "The Industrial Revolution was a period of major economic and technological change that began with the creation of the International Monetary Fund (IMF).\nIn 1930, the International Monetary Fund was created to support the development of the global economy. The IMF is responsible for providing the world with economic and technological assistance. The IMF’s main objective is to help countries in developing economies and to provide them with financial assistance.\nThe IMF has developed a range of instruments, including a set of rules for the management of international trade, as well as a set of rules for the management of international trade. The IMF also promotes the use of international trade as a means of promoting economic development and enhancing the global economy.\nIn 1932, the IMF launched the World Trade Organization (WTO) which was a multilateral organization that included the United States, the United Kingdom, the United States of America,"
+}
+
+{
+  "text": "The Industrial Revolution was a period of major economic and technological change that began in the 1960s.\nIn 1970, the United States had entered the industrial revolution. The United States was the largest industrial nation in the world, with a population of 2.6 billion. In the 1980s, the United States was the largest industrial nation in the world, with an estimated population of 1.8 billion.\nIt is also important to note that the United States was not a dominant industrial country until the mid-1990s. In fact, the United States was a relatively small country in terms of population, with a population of 3.7 billion.\nThe United States was one of the most populous countries in the world in 1989, with a population of 4.8 billion.\nThe United States was also the largest industrial nation in the world by area, with an estimated population of 1.9 billion.\nThe United States was the largest industrial nation in the"
+}
+
+{
+  "text": "The Industrial Revolution was a period of major economic and technological change that began with the discovery of the first electric power plant in the United States. The first electric power plant was built in 1905 in the city of Los Angeles, California, and it was named after John L. L. Lasalle.\nLast year, the first electric power plant in the United States was built by L.L.C. in the city of Los Angeles, California. It was named after L.L.C. in 1997. The second electric power plant in the United States was built in the same city, and it was named after John L. Lasalle.\nThis is the first time that the first electric power plant has been built in the United States. This is because it was designed to be the first electric power plant in the United States.\nIn 1996, the first electric power plant was built in the United States. This is the first time that the first electric power plant in the United States"
+}
+
+9. High Creativity stress test
+
+Request:
+
+{
+  "prompt": "Beyond the last known star, the explorers discovered",
+  "max_new_tokens": 200,
+  "temperature": 1.05,
+  "top_p": 0.96,
+  "repetition_penalty": 1.15
+}
+
+Response:
+
+{
+  "text": "Beyond the last known star, the explorers discovered a man who would eventually become General Dolby Clarity. He could access, without extreme agitation and as a feature of just what sounded like a Western civilization, the clear throbbing of passion forever tounding for Southern others in this—well...the Black Man Edition. Who knows if it is required?\nThere were no words, not even reactionary or apologetic after seeing Beowulf grow from the humble beginnings of his colony to dominate the US of A and take over the throne of Cold War-dom. And this wasn’t merely another public embarrassment brewing around Ohamzen but – apart from what seems normal at first – certain ironic amnesia from Soviet royals involving their tears (how much is?) appears afoot; make out was begun successfully and the two men most commonly associated with the particular Galilean adventurer were on opposite sides of the counting room where they endlessly attempted to dodge each"
+}
+
+{
+  "text": "Beyond the last known star, the explorers discovered a mysterious fine crystal forming a nearby nuclear fingerprint found in earth’s environment. The suggestion suggests that an earlier place called Srira will have been discovered by sea before being woken in America by the news of the discovery.\nRead more about think tank at.\nThe Meteorological Institute contributes publication to dozens of reputable magazine articles concerning meteorology and climate. Topics include experience with science and technology and successful attempts across climates, geosciences, and making a living.See also studies based on meteoric oil exploration underway along the Xiangyang mainland trajectory, a longtime resistance area for scientists and industry professionals who find change through shared conservative criticism or detractions from their methods. See also upcoming covers (and there was some chilling suspense) this summer. Experience Globe is your substitute for the inevitable.\nNOTE:"
+}
+
+{
+  "text": "Beyond the last known star, the explorers discovered nine patches of cloud-like water that had shaped glass.\nThe discovery could have allowed researchers at the chemistry departments to collect more iron oxides than their R&D colleagues, plus create better chips that showed an economical engineering way for the tungsten electrodes to produce black powder close enough inside to trigger them to detonate once they were still sealed from which sea life was derived. See at a YIIAR science class held three months before falling into deepfake footage that revealed previously unseen passengers' presence on high seas in under a week after TheyiQ powered its technology transfer method up to pure water and hydrogen through other units.\nThe Rousseau bundle of chemicals that as scientists struggled with staging remediation rates needed to save planetary names. The explorers proved the mystery hidden beneath these secrets. The discoveries leveraged liquid white natural gas to bury under water nearly five"
+}
