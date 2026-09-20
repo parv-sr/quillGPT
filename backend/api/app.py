@@ -9,16 +9,12 @@ from backend.api import endpoints
 from backend.inference.engine import ONNXInferenceEngine
 from backend.inference.generator import TextGenerator
 from data.bpe_tokenizer import BPETokenizer
-from data.corpus import TextCorpus
 
 MODEL_PATH: str = f"artifacts/models/quillGPT_v{config.version}.onnx"
 TOKENIZER_PATH: str = "bpe_tokenizer_16384.json"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    #corpus = TextCorpus("data/raw")
-    #print("Corpus loaded")
-
     tokenizer = BPETokenizer(config.vocab_size)
     tokenizer.load(TOKENIZER_PATH)
     print("Tokenizer loaded")
